@@ -1,0 +1,60 @@
+import jade.core.AID;
+import jade.core.Agent;
+import jade.core.behaviours.OneShotBehaviour;
+import jade.core.behaviours.ParallelBehaviour;
+import jade.core.behaviours.TickerBehaviour;
+import jade.core.behaviours.WakerBehaviour;
+import jade.core.behaviours.CyclicBehaviour;
+import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
+
+		public class AgentPara extends Agent{
+			protected void setup(){
+				ParallelBehaviour comportementparallele = new ParallelBehaviour(ParallelBehaviour.WHEN_ALL);
+				comportementparallele.addSubBehaviour(new TickerBehaviour(this,3000){
+					@Override
+					protected void onTick() {
+						//System.out.println("ay ay Senor Carlos");
+					}
+				});
+			
+				comportementparallele.addSubBehaviour(new TickerBehaviour(this,3000){
+					@Override
+					protected void onTick() {
+					//	System.out.println("Ah la la, quel frigo");
+
+					}
+				});
+				
+				
+				
+				comportementparallele.addSubBehaviour(new CyclicBehaviour(this){
+					public void action() { 
+					ACLMessage msg = receive();
+					if(msg!= null)  {
+						String A = msg.getContent();
+						System.out.println(A);
+							if(A.equals("mort"))
+							{
+								System.out.println("je vais dormir");
+								doDelete();
+							}
+							
+								ACLMessage M = new ACLMessage(ACLMessage.INFORM);
+								M.setLanguage("English");
+								M.setOntology("Un_Test");
+								M.addReceiver(new AID("Peter",AID.ISLOCALNAME));
+								M.setContent("jour");
+								send(M);
+							
+					}
+							else{
+						block();
+								};
+						}
+				}
+			);	
+			addBehaviour(comportementparallele);
+			}
+		}
+			
