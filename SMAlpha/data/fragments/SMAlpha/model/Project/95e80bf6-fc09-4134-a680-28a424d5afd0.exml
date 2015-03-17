@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="SMAlpha" version="3">
+  <DEPS>
+    <ID name="SMAlpha" mc="Project" uid="95e80bf6-fc09-4134-a680-28a424d5afd0"/>
+    <COMPID name="SMAlpha" mc="DiagramSet" uid="41b92065-f564-4685-98de-b24159f6cddd"/>
+    <COMPID name="smalpha" mc="Package" uid="15aef552-058f-443d-a815-9f1066852b6f"/>
+  </DEPS>
+  <OBJECT>
+    <ID name="SMAlpha" mc="Project" uid="95e80bf6-fc09-4134-a680-28a424d5afd0"/>
+    <ATTRIBUTES>
+      <ATT name="ProjectContext"></ATT>
+      <ATT name="ProjectDescr"></ATT>
+      <ATT name="Name"><![CDATA[SMAlpha]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="DiagramRoot">
+        <COMPID name="SMAlpha" mc="DiagramSet" uid="41b92065-f564-4685-98de-b24159f6cddd"/>
+      </COMP>
+      <COMP relation="Model">
+        <COMPID name="smalpha" mc="Package" uid="15aef552-058f-443d-a815-9f1066852b6f"/>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>
