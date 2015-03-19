@@ -1,6 +1,0 @@
-INDEX VERSION 1.127+C:\Users\FofW\Programmes\PROJET INFO 6ème semestre\.metadata\.plugins\org.eclipse.jdt.core
-3632061527.index
-4258327776.index
-3509566135.index
-3916163721.index
-1414242881.index
