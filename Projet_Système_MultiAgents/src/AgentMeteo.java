@@ -3,6 +3,7 @@ import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.ParallelBehaviour;
 import jade.core.behaviours.TickerBehaviour;
+import jade.lang.acl.ACLMessage;
 
 
 public class AgentMeteo  extends Agent{
@@ -20,8 +21,23 @@ public class AgentMeteo  extends Agent{
 			meteoparallele.addSubBehaviour(new CyclicBehaviour(this) {
 				public void action()
 				{
-					// gérer la reception de message
-					// et l'envoi de message pour donner les prévision météo
+				ACLMessage msg = receive();
+				if(msg!= null)  {
+					String A = msg.getContent();
+					System.out.println(A);
+					//	if(A.equals("jour"))
+					//	{	ACLMessage reply = msg.createReply();
+					//		reply.setContent("nuit");
+					//		send(reply);
+					//	}
+					}
+				else{
+					System.out.println("je suis bloqué");
+					block();
+					
+							};
+				// gérer la reception de message
+				// et l'envoi de message pour donner les prévision météo
 				}
 			});
 			
