@@ -13,7 +13,7 @@ public class AgentEquipement extends Agent{
 		equiparallele.addSubBehaviour(new CyclicBehaviour(this) {
 			public void action()
 			{
-				//TODO gérer la reception de message de Energie pour une action et le checking des préférences utilisateurs
+				//TODO gérer la reception de message du planning energie
 			}
 		});
 		equiparallele.addSubBehaviour(new CyclicBehaviour(this) {

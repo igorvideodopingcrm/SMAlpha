@@ -6,7 +6,7 @@
 \fs22 Tache 1: GUi et requ\'eates que cela g\'e9n\'e8re\par
 \b0 Requ\'eate:\line\ulnone Senor M\'e9t\'e9o: \line -M\'e9t\'e9o\par
 GladOS:\line - Heure de d\'e9but de la tache X ? (mettre X=0 pour heure de d\'e9but de toutes les t\'e2ches)\line - Tableau d'une t\'e2che X? (pareil que ci dessus)\line - Liste des IDs des t\'e2ches.\line - Conso effective et conseil.\line - Envoi le planning si il est demand\'e9.\par
-R2D2:\line - Etat Equipement.\line - Agir sur un \'e9quipement.\par
+R2D2:\line - Etat Equipement.\line - Agir sur un \'e9quipement.( fonctionnalit\'e9 optionnelle)\par
 \ul Renseigner des prefs utilisateurs\par
 Rajouter/ supprimer un \'e9quipement\par
 Retour de requ\'eates\par
@@ -46493,5 +46493,11 @@ ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 ffffffffffffffffffffffffffffffffffffffffffffffffff00030000000000
 }}}\par
+\par
+Agent Java\par
+-demander planning / m\'e9t\'e9o\line -R\'e9cup\'e9rer les donn\'e9es capteurs (r2d2)\line -recevoir les conseils conso\line (tout cela est envoy\'e9 au service web qui met \'e0 jour un fichier texte qu'il affichera \'e0 la demande)\line\par
+Service Web\par
+-Afficher Meteo/Planning //txt\line -Renseigner Pref Users. // BDD\line -G\'e9rer les \'e9quipements. // BDD\line -Affiche les donn\'e9es des capteurs //Txt\line -affiche les donn\'e9es conso //txt\par
+\par
 }
  
