@@ -1,2 +1,7 @@
 Open weather map pour l'agent météo
 openweathermap.org/forecast
+openweather map
+
+json
+
+http://api.openweathermap.org/data/2.5/forecast?q=Chambery,fr
