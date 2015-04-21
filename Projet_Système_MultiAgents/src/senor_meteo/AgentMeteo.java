@@ -1,54 +1,61 @@
 package senor_meteo;
+
+
 import java.io.IOException;
 
 import org.json.JSONException;
+import org.json.JSONObject;
+
+
+
+
 
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
+import jade.core.behaviours.OneShotBehaviour;
 import jade.core.behaviours.ParallelBehaviour;
 import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
-import outilsmeteo.OwmClient;
-import outilsmeteo.WeatherData;
-import outilsmeteo.WeatherData.Clouds;
-import outilsmeteo.WeatherData.WeatherCondition;
-import outilsmeteo.WeatherStatusResponse;
 
 
-public class AgentMeteo  extends Agent{
+public class AgentMeteo extends Agent{
+	JSONObject json = null;
+	
 	protected void setup(){
 		ParallelBehaviour meteoparallele = new ParallelBehaviour(ParallelBehaviour.WHEN_ALL);
+		
+		
+		meteoparallele.addSubBehaviour(new OneShotBehaviour(this){
+			public void action(){
+				System.out.println("one shot behaviour");
+				try {
+					json = outilsmeteo.JsonReader.meteoFromUrl(); // importation de la météo depuis la fonction du package
+					System.out.println(json.get("list").toString());
+					
+				} catch (IOException | JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		  }
+	  });
 			
-		meteoparallele.addSubBehaviour(new TickerBehaviour(this,3000){
+		meteoparallele.addSubBehaviour(new TickerBehaviour(this,43200000){// 43200000 = 12 heures en milisecondes | à modifier selon le rafraichissement voulu
 				protected void onTick() {
 					
 					
-					OwmClient owm = new OwmClient ();
-					WeatherStatusResponse currentWeather = null;
 					try {
-						currentWeather = owm.currentWeatherAtCity("Lapua","FI");
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (JSONException e) {
+						json = outilsmeteo.JsonReader.meteoFromUrl(); // importation de la météo depuis la fonction du package
+					} catch (IOException | JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					if (currentWeather.hasWeatherStatus ()) {
-					    WeatherData weather = currentWeather.getWeatherStatus().get (0);
-				        float weatherCondition = weather.getTemp()-273;
-				        String description = String.valueOf(weatherCondition);
-					    System.out.println ("la température à saint pierre est de "+description);
-					}
 					
-					
-					//TODO Espace ou Senor Meteo va chercher la météo sur le net pour les agent en ayant besoin
-					//Ou la distribuer à qui de droit. Le timer ci dessus, 3000, est en millième de seconde (actuellement 3 s)
-					//A modifier selon la fréquence de rafraichissement voulue.
+					json.toString();
+					System.out.println(json.toString());
 				}
 			});
-		
+			
 			meteoparallele.addSubBehaviour(new CyclicBehaviour(this) {
 				public void action()
 				{

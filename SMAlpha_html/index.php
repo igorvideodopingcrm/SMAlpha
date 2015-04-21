@@ -1,14 +1,12 @@
 <?php
-/**
- * Example Application
- *
- * @package Example-application
- */
 
-require './libs/Smarty.class.php';
 
-$smarty = new Smarty;
+include_once "./init.php";
 
-$smarty->display('./view/header.html');
-$smarty->display('./view/index.html');
-$smarty->display('./view/footer.html');
+$tpl = new Smarty;
+$tpl->assign("page","index");
+
+$tpl->display('./view/header.html');
+$tpl->display('./view/index.html');
+$tpl->display('./view/footer.html');
+?>
