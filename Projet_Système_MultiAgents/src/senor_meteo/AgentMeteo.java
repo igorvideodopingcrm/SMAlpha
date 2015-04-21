@@ -3,6 +3,7 @@ import java.io.IOException;
 
 import org.json.JSONException;
 
+import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.ParallelBehaviour;
@@ -35,7 +36,7 @@ public class AgentMeteo  extends Agent{
 						e.printStackTrace();
 					}
 					if (currentWeather.hasWeatherStatus ()) {
-					    WeatherData weather = currentWeather.getWeatherStatus ().get (0);
+					    WeatherData weather = currentWeather.getWeatherStatus().get (0);
 				        float weatherCondition = weather.getTemp()-273;
 				        String description = String.valueOf(weatherCondition);
 					    System.out.println ("la température à saint pierre est de "+description);
@@ -52,8 +53,12 @@ public class AgentMeteo  extends Agent{
 				public void action()
 				{
 				ACLMessage msg = receive();
+				ACLMessage rep = null;
 				if(msg!= null)  {
-					String A = msg.getContent();
+					AID A = msg.getSender();
+					rep.addReceiver(A);
+					rep.setContent("contenu à mettre dans le message");
+					// TODO fonction qui met dans le message la météo obtenue et envoie du message
 					}
 				
 				else{
