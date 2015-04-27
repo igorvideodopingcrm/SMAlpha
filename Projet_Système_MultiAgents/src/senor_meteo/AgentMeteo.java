@@ -20,48 +20,82 @@ import jade.lang.acl.ACLMessage;
 
 
 public class AgentMeteo extends Agent{
-	JSONObject json = null;
+
+	Tabmeteo[] tab= new Tabmeteo[7];
 	
 	protected void setup(){
+		
 		ParallelBehaviour meteoparallele = new ParallelBehaviour(ParallelBehaviour.WHEN_ALL);
 		
 		
+		
 		meteoparallele.addSubBehaviour(new OneShotBehaviour(this){
+
+			
 			public void action(){
-				System.out.println("one shot behaviour");
+				System.out.println(this.getClass().toString()+" lancé");
 				try {
-					json = outilsmeteo.JsonReader.meteoFromUrl();// importation de la météo depuis la fonction du package
-					JSONArray jarray = json.getJSONArray("list");
-					JSONObject temp = jarray.getJSONObject(1);  //obtient le numéro 1 de l'array de la météo
-				//	temp = temp.getJSONObject("dt");
-					System.out.print(temp.getInt("dt")); // marque la date du premier élément
+				
+					JSONObject json = outilsmeteo.JsonReader.meteoFromUrl();// importation de la météo depuis la fonction du package
+					JSONArray listejour = json.getJSONArray("list"); // on prends la liste des prévisions journalière
+					long valdat =0; 								// initialisation des variable et du tableau ou on les rentre
+					String meteo;
+					int temperature;
 					
-					 StringWriter out = new StringWriter();
-					  temp.write(out);
-					  String jsonText = out.toString();
-					  System.out.print(jsonText);
-					  Tabmeteo tab[]= new Tabmeteo[7];
+									// entrée dans le tableau
+					for (int i = 0; i < tab.length; i++) {
+						JSONObject temp1 = listejour.getJSONObject(i);
+						temperature = temp1.getJSONObject("temp").getInt("day");
+						valdat=temp1.getLong("dt");
+						meteo = temp1.getJSONArray("weather").getJSONObject(0).getString("description");
+
+						tab[i] = new Tabmeteo();			// entrée des données dans le tableau
+						tab[i].setDate(valdat);
+						tab[i].setTemperature(temperature);
+						tab[i].setMeteo(meteo);
+					//	System.out.println(tab[i].toString());
+						}
 					  
+//					  valtest=10;
 				} catch (IOException | JSONException e) {
 					// TODO Auto-generated catch block
+					System.out.println("erreur: Senor meteo n'a pas reçu de donnée du web.");
 					e.printStackTrace();
 				}
 		  }
+			
 	  });
 			
 		meteoparallele.addSubBehaviour(new TickerBehaviour(this,43200000){// 43200000 = 12 heures en milisecondes | à modifier selon le rafraichissement voulu
 				protected void onTick() {
-					
-					
 					try {
-						json = outilsmeteo.JsonReader.meteoFromUrl(); // importation de la météo depuis la fonction du package
+						
+						JSONObject json = outilsmeteo.JsonReader.meteoFromUrl();// importation de la météo depuis la fonction du package
+						JSONArray listejour = json.getJSONArray("list"); // on prends la liste des prévisions journalière
+						long valdat =0; 								// initialisation des variable et du tableau ou on les rentre
+						String meteo;
+						int temperature;
+						
+										// entrée dans le tableau
+						for (int i = 0; i < tab.length; i++) {
+							JSONObject temp1 = listejour.getJSONObject(i);
+							temperature = temp1.getJSONObject("temp").getInt("day");
+							valdat=temp1.getLong("dt");
+							meteo = temp1.getJSONArray("weather").getJSONObject(0).getString("description");
+
+							tab[i] = new Tabmeteo();			// entrée des données dans le tableau
+							tab[i].setDate(valdat);
+							tab[i].setTemperature(temperature);
+							tab[i].setMeteo(meteo);
+						//	System.out.println(tab[i].toString());
+							}
+						  
+//						  valtest=10;
 					} catch (IOException | JSONException e) {
 						// TODO Auto-generated catch block
+						System.out.println("erreur: Senor meteo n'a pas reçu de donnée du web.");
 						e.printStackTrace();
 					}
-					
-					json.toString();
-					System.out.println(json.toString());
 				}
 			});
 			
@@ -69,12 +103,18 @@ public class AgentMeteo extends Agent{
 				public void action()
 				{
 				ACLMessage msg = receive();
-				ACLMessage rep = null;
+				ACLMessage rep = new ACLMessage(ACLMessage.INFORM);
 				if(msg!= null)  {
 					AID A = msg.getSender();
 					rep.addReceiver(A);
-					rep.setContent("contenu à mettre dans le message");
-					// TODO fonction qui met dans le message la météo obtenue et envoie du message
+					String reponse ="";
+					
+					for (int i = 0; i < tab.length; i++) {
+						reponse = reponse+tab[i].toString()+";";
+
+						}
+					rep.setContent(reponse);
+					send(rep); 
 					}
 				
 				else{

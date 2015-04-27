@@ -2,16 +2,17 @@ package outilsmeteo;
 
 public class Tabmeteo {
 
-String date;
-int temperature;
-String meteo;
+String date="";
+int temperature=42;
+String meteo="";
 
 
 public String getDate() {
 	return date;
 }
-public void setDate(String date) {
-	this.date = date;
+public void setDate(long i) {
+	String dat = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new java.util.Date(i*1000)); // i ou i*1000 ?
+	this.date = dat;
 }
 public int getTemperature() {
 	return temperature;
@@ -28,8 +29,7 @@ public void setMeteo(String meteo) {
 
 @Override
 public String toString() {
-	return "Tabmeteo [date=" + date + ", temperature=" + temperature
-			+ ", meteo=" + meteo + "]";
+	return  date + "," + temperature + "," + meteo;
 }
 
 
