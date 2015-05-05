@@ -1,0 +1,351 @@
+body {
+	margin: 0px;
+	background: #e1e1e2;
+	font-family: Verdana, sans-serif;
+}
+
+img {
+	border: 0;
+}
+
+/* #quicknav = la barre du haut qui donne accès aux différentes parties du site */
+
+#quicknav {
+	width: 920px;
+	height: 22px;
+	margin: 0 auto;
+	padding: 0 0 4px 10px;
+	font-weight: bold;
+	background-color: #c4d3db;
+	background: linear-gradient(to bottom, #c4d3db 0%,#99b2c2 100%);
+	border-radius: 0 0 15px 15px;
+}
+
+#quicknav ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+#quicknav ul li {
+	display: inline;
+	margin-right: 5px;
+}
+
+#quicknav a {
+	font-size: 12px;
+	color: #243c47;
+	text-decoration: none;
+}
+
+#quicknav a:hover {
+	text-decoration: underline;
+}
+
+#quicksearch {
+	float: right;
+	background-color: #496476;
+	padding: 1px 10px 1px 1px;
+	border-radius: 0 0 15px;
+}
+
+#quicksearch * {
+	margin: 0;
+	padding: 0;
+}
+
+#recherche_g {
+	width: 145px;
+}
+
+/* #tabs = barre de menus */
+
+#tabs {
+	clear: both;
+	background-color: #68869a;
+	background: linear-gradient(to bottom, #68869a 0%,#5a7f97 100%);
+	height: 30px;
+	padding-left: 10px;
+	margin: 0;
+}
+
+#tabs .item {
+	border-style: solid;
+	border-width: 0 0 0 1px;
+}
+
+#tabs .item:first-child {
+	border: 0;
+}
+
+#tabs a {
+	font-weight: bold;
+	text-decoration: none;
+}
+
+#tabs > li {
+	position: relative;
+	float: left;
+	display: block;
+	font-size: 12px;
+	color: #D8D7D7;
+	height: 30px;
+	line-height: 30px;
+}
+
+#tabs > li > a {
+	display: block;
+	height: 100%;
+	padding: 0 7px;
+	color: white;
+}
+
+#tabs > li a.selected, #tabs > li > a:hover, #tabs > li:hover > a {
+	background-color: white;
+	background: linear-gradient(to bottom, #ffffff 0%,#b0c2ce 100%);
+	color: black;
+}
+
+/* .tooltip = infobulle au survol des méga-rubriques */
+
+#tabs li a .tooltip {
+	display: none;
+}
+
+#tabs li a:hover .tooltip {
+	display: block;
+	position: absolute;
+	width: 325px;
+	height: 18px;
+	top: -21px;
+	left: -2px;
+	background: #ffc;
+	border: 1px solid #bbb;
+	color: #25457d;
+	font-size: 10px;
+	font-weight: normal;
+	line-height: 18px;
+	padding: 0 5px;
+}
+
+#tabs li:last-child a:hover .tooltip {
+	left: -258px;
+	text-align: right;
+}
+
+/* .submenu = les menus déroulants */
+
+#tabs li:hover ul.submenu {
+	display: block;
+}
+
+#tabs li .submenu {
+	display: none;
+	position: absolute;
+	border: solid 2px #b0c2ce;
+	padding: 0px;
+	background-color: #F9F9F9;
+	z-index: 11;
+}
+
+#tabs li:last-child .submenu {
+	left: -68px;
+}
+
+.submenu li {
+	display: block;
+	margin: 0;
+	padding: 0;
+	background-color: #F9F9F9;
+	height: 25px;
+}
+
+.submenu li a {
+	display: block;
+	white-space: nowrap;
+	color: #5A7F97;
+	padding: 0 10px;
+	font-size: 10px;
+	line-height: 25px;
+}
+
+.submenu li a:hover{
+	color: #F9F9F9;
+	background-color: #5a7f97;
+	transition: background-color 0.1s linear;
+}
+
+/* #gabarit_topicmenu = première barre de boutons, #gabarit_resourcesmenu = deuxième barre de boutons */
+
+#gabarit_topicmenu {
+	background-color: #8ba6b8;
+	background: linear-gradient(to bottom, #8ba6b8 0%,#7192a8 100%); 
+}
+
+#gabarit_resourcemenu {
+	background-color: #a9bfca;
+	background: linear-gradient(to bottom, #a9bfca 0%,#96b1be 100%); 
+	border-width: 1px 0 1px 0;
+	border-color: #5a7f97;
+	border-style: solid;
+	padding: 2px 10px;
+}
+
+#topics, #resources {
+	margin: 0;
+	list-style: none;
+	text-align: center;
+}
+
+#topics a, #resources a {
+	font-weight: bold;
+	text-decoration: none;
+	color: white;
+}
+
+#topics a {
+	font-size: 8pt;
+}
+
+#resources a {
+	font-size: 7pt;
+}
+
+#topics li, #resources li {
+	display: inline-block;
+	margin: 5px 0;
+	padding: 1px 5px;
+	border: solid 1px #5a7f97;
+}
+
+#topics li {
+	line-height: 20px;
+	background-color: #7192a8;
+	background: linear-gradient(to bottom, #7192a8 0%,#7192a8 100%);
+}
+
+#resources li {
+	line-height: 16px;
+	background-color: #91aab9;
+	background: linear-gradient(to bottom, #91aab9 0%,#5a7f97 100%);
+	border-radius: 8px;
+}
+
+#topics li.selected, #topics li:hover {
+	background-color: #fdfdfe;
+	background: linear-gradient(to bottom, #fdfdfe 0%,#bdccd5 100%);
+}
+
+#resources li:hover {
+	background-color: #ecf0f3;
+	background: linear-gradient(to bottom, #ecf0f3 0%,#acbfcb 100%);
+}
+
+#topics li.selected a, #topics li:hover a, #resources li:hover a {
+	color: black;
+}
+
+@-moz-document url-prefix() {
+	#resources li { min-width: 50px; }
+	#topics li a, #resources li a { display: inline-block; position: relative; top: -2px; }
+}
+
+#twitter_bloc, #facebook_bloc, #googleplus_bloc, #rss_syndication {
+	position: relative;
+	float: right;
+	margin: 10px 0 0 5px;
+	background-image: none;
+	cursor: pointer;
+	z-index: 0;
+}
+
+/* .contenuPage = tout l'espace utile du site, entre l'en-tête gabarit et le pied du gabarit */
+
+.contenuPage {
+	font-size: 10pt;
+	padding: 1em;
+	background: white;
+}
+
+/* #gabarit_footer = zone où est indiqué qui est responsable de cette rubrique */
+
+#gabarit_footer {
+	padding: 5px 0;
+	background-color: #a8bec9;
+	background: linear-gradient(to bottom, #a8bec9 0%,#8ba7ba 100%);
+	font-size: 8pt;
+	font-weight: bold;
+	color: #446372;
+	text-align: center;
+	border-width: 1px 0 1px 0;
+	border-color: #5a7f97;
+	border-style: solid;
+}
+
+#gabarit_footer a {
+	color: #446372;
+	text-decoration: none;
+}
+
+#gabarit_footer a:hover {
+	text-decoration: underline;
+}
+
+/* #gabarit_pied = pied de page */
+
+#gabarit_pied {
+	background-color: #7292a7;
+	background: linear-gradient(to bottom, #7292a7 0%,#486375 100%);
+	padding-bottom: 10px;
+}
+
+#gabarit_pied_contenu {
+	width: 850px;
+	margin: 0 auto;
+	padding-top: 10px;
+}
+
+#gabarit_pied_contenu .gabarit_pied_div {
+	float: left;
+	width: 250px;
+}
+
+#gabarit_pied_contenu .gabarit_pied_div_separation {
+	float: left;
+	width: 50px;
+}
+
+#gabarit_pied_contenu span {
+	display: block;
+	margin-bottom: 0.5em;
+	font-size: 10pt;
+	color: white;
+}
+
+#gabarit_pied_contenu p {
+	margin: 0;
+}
+
+#gabarit_pied a {
+	color: #d4e2e5;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 8pt;
+}
+
+#gabarit_pied a:hover {
+	color: yellow;
+	text-decoration: none;
+}
+
+#gabarit_pied_copyright p {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	margin-top: 15px;
+	text-align: center;
+	color: #7292a7;
+	font-weight: bold;
+	text-align: center;
+	font-size: 8pt;
+}

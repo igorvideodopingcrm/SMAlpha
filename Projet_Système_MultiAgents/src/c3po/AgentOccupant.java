@@ -5,7 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import outilsmeteo.Tabmeteo;
+import senor_meteo.Tabmeteo;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
@@ -32,7 +32,7 @@ public class AgentOccupant  extends Agent{
 			occuparallele.addSubBehaviour(new OneShotBehaviour(this){
 				
 				public void action(){
-					System.out.println(this.getClass().toString()+" lancé");
+					System.out.println(getLocalName()+" lancé");
 					
 					ACLMessage message = new ACLMessage(ACLMessage.INFORM);
 					message.addReceiver(new AID("senor_meteo", AID.ISLOCALNAME));

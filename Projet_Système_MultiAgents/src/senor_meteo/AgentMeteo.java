@@ -9,7 +9,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import outilsmeteo.*;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
@@ -33,10 +32,10 @@ public class AgentMeteo extends Agent{
 
 			
 			public void action(){
-				System.out.println(this.getClass().toString()+" lancé");
+				System.out.println(getLocalName()+" lancé");
 				try {
 				
-					JSONObject json = outilsmeteo.JsonReader.meteoFromUrl();// importation de la météo depuis la fonction du package
+					JSONObject json = senor_meteo.JsonReader.meteoFromUrl();// importation de la météo depuis la fonction du package
 					JSONArray listejour = json.getJSONArray("list"); // on prends la liste des prévisions journalière
 					long valdat =0; 								// initialisation des variable et du tableau ou on les rentre
 					String meteo;
@@ -70,7 +69,7 @@ public class AgentMeteo extends Agent{
 				protected void onTick() {
 					try {
 						
-						JSONObject json = outilsmeteo.JsonReader.meteoFromUrl();// importation de la météo depuis la fonction du package
+						JSONObject json = senor_meteo.JsonReader.meteoFromUrl();// importation de la météo depuis la fonction du package
 						JSONArray listejour = json.getJSONArray("list"); // on prends la liste des prévisions journalière
 						long valdat =0; 								// initialisation des variable et du tableau ou on les rentre
 						String meteo;

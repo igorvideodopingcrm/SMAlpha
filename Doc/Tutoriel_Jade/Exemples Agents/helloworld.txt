@@ -1,0 +1,42 @@
+
+
+import jade.core.Agent;
+import jade.core.behaviours.Behaviour;
+
+/**
+   This example shows a minimal agent that just prints "Hello World!" 
+   and then terminates.
+   @author Giovanni Caire - TILAB
+ */
+
+public class HelloWorldAgent extends Agent {
+
+  protected void setup() {
+  	System.out.println("Hello World! My name is "+getLocalName());
+  	addBehaviour(new premierbehaviour());
+  	doDelete();
+  } 
+  
+  public class premierbehaviour extends Behaviour
+  {
+	  public void action()
+	  {
+		  System.out.println("Ah la la, il fait chaud...");
+		  try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			System.out.println("oups, j'ai raté...");
+			e.printStackTrace();
+			}	
+		  }
+
+	@Override
+	public boolean done() {
+		// TODO Auto-generated method stub
+		System.out.println("j'ai fini...");
+		return false;
+	}
+  }
+}
+
+// On ne va pas s'intéresser à comprendre chaque ligne du code mais juste comment compiler et lancer l'agent.

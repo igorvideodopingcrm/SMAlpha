@@ -1,4 +1,4 @@
-package outilsmeteo;
+package senor_meteo;
 
 import java.io.BufferedReader;
 import java.io.IOException;

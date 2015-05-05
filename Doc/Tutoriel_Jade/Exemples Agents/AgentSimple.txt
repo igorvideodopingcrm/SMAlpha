@@ -1,0 +1,17 @@
+
+
+import jade.core.Agent;
+import jade.core.behaviours.Behaviour;
+import jade.core.behaviours.TickerBehaviour;
+
+public class AgentSimple extends Agent {
+
+  protected void setup() {
+	  System.out.println("je suis "+getLocalName());
+		  addBehaviour(new TickerBehaviour(this, 10000) {
+			  protected void onTick() {
+				  System.out.println("il fait chaud");
+		  	}
+		  } );
+	  }
+}

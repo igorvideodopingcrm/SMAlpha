@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<!-- saved from url=(0048)http://djug.developpez.com/java/jade/behaviours/ -->
+<html lang="fr" xmlns:og="http://ogp.me/ns#"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+	<meta charset="iso-8859-1">
+	<title>Les Behaviours dans JADE</title>
+	<meta name="generator" content="developpez-com">
+	<meta name="description" content="Les Behaviours dans JADE">
+	<meta name="keywords" content="BEHAVIOUR,JADE,agent, multi-agent">
+	<script type="text/javascript" async="" src="./Les Behaviours dans JADE_files/ga.js"></script><script type="text/javascript" src="./Les Behaviours dans JADE_files/jquery-1.7.2.js"></script>
+	<script type="text/javascript" src="./Les Behaviours dans JADE_files/saved_resource"></script>
+	<link rel="shortcut icon" type="image/x-icon" href="http://djug.developpez.com/template/favicon.ico">
+	<link rel="image_src" href="http://www.developpez.com/facebook-icon.png">
+	<link rel="stylesheet" type="text/css" href="./Les Behaviours dans JADE_files/gabarit0.css">
+	<link rel="stylesheet" type="text/css" media="print" href="./Les Behaviours dans JADE_files/printer.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="./Les Behaviours dans JADE_files/developpez-kit-generation.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="./Les Behaviours dans JADE_files/code.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="./Les Behaviours dans JADE_files/lightbox.2.51.css">
+	<script type="text/javascript" src="./Les Behaviours dans JADE_files/developpez-kit-generation.js"></script>
+	<script type="text/javascript" src="./Les Behaviours dans JADE_files/lightbox.2.51.js"></script>
+	<script type="text/javascript" src="./Les Behaviours dans JADE_files/fonctions-kit.js"></script>
+	<meta name="author" content="djug">
+	<!--[if lt IE 7]>
+	<script src="/template/ie7/IE7.js" type="text/javascript"></script>
+	<![endif]-->
+
+	<!--[if IE 6]>
+	<link rel="stylesheet" type="text/css" href="/template/gabarit-ie6.css" />
+	<![endif]-->
+
+	<!--[if IE 7]>
+	<link rel="stylesheet" type="text/css" href="/template/gabarit-ie7.css" />
+	<![endif]-->
+
+	<!--[if IE 8]>
+	<link rel="stylesheet" type="text/css" href="/template/gabarit-ie8.css" />
+	<![endif]-->
+
+	<!--[if lt IE 9]>
+	<script type="text/javascript" src="/template/kit/html5_ie.js"></script>
+	<![endif]-->
+	<!--[if IE 9]><link rel="stylesheet" type="text/css" href="http://www.developpez.com/template/kit/ie9.css" /><![endif]-->
+	<!--[if IE 8]><link rel="stylesheet" type="text/css" href="http://www.developpez.com/template/kit/ie8.css" /><![endif]-->
+	<!--[if lt IE 9]><link rel="stylesheet" type="text/css" href="http://www.developpez.com/template/kit/ie.css" /><![endif]-->
+	<!--[if IE 7]><link rel="stylesheet" type="text/css" href="http://www.developpez.com/template/kit/ie7.css" /><![endif]-->
+	<!--[if lte IE 6]><link rel="stylesheet" type="text/css" href="http://www.developpez.com/template/kit/ie6.css" /><![endif]-->
+	<!--[if lt IE 9]><script type="text/javascript" src="http://www.developpez.com/template/kit/html5_ie.js"></script><![endif]-->
+
+<style type="text/css"></style></head>
+<body>
+<header class="layout">
+
+<div id="quicknav">
+	<div id="quicksearch">
+		<form method="get" action="http://www.developpez.com/recherche/" id="cse-search-box">
+			<p>
+				<input type="text" name="q" id="recherche_g" style="border: 1px solid rgb(126, 157, 185); padding: 2px; background: url(http://www.google.com/cse/intl/fr/images/google_custom_search_watermark.gif) 0% 50% no-repeat rgb(255, 255, 255);">
+				<input type="image" name="sa" id="recherche_submit" alt="Go" title="Rechercher" src="./Les Behaviours dans JADE_files/go-gray.png">
+				<input type="hidden" name="cx" value="006424388311999799839:-31tnf0iuqy">
+				<input type="hidden" name="cof" value="FORID:9">
+				<input type="hidden" name="ie" value="ISO-8859-1">
+			</p>
+		<input name="siteurl" type="hidden" value="djug.developpez.com/java/jade/behaviours/"><input name="ref" type="hidden" value="djug.developpez.com/java/jade/communication/"><input name="ss" type="hidden" value=""></form>
+		<script type="text/javascript" src="./Les Behaviours dans JADE_files/brand"></script>
+	</div>
+<nav>	<ul id="quicklinks">
+		<li class="first"><a href="http://www.developpez.net/forums/" title="">Forums</a></li>
+		<li><a href="http://general.developpez.com/cours/" title="">Tutoriels</a></li>
+		<li><a href="http://magazine.developpez.com/" title="">Magazine</a></li>
+		<li><a href="http://general.developpez.com/faq/" title="">FAQs</a></li>
+		<li><a href="http://www.developpez.net/forums/blogs/" title="">Blogs</a></li>
+		<li><a href="http://projets.developpez.com/" title="">Projets</a></li>
+		<li><a href="http://chat.developpez.com/" title="">Chat</a></li>
+		<li><a href="http://www.developpez.com/newsletter/">Newsletter</a></li>
+		<li><a href="http://etudes.developpez.com/">Études</a></li>
+		<li><a href="http://emploi.developpez.com/" title="">Emploi</a></li>
+		<li><a href="http://club.developpez.com/">Club</a></li>
+		<li><a href="http://club.developpez.com/contacts/" title="">Contacts</a></li>
+	</ul>
+</nav></div>
+<div style="position: relative; clear: both; float: right; top: -2px; width: 728px; margin-top: 10px; margin-right: 10px; text-align: right; background-color: #E1E1E2">
+<iframe width="728" height="90" style="border: 0" scrolling="no" seamless="seamless" src="about:blank"></iframe>
+</div>
+
+	<div id="logo_dvp">
+		<a href="http://www.developpez.com/" title="Accueil Developpez.com">
+			<img src="./Les Behaviours dans JADE_files/logo.png" alt="">
+		</a>
+	</div>
+
+<nav id="gabarit">
+
+<div id="gabarit_tabmenu">
+	<ul id="tabs">
+	<li class="item">
+
+	<a href="http://www.developpez.com/">
+		Accueil
+	<span class="tooltip">Actualités IT Pro</span>	</a>
+
+		</li>
+	<li class="item">
+
+	<a href="http://alm.developpez.com/">
+		ALM
+	<span class="tooltip">Cycle de vie du logiciel</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://alm.developpez.com/">ALM</a></li>
+					<li>			<a href="http://merise.developpez.com/">Merise</a></li>
+					<li class="last">			<a href="http://uml.developpez.com/">UML</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://java.developpez.com/" class="selected">
+		Java
+	<span class="tooltip">Plateforme et langage Java</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://java.developpez.com/">Java</a></li>
+					<li>			<a href="http://javaweb.developpez.com/">Java Web</a></li>
+					<li>			<a href="http://spring.developpez.com/">Spring</a></li>
+					<li>			<a href="http://android.developpez.com/">Android</a></li>
+					<li>			<a href="http://eclipse.developpez.com/">Eclipse</a></li>
+					<li class="last">			<a href="http://netbeans.developpez.com/">NetBeans</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://dotnet.developpez.com/">
+		.NET
+	<span class="tooltip">Microsoft Framework .NET</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://dotnet.developpez.com/">Microsoft DotNET</a></li>
+					<li>			<a href="http://dotnet.developpez.com/visual-studio/">Visual Studio</a></li>
+					<li>			<a href="http://dotnet.developpez.com/aspnet/">ASP.NET</a></li>
+					<li>			<a href="http://dotnet.developpez.com/csharp/">C#</a></li>
+					<li>			<a href="http://dotnet.developpez.com/vbnet/">VB.NET</a></li>
+					<li>			<a href="http://windowsphone.developpez.com/">Windows Phone</a></li>
+					<li class="last">			<a href="http://windows-azure.developpez.com/">Microsoft Azure</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://web.developpez.com/">
+		Dév. Web
+	<span class="tooltip">Développement Web et Webmarketing</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://web.developpez.com/">Développement Web</a></li>
+					<li>			<a href="http://ajax.developpez.com/">AJAX</a></li>
+					<li>			<a href="http://apache.developpez.com/">Apache</a></li>
+					<li>			<a href="http://asp.developpez.com/">ASP</a></li>
+					<li>			<a href="http://css.developpez.com/">CSS</a></li>
+					<li>			<a href="http://dart.developpez.com/">Dart</a></li>
+					<li>			<a href="http://flash.developpez.com/">Flash / Flex</a></li>
+					<li>			<a href="http://javascript.developpez.com/">JavaScript</a></li>
+					<li>			<a href="http://php.developpez.com/">PHP</a></li>
+					<li>			<a href="http://ruby.developpez.com/">Ruby &amp; Rails</a></li>
+					<li>			<a href="http://web-semantique.developpez.com/">Web sémantique</a></li>
+					<li>			<a href="http://webmarketing.developpez.com/">Webmarketing</a></li>
+					<li class="last">			<a href="http://xhtml.developpez.com/">(X)HTML</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://edi.developpez.com/">
+		EDI
+	<span class="tooltip">Environnements de Développement Intégré</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://edi.developpez.com/">EDI</a></li>
+					<li>			<a href="http://4d.developpez.com/">4D</a></li>
+					<li>			<a href="http://delphi.developpez.com/">Delphi</a></li>
+					<li>			<a href="http://eclipse.developpez.com/">Eclipse</a></li>
+					<li>			<a href="http://labview.developpez.com/">LabVIEW</a></li>
+					<li>			<a href="http://netbeans.developpez.com/">NetBeans</a></li>
+					<li>			<a href="http://matlab.developpez.com/">MATLAB</a></li>
+					<li>			<a href="http://scilab.developpez.com/">Scilab</a></li>
+					<li>			<a href="http://dotnet.developpez.com/visual-studio/">Visual Studio</a></li>
+					<li>			<a href="http://wind.developpez.com/">WinDev</a></li>
+					<li>			<a href="http://vb.developpez.com/">Visual Basic 6</a></li>
+					<li>			<a href="http://lazarus.developpez.com/">Lazarus</a></li>
+					<li class="last">			<a href="http://qt-creator.developpez.com/">Qt Creator</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://programmation.developpez.com/">
+		Programmation
+	<span class="tooltip">Programmation et langages de programmation applicatifs</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://programmation.developpez.com/">Programmation</a></li>
+					<li>			<a href="http://algo.developpez.com/">Débuter - Algorithmique</a></li>
+					<li>			<a href="http://jeux.developpez.com/">2D - 3D - Jeux</a></li>
+					<li>			<a href="http://asm.developpez.com/">Assembleur</a></li>
+					<li>			<a href="http://c.developpez.com/">C</a></li>
+					<li>			<a href="http://cpp.developpez.com/">C++</a></li>
+					<li>			<a href="http://go.developpez.com/">Go</a></li>
+					<li>			<a href="http://objective-c.developpez.com/">Objective C</a></li>
+					<li>			<a href="http://pascal.developpez.com/">Pascal</a></li>
+					<li>			<a href="http://perl.developpez.com/">Perl</a></li>
+					<li>			<a href="http://python.developpez.com/">Python</a></li>
+					<li>			<a href="http://swift.developpez.com/">Swift</a></li>
+					<li>			<a href="http://qt.developpez.com/">Qt</a></li>
+					<li>			<a href="http://xml.developpez.com/">XML</a></li>
+					<li class="last">			<a href="http://general.developpez.com/cours/">Autres</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://sgbd.developpez.com/">
+		SGBD
+	<span class="tooltip">Systèmes de Gestion de Bases de Données</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://sgbd.developpez.com/">SGBD &amp; SQL</a></li>
+					<li>			<a href="http://4d.developpez.com/">4D</a></li>
+					<li>			<a href="http://access.developpez.com/">Access</a></li>
+					<li>			<a href="http://big-data.developpez.com/">Big Data</a></li>
+					<li>			<a href="http://db2.developpez.com/">DB2</a></li>
+					<li>			<a href="http://firebird.developpez.com/">Firebird</a></li>
+					<li>			<a href="http://interbase.developpez.com/">InterBase</a></li>
+					<li>			<a href="http://mysql.developpez.com/">MySQL</a></li>
+					<li>			<a href="http://nosql.developpez.com/">NoSQL</a></li>
+					<li>			<a href="http://postgresql.developpez.com/">PostgreSQL</a></li>
+					<li>			<a href="http://oracle.developpez.com/">Oracle</a></li>
+					<li>			<a href="http://sybase.developpez.com/">Sybase</a></li>
+					<li class="last">			<a href="http://sqlserver.developpez.com/">SQL-Server</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://office.developpez.com/">
+		Office
+	<span class="tooltip">Bureautique pour l'entreprise</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://office.developpez.com/">Microsoft Office</a></li>
+					<li>			<a href="http://access.developpez.com/">Access</a></li>
+					<li>			<a href="http://excel.developpez.com/">Excel</a></li>
+					<li>			<a href="http://word.developpez.com/">Word</a></li>
+					<li>			<a href="http://outlook.developpez.com/">Outlook</a></li>
+					<li>			<a href="http://powerpoint.developpez.com/">PowerPoint</a></li>
+					<li>			<a href="http://sharepoint.developpez.com/">SharePoint</a></li>
+					<li>			<a href="http://project.developpez.com/">Microsoft Project</a></li>
+					<li class="last">			<a href="http://openoffice-libreoffice.developpez.com/">OpenOffice &amp; LibreOffice</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://solutions-entreprise.developpez.com/">
+		Solutions d'entreprise
+	<span class="tooltip">Autres logiciels pour l'entreprise</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://solutions-entreprise.developpez.com/">Solutions d'entreprise</a></li>
+					<li>			<a href="http://big-data.developpez.com/">Big Data</a></li>
+					<li>			<a href="http://business-intelligence.developpez.com/">Business Intelligence</a></li>
+					<li>			<a href="http://solutions-entreprise.developpez.com/erp-pgi/presentation-erp-pgi/">ERP / PGI</a></li>
+					<li>			<a href="http://crm.developpez.com/">CRM</a></li>
+					<li>			<a href="http://sas.developpez.com/">SAS</a></li>
+					<li>			<a href="http://cloud-computing.developpez.com/">Cloud Computing</a></li>
+					<li>			<a href="http://sap.developpez.com/">SAP</a></li>
+					<li>			<a href="http://www.developpez.net/forums/f1664/systemes/windows/windows-serveur/biztalk-server/">Microsoft BizTalk Server</a></li>
+					<li class="last">			<a href="http://talend.developpez.com/">Talend</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://applications.developpez.com/">
+		Applications
+	<span class="tooltip">Applications logicielles</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://applications.developpez.com/">Applications</a></li>
+					<li>			<a href="http://open-source.developpez.com/">Libres &amp; Open Source</a></li>
+					<li>			<a href="http://openoffice-libreoffice.developpez.com/">OpenOffice &amp; LibreOffice</a></li>
+					<li class="last">			<a href="http://portail-projets.developpez.com/">Projets</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://mobiles.developpez.com/">
+		Mobiles
+	<span class="tooltip">Logiciels et matériels mobiles</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://mobiles.developpez.com/">Mobiles</a></li>
+					<li>			<a href="http://android.developpez.com/">Android</a></li>
+					<li>			<a href="http://ios.developpez.com/">iOS</a></li>
+					<li class="last">			<a href="http://windowsphone.developpez.com/">Windows Phone</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://systeme.developpez.com/">
+		Systèmes
+	<span class="tooltip">Logiciels et matériels systèmes</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://systeme.developpez.com/">Systèmes</a></li>
+					<li>			<a href="http://windows.developpez.com/">Windows</a></li>
+					<li>			<a href="http://linux.developpez.com/">Linux</a></li>
+					<li>			<a href="http://securite.developpez.com/">Sécurité</a></li>
+					<li>			<a href="http://hardware.developpez.com/">PC</a></li>
+					<li>			<a href="http://mac.developpez.com/">Mac</a></li>
+					<li>			<a href="http://reseau.developpez.com/">Réseau</a></li>
+					<li>			<a href="http://green-it.developpez.com/">Green IT</a></li>
+					<li>			<a href="http://virtualisation.developpez.com/">Virtualisation</a></li>
+					<li class="last">			<a href="http://embarque.developpez.com/">Systèmes Embarqués</a></li>
+		
+			</ul>	</li>
+	</ul>
+</div>
+
+	<div id="gabarit_topicmenu">
+		<ul id="topics">
+												<li class="selected">
+								<a href="http://java.developpez.com/">Java</a></li>
+															<li>
+								<a href="http://javaweb.developpez.com/">Java Web</a>
+				</li>
+												<li>
+								<a href="http://spring.developpez.com/">Spring</a>
+				</li>
+												<li>
+								<a href="http://android.developpez.com/">Android</a>
+				</li>
+												<li>
+								<a href="http://eclipse.developpez.com/">Eclipse</a>
+				</li>
+												<li>
+								<a href="http://netbeans.developpez.com/">NetBeans</a>
+				</li>
+					</ul>
+	</div>
+
+<div id="gabarit_resourcemenu">
+	<div id="googleplus_bloc">
+		<a href="https://plus.google.com/114187622962832882709" rel="publisher" target="_blank"><img src="./Les Behaviours dans JADE_files/googleplus.png" alt="Google+" title="Retrouver Developpez sur Google+"></a>
+	</div>
+	<div id="facebook_bloc">
+		<a href="http://www.facebook.com/pages/Java/368176262168" target="_blank"><img src="./Les Behaviours dans JADE_files/facebook.png" alt="Facebook" title="Retrouver Developpez sur Facebook"></a>
+	</div>
+	<div id="twitter_bloc">
+		<a href="http://twitter.com/javaDeveloppez" target="_blank"><img src="./Les Behaviours dans JADE_files/twitter.png" alt="Twitter" title="Retrouver Developpez sur Twitter"></a>
+	</div>
+	<div id="rss_syndication">
+		<a href="http://java.developpez.com/index/rss" target="_blank"><img src="./Les Behaviours dans JADE_files/rss.png" alt="RSS" title="Flux RSS"></a>
+	</div>
+	<ul id="resources">		<li><a href="http://www.developpez.net/forums/f6/java/">Forums</a></li>
+			<li><a href="http://java.developpez.com/faq/">FAQs</a></li>
+			<li><a href="http://java.developpez.com/cours/">Tutoriels</a></li>
+			<li><a href="http://java.developpez.com/livres/">Livres</a></li>
+			<li><a href="http://java.developpez.com/videos/">Vidéos</a></li>
+			<li><a href="http://java.developpez.com/telecharger/index/categorie/43/Sources-Java">Sources</a></li>
+			<li><a href="http://java.developpez.com/outils/">Outils, EDI &amp; API</a></li>
+			<li><a href="http://javasearch.developpez.com/">JavaSearch</a></li>
+	</ul>
+</div>
+</nav>
+</header>
+
+<section class="layout">
+<div class="contenuPage">		<article class="ArticleComplet" itemscope="" itemtype="http://schema.org/Article" style="margin: 0px 20px;">
+<meta itemprop="genre" content="informatique">
+<meta itemprop="inLanguage" content="fr-FR">
+		
+<header class="EnteteTitres">
+<h1 class="titre-article" itemprop="name">Les Behaviours dans JADE</h1>
+
+</header><nav class="nav-sommaire fixed2" role="navigation" style="width: 446px;">
+<header><h1 class="TitreHeader StopArrondi ToggleGecko">Table des matières<img class="ToggleImgPlier" title="Plier" alt="Plier" src="./Les Behaviours dans JADE_files/fleche-haut-bleue.gif"><img class="ToggleImgDeplier" title="Déplier" alt="Déplier" src="./Les Behaviours dans JADE_files/fleche-bas-bleue.gif" style="display:none;"></h1></header>
+<ul id="nav_sommaire_ul_principal" class="nav-sommaire-ul" style="overflow-y: auto;">
+    <li><a class="summaryIndent0" href="http://djug.developpez.com/java/jade/behaviours/#LI">I. Introduction</a></li>
+    <li><a class="summaryIndent0" href="http://djug.developpez.com/java/jade/behaviours/#LII">II. Vue générale </a></li>
+    <li><a class="summaryIndent0" href="http://djug.developpez.com/java/jade/behaviours/#LIII">III. Les Behaviours du JADE</a><ul class="nav-sommaire-ul IndentationIII">
+      
+      <li><a class="summaryIndent1" href="http://djug.developpez.com/java/jade/behaviours/#LIII-A">III-A. Les Behaviours simples</a><ul class="nav-sommaire-ul IndentationIII-A">
+        
+        
+        <li><a class="summaryIndent2" href="http://djug.developpez.com/java/jade/behaviours/#LIII-A-1">III-A-1. One-shot Behaviour</a></li>
+        <li><a class="summaryIndent2" href="http://djug.developpez.com/java/jade/behaviours/#LIII-A-2">III-A-2. Cyclic Behaviour</a></li>
+        <li><a class="summaryIndent2" href="http://djug.developpez.com/java/jade/behaviours/#LIII-A-3">III-A-3. Generic Behaviour</a></li>
+        <li><a class="summaryIndent2" href="http://djug.developpez.com/java/jade/behaviours/#LIII-A-4">III-A-4. Exemple</a></li>
+      </ul></li>
+      <li><a class="summaryIndent1" href="http://djug.developpez.com/java/jade/behaviours/#LIII-B">III-B. Les Behaviours planifiés</a><ul class="nav-sommaire-ul IndentationIII-B">
+        
+        
+        <li><a class="summaryIndent2" href="http://djug.developpez.com/java/jade/behaviours/#LIII-B-1">III-B-1. WakerBehaviour</a></li>
+        <li><a class="summaryIndent2" href="http://djug.developpez.com/java/jade/behaviours/#LIII-B-2">III-B-2. TickerBehaviour</a></li>
+        <li><a class="summaryIndent2" href="http://djug.developpez.com/java/jade/behaviours/#LIII-B-3">III-B-3. Exemple</a></li>
+      </ul></li>
+      <li><a class="summaryIndent1" href="http://djug.developpez.com/java/jade/behaviours/#LIII-C">III-C. Les  Behaviours composés</a><ul class="nav-sommaire-ul IndentationIII-C">
+        
+        
+        <li><a class="summaryIndent2" href="http://djug.developpez.com/java/jade/behaviours/#LIII-C-1">III-C-1. SequentielBehaviour</a></li>
+        <li><a class="summaryIndent2" href="http://djug.developpez.com/java/jade/behaviours/#LIII-C-2">III-C-2. FSMBehaviour</a></li>
+        <li><a class="summaryIndent2" href="http://djug.developpez.com/java/jade/behaviours/#LIII-C-3">III-C-3. ParallelBehaviour</a></li>
+      </ul></li>
+      <li><a class="summaryIndent1" href="http://djug.developpez.com/java/jade/behaviours/#LIII-D">III-D. Combiner plusieurs Behaviours composés</a></li>
+    </ul></li>
+    <li><a class="summaryIndent0" href="http://djug.developpez.com/java/jade/behaviours/#LIV">IV. Conclusion</a><ul class="nav-sommaire-ul IndentationIV">
+      
+      <li><a class="summaryIndent1" href="http://djug.developpez.com/java/jade/behaviours/#LIV-A">IV-A. Bibliographie</a></li>
+      <li><a class="summaryIndent1" href="http://djug.developpez.com/java/jade/behaviours/#LIV-B">IV-B. Remerciements</a></li>
+    </ul></li>
+  </ul></nav>
+
+
+<div class="fixeMarge"><section itemprop="about" class="SectionSynopsis">
+    <p>
+		
+	Après avoir vu comment créer un agent JADE sous eclipse <a class=" tooltip blue-tooltip lienArticle simple" href="http://djug.developpez.com/java/jade/creation-agent" target="_blank">ici<span>Créer votre premier agent avec JADE et ECLIPSE</span></a>. Nous allons voir dans cet article comment utiliser les comportements  (behaviours), l'un des aspects les plus importants de la programmation orientée agent. 
+	<a class="lienforum" href="http://www.developpez.net/forums/showthread.php?t=757892">35&nbsp;commentaires</a> <a href="http://www.developpez.net/forums/showthread.php?t=757892&nojs=1#goto_threadrating" title="Donner une note à l&#39;article (5)"><img src="./Les Behaviours dans JADE_files/kitstars-5-0.gif" width="66" height="14" style="border: none" alt="Donner une note à l&#39;article (5)"></a></p>
+  <p class="TextNbrVues">Article lu <span id="NbrVues">-1</span> fois.</p></section></div><div class="InfoAuthArtBook" style="height: 133px;">
+	<section class="SectionAuteurs">
+	<header><h1 class="TitreHeader">L'auteur</h1></header>
+<p class="auteur" itemprop="author" itemscope="" itemtype="http://schema.org/Person"><a itemprop="url" class="auteur" href="http://www.developpez.net/forums/u166060/djug/"><span itemprop="author">Youghourta BENALI</span></a><a class="homepage" href="http://djug.developpez.com/java/jade/behaviours/site%20de%20Djug"><img src="./Les Behaviours dans JADE_files/kitbm-site-personnel.png" title="http://djug.developpez.com" alt="Site personnel" style="vertical-align:middle;"></a></p>
+</section>
+<section class="SectionInformationArticle">
+<header><h1 class="TitreHeader">L'article</h1></header>
+
+<p class="InfoArticle">Publié&nbsp;le&nbsp;<span itemprop="datePublished">7&nbsp;juin&nbsp;2009&nbsp;</span></p><p>
+<span class="lientelechargementpdf"><a class="lientelechargement" href="http://djug.developpez.com/java/jade/behaviours-dans-jade/behaviours.pdf" title="Télécharger la version PDF de cet article.">Version PDF</a></span>
+<span class="lientelechargementzip"><a class="lientelechargement" href="http://djug.developpez.com/java/jade/behaviours-dans-jade/behaviours.zip" title="Télécharger la version HTML de cet article.">Version hors-ligne</a></span></p>
+<p><span class="lientelechargementebook"><a class="lientelechargement" href="http://djug.developpez.com/java/jade/behaviours-dans-jade/behaviours.epub" title="Télécharger la version ePub de l&#39;article compatible avec la plupart des liseuses non Kindle (Amazon).">ePub</a></span>, <span class="lientelechargementebook"><a class="lientelechargement" href="http://djug.developpez.com/java/jade/behaviours-dans-jade/behaviours.azw" title="Télécharger la version Azw spécifique aux liseuses Kindle (Amazon).">Azw</a></span> et <span class="lientelechargementebook"><a class="lientelechargement" href="http://djug.developpez.com/java/jade/behaviours-dans-jade/behaviours.mobi" title="Télécharger la version Mobi de l&#39;article compatible avec les liseuses Amazon.">Mobi</a></span></p>
+</section>
+<section class="SectionBookmarks">
+<header><h1 class="TitreHeader">Liens&nbsp;sociaux</h1></header>
+<div class="InfoBookmarks"><a title="Viadeo" href="http://www.viadeo.com/shareit/share/?url=http%3A%2F%2Fdjug.developpez.com%2Fjava%2Fjade%2Fbehaviours-dans-jade%2F&Title=Les+Behaviours+dans+JADE" rel="nofollow"><img alt="Viadeo" src="./Les Behaviours dans JADE_files/kitbm-viadeo.gif"></a>&nbsp;<a title="Twitter" href="http://twitter.com/timeline/home?status=http%3A%2F%2Fdjug.developpez.com%2Fjava%2Fjade%2Fbehaviours-dans-jade%2F" rel="nofollow"><img alt="Twitter" src="./Les Behaviours dans JADE_files/kitbm-twitter.png"></a>&nbsp;<a title="Facebook" href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fdjug.developpez.com%2Fjava%2Fjade%2Fbehaviours-dans-jade%2F" rel="nofollow"><img alt="Facebook" src="./Les Behaviours dans JADE_files/kitbm-facebook.gif"></a>&nbsp;<a title="Google +" href="https://plus.google.com/share?url=http%3A%2F%2Fdjug.developpez.com%2Fjava%2Fjade%2Fbehaviours-dans-jade%2F" onclick="javascript:window.open(this.href, &#39;&#39;, &#39;menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600&#39;);return false;"><img src="./Les Behaviours dans JADE_files/gplus-16.png" alt="Share on Google+"></a>&nbsp;</div>
+</section></div><section itemprop="articleBody" class="articleBody" style="margin-left: 461px; margin-top: 20px; clear: none;">
+    
+		<h1 class="TitreSection0" id="LI">I. Introduction<a class="HautPage" href="http://djug.developpez.com/java/jade/behaviours/#" title="Haut de page">&#9650;</a></h1><div class="BlocSection0">
+      
+      <p>
+				Dans la programmation orientée agent, les différentes tâches d'un agent doivent obéir à certaines règles  et doivent être écrite sous une forme compréhensible par la plateforme utilisée. Nous allons voir dans ce qui suit comment définir ces tâches et les utiliser dans JADE     
+			</p>
+    </div>
+    
+		<h1 class="TitreSection0" id="LII">II. Vue générale <a class="HautPage" href="http://djug.developpez.com/java/jade/behaviours/#" title="Haut de page">&#9650;</a></h1><div class="BlocSection0">
+      
+      <p>
+				Pour qu'un agent JADE exécute une tâche, nous avons tout d'abord besoin de définir ces tâches. Les tâches dans JADE (appelées des <b>behaviours</b>  ou des <b>comportements</b>) sont des instances de la classe <b>jade.core.behaviours</b> . pour qu'un agent exécute une tâche on doit lui l'attribuer par la méthode <b>addBehaviour(Behaviour b)</b> de la classe <b>jade.core.Agent</b>.
+				<br>
+				Chaque Behaviour doit implémenter au moins les deux méthodes :
+				<br></p>
+      <ul class="ListeDVP">
+        <li><b>action() :</b> qui désigne les opérations à exécuter par le Behaviour;</li>
+        <li><b>done() :</b> qui exprime si le Behaviour a terminé son exécution ou pas.</li>
+      </ul>
+      <p><br>
+			Il existe deux autres méthodes dont l'implémentation n'est pas obligatoire mais qui peuvent être très utiles :
+			</p>
+      <ul class="ListeDVP">
+        <li><b>onStart() :</b> appelée juste avant l'exécution de ma méthode action();</li>
+        <li><b>onEnd() :</b>   appelée juste après la retournement de <b>true</b>  par la méthode done().</li>
+      </ul>
+      <p>
+			Des fois on a besoin de savoir quel est le propriétaire d'un Behaviour, et cela peut être connu par le membre  <b>myAgent</b>  du Behaviour en question.
+			<br>
+			JADE alloue un thread par agent, pour cela un agent exécute un Behaviour à la fois. L'agent peut exécuter plusieurs Behaviours simultanément en choisissant un bon mécanisme de passation d'un Behaviour à un autre (c'est à la charge du programmeur et non pas à la charge du JADE).
+				
+			</p>
+    </div>
+    
+		<h1 class="TitreSection0" id="LIII">III. Les Behaviours du JADE<a class="HautPage" href="http://djug.developpez.com/java/jade/behaviours/#" title="Haut de page">&#9650;</a></h1><div class="BlocSection0">
+      
+      
+		<h2 class="TitreSection1" id="LIII-A">III-A. Les Behaviours simples<a class="HautPage" href="http://djug.developpez.com/java/jade/behaviours/#" title="Haut de page">&#9650;</a></h2><div class="BlocSection1">
+        
+        <p>
+								JADE offre trois types de Behaviours simple. Ces Behaviours sont :
+						</p>
+        
+		<h3 class="TitreSection2" id="LIII-A-1">III-A-1. One-shot Behaviour<a class="HautPage" href="http://djug.developpez.com/java/jade/behaviours/#" title="Haut de page">&#9650;</a></h3><div class="BlocSection2">
+          
+          <p>
+								
+									Un one-shot Behaviour est une instance de la classe <b>jade.core.behaviours.OneShotBehaviour</b>. Il a la particularité d'exécuter sa tâche une et une seule fois puis il se termine. La classe OneShotBehaviour implémente la méthode <b>done()</b> et elle retourne toujours <b>true</b>.
+								</p>
+        </div>
+        
+		<h3 class="TitreSection2" id="LIII-A-2">III-A-2. Cyclic Behaviour<a class="HautPage" href="http://djug.developpez.com/java/jade/behaviours/#" title="Haut de page">&#9650;</a></h3><div class="BlocSection2">
+          
+          <p>
+									Un cyclic Behaviour est une instance de la classe <b>jade.core.behaviours.CyclicBehaviour</b>. Comme son nom l'indique un cyclic Behaviour exécute sa tâche d'une manière répétitive. La classe   CyclicBehaviour implémente la méthode <b>done()</b> qui retourne toujours <b>false</b>.	
+								</p>
+        </div>
+        
+		<h3 class="TitreSection2" id="LIII-A-3">III-A-3. Generic Behaviour<a class="HautPage" href="http://djug.developpez.com/java/jade/behaviours/#" title="Haut de page">&#9650;</a></h3><div class="BlocSection2">
+          
+          <p>
+									Un Generic Behaviour est une instance de la classe <b>jade.core.behaviours.Behaviour</b>.Le Generic Behaviour vient entre le One-shot Behaviour et le Cyclic Behaviour de faite qu'il n'implémente pas  la méthode done() et laisse son implémentation au programmeur, donc il peut planifier la terminaison de son Behaviour selon ces besoin. 
+								</p>
+        </div>
+        
+		<h3 class="TitreSection2" id="LIII-A-4">III-A-4. Exemple<a class="HautPage" href="http://djug.developpez.com/java/jade/behaviours/#" title="Haut de page">&#9650;</a></h3><div class="BlocSection2">
+          
+          <p>
+									Voici un exemple sur l'utilisation des Behaviours simples
+					</p>
+          <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e251">&nbsp;<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e251" onclick="selectionCode(&#39;contenuCoded0e251&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e251" class="contenuCode">
+<code class="java_keyword2">import</code> jade.core.Agent;
+<code class="java_keyword2">import</code> jade.core.behaviours.Behaviour;
+<code class="java_keyword2">import</code> jade.core.behaviours.CyclicBehaviour;
+<code class="java_keyword2">import</code> jade.core.behaviours.OneShotBehaviour;
+
+<code class="java_keyword1">public</code> <code class="java_keyword3">class</code> SimpleAgent <code class="java_keyword1">extends</code> Agent <code class="java_operator">{</code>
+  <code class="java_keyword1">protected</code> <code class="java_keyword3">void</code> <code class="java_function">setup</code>() <code class="java_operator">{</code>
+	<code class="java_comment2">//</code><code class="java_comment2"> </code><code class="java_comment2">l'ajout</code><code class="java_comment2"> </code><code class="java_comment2">d'un</code><code class="java_comment2"> </code><code class="java_comment2">one-shot</code><code class="java_comment2"> </code><code class="java_comment2">behaviour</code><code class="java_comment2"> </code><code class="java_comment2">pour</code><code class="java_comment2"> </code><code class="java_comment2">afficher</code><code class="java_comment2"> </code><code class="java_comment2">un</code><code class="java_comment2"> </code><code class="java_comment2">Hello</code><code class="java_comment2"> </code><code class="java_comment2">world</code><code class="java_comment2"> </code><code class="java_comment2">:D</code>
+	  <code class="java_function">addBehaviour</code>(<code class="java_keyword1">new</code> <code class="java_function">OneShotBehaviour</code>(<code class="java_literal2">this</code>)<code class="java_operator">{</code>
+			<code class="java_keyword1">public</code> <code class="java_keyword3">void</code> <code class="java_function">action</code>()<code class="java_operator">{</code>
+			    System.out.<code class="java_function">println</code>(<code class="java_literal1">"</code><code class="java_literal1">Bonjour</code><code class="java_literal1"> </code><code class="java_literal1">tous</code><code class="java_literal1"> </code><code class="java_literal1">le</code><code class="java_literal1"> </code><code class="java_literal1">monde</code><code class="java_literal1"> </code><code class="java_literal1">je</code><code class="java_literal1"> </code><code class="java_literal1">suis</code><code class="java_literal1"> </code><code class="java_literal1">l'agent</code><code class="java_literal1"> </code><code class="java_literal1">"</code><code class="java_operator">+</code><code class="java_function">getLocalName</code>());
+		  <code class="java_operator">}</code>
+	  <code class="java_operator">}</code>);
+
+    <code class="java_comment2">//</code><code class="java_comment2"> </code><code class="java_comment2">l'ajout</code><code class="java_comment2"> </code><code class="java_comment2">d'un</code><code class="java_comment2"> </code><code class="java_comment2"> </code><code class="java_comment2">CyclicBehaviour</code><code class="java_comment2"> </code><code class="java_comment2">pour</code><code class="java_comment2"> </code><code class="java_comment2">afficher</code><code class="java_comment2"> </code><code class="java_comment2">un</code><code class="java_comment2"> </code><code class="java_comment2">message</code><code class="java_comment2"> </code><code class="java_comment2">à</code><code class="java_comment2"> </code><code class="java_comment2">chaque</code><code class="java_comment2"> </code><code class="java_comment2">fois</code><code class="java_comment2"> </code><code class="java_comment2">qu'il</code><code class="java_comment2"> </code><code class="java_comment2">s'execute</code><code class="java_comment2"> </code><code class="java_comment2"> </code>
+		<code class="java_function">addBehaviour</code>(<code class="java_keyword1">new</code> <code class="java_function">CyclicBehaviour</code>(<code class="java_literal2">this</code>) <code class="java_operator">{</code>
+			<code class="java_keyword1">public</code> <code class="java_keyword3">void</code> <code class="java_function">action</code>() <code class="java_operator">{</code>    	 
+				System.out.<code class="java_function">println</code>(<code class="java_literal1">"</code><code class="java_literal1">cyclique...</code><code class="java_literal1"> </code><code class="java_literal1">"</code>);
+      <code class="java_operator">}</code> 
+    <code class="java_operator">}</code>);
+
+    <code class="java_comment2">//</code><code class="java_comment2"> </code><code class="java_comment2">l'ajout</code><code class="java_comment2"> </code><code class="java_comment2">d'un</code><code class="java_comment2"> </code><code class="java_comment2">generic</code><code class="java_comment2"> </code><code class="java_comment2">behaviour</code>
+    <code class="java_comment2">//</code><code class="java_comment2"> </code><code class="java_comment2">le</code><code class="java_comment2"> </code><code class="java_comment2">Behaviour</code><code class="java_comment2"> </code><code class="java_comment2">s'arrête</code><code class="java_comment2"> </code><code class="java_comment2">quand</code><code class="java_comment2"> </code><code class="java_comment2">aléatoire</code><code class="java_comment2"> </code><code class="java_comment2">reçoit</code><code class="java_comment2"> </code><code class="java_comment2">la</code><code class="java_comment2"> </code><code class="java_comment2">valeur</code><code class="java_comment2"> </code><code class="java_comment2">7</code>
+    <code class="java_function">addBehaviour</code>(<code class="java_keyword1">new</code> <code class="java_function">RandomBehaviour</code>());
+  <code class="java_operator">}</code> 
+
+  <code class="java_comment3">/**</code>
+<code class="java_comment3"> </code><code class="java_comment3"> </code><code class="java_comment3"> </code><code class="java_comment3">*</code><code class="java_comment3"> </code><code class="java_comment3">Inner</code><code class="java_comment3"> </code><code class="java_comment3">class</code><code class="java_comment3"> </code><code class="java_comment3">RandomBehaviour</code>
+<code class="java_comment3"> </code><code class="java_comment3"> </code><code class="java_comment3"> </code><code class="java_comment3">*/</code>
+  <code class="java_keyword1">private</code> <code class="java_keyword3">class</code> RandomBehaviour <code class="java_keyword1">extends</code> Behaviour <code class="java_operator">{</code>
+    <code class="java_keyword1">private</code> <code class="java_keyword3">int</code> aleatoire ;
+
+    <code class="java_keyword1">public</code> <code class="java_keyword3">void</code> <code class="java_function">action</code>() <code class="java_operator">{</code>
+    	aleatoire <code class="java_operator">=</code> (<code class="java_keyword3">int</code>) (Math.<code class="java_function">random</code>()<code class="java_operator">*</code><code class="java_digit">10</code>);
+    	System.out.<code class="java_function">println</code>(<code class="java_literal1">"</code><code class="java_literal1">aleatoire</code><code class="java_literal1"> </code><code class="java_literal1">=</code><code class="java_literal1">"</code><code class="java_operator">+</code> aleatoire);     
+    <code class="java_operator">}</code> 
+
+    <code class="java_keyword1">public</code> <code class="java_keyword3">boolean</code> <code class="java_function">done</code>() <code class="java_operator">{</code>
+      <code class="java_keyword1">return</code> aleatoire <code class="java_operator">=</code><code class="java_operator">=</code> <code class="java_digit">7</code>;
+    <code class="java_operator">}</code> 
+
+    <code class="java_keyword1">public</code> <code class="java_keyword3">int</code> <code class="java_function">onEnd</code>() <code class="java_operator">{</code>
+      myAgent.<code class="java_function">doDelete</code>();
+      <code class="java_keyword1">return</code> <code class="java_literal2">super</code>.<code class="java_function">onEnd</code>();
+    <code class="java_operator">}</code> 
+  <code class="java_operator">}</code>    
+<code class="java_operator">}</code>
+</code></pre></div>
+        </div>
+      </div>
+      
+		<h2 class="TitreSection1" id="LIII-B">III-B. Les Behaviours planifiés<a class="HautPage" href="http://djug.developpez.com/java/jade/behaviours/#" title="Haut de page">&#9650;</a></h2><div class="BlocSection1">
+        
+        <p>
+					Pour planifier une tâche d'un agent JADE offre deux types de Behaviours :
+				</p>
+        
+		<h3 class="TitreSection2" id="LIII-B-1">III-B-1. WakerBehaviour<a class="HautPage" href="http://djug.developpez.com/java/jade/behaviours/#" title="Haut de page">&#9650;</a></h3><div class="BlocSection2">
+          
+          <p>
+						Le WakerBehaviour est implémenté de façon à exécuter la méthode <b>onWake()</b> après une période passée comme argument au constructeur. Cette période est exprimée en millisecondes.
+Le Behaviour prend fin juste après avoir exécuté la méthode <b>onWake()</b>.     
+
+					</p>
+        </div>
+        
+		<h3 class="TitreSection2" id="LIII-B-2">III-B-2. TickerBehaviour<a class="HautPage" href="http://djug.developpez.com/java/jade/behaviours/#" title="Haut de page">&#9650;</a></h3><div class="BlocSection2">
+          
+          <p>
+						Le TickerBehaviour est implémenté pour qu'il  exécute sa tâche périodiquement par la méthode <b>onTick()</b>. La durée de la période est passée comme argument au constructeur.
+					</p>
+        </div>
+        
+		<h3 class="TitreSection2" id="LIII-B-3">III-B-3. Exemple<a class="HautPage" href="http://djug.developpez.com/java/jade/behaviours/#" title="Haut de page">&#9650;</a></h3><div class="BlocSection2">
+          
+          <p>
+						Voici un exemple d'un d'un compte à rebours.<br>
+						Le premier Behaviour affiche le temps restant chaque seconde.<br>
+						Le deuxième arrête le  compte à rebours et termine l'agent.<br></p>
+          <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e783">&nbsp;<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e783" onclick="selectionCode(&#39;contenuCoded0e783&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e783" class="contenuCode">
+<code class="java_keyword2">import</code> jade.core.Agent;
+<code class="java_keyword2">import</code> jade.core.behaviours.WakerBehaviour;
+<code class="java_keyword2">import</code> jade.core.behaviours.TickerBehaviour;
+<code class="java_keyword1">public</code> <code class="java_keyword3">class</code> CompteaRebours <code class="java_keyword1">extends</code> Agent <code class="java_operator">{</code>
+
+  <code class="java_keyword1">protected</code> <code class="java_keyword3">void</code> <code class="java_function">setup</code>() <code class="java_operator">{</code>
+
+
+
+<code class="java_keyword1">final</code> <code class="java_keyword3">int</code> nombreDeSecondes <code class="java_operator">=</code> (<code class="java_keyword3">int</code>)(Math.<code class="java_function">random</code>()<code class="java_operator">*</code><code class="java_digit">15</code>);
+System.out.<code class="java_function">println</code>(<code class="java_literal1">"</code><code class="java_literal1">compteur</code><code class="java_literal1"> </code><code class="java_literal1">a</code><code class="java_literal1"> </code><code class="java_literal1">rebours</code><code class="java_literal1"> </code><code class="java_literal1">de</code><code class="java_literal1"> </code><code class="java_literal1">"</code><code class="java_operator">+</code>nombreDeSecondes);
+
+<code class="java_comment2">//</code><code class="java_comment2">ce</code><code class="java_comment2"> </code><code class="java_comment2">Behaviour</code><code class="java_comment2"> </code><code class="java_comment2">montre</code><code class="java_comment2"> </code><code class="java_comment2">le</code><code class="java_comment2"> </code><code class="java_comment2">temps</code><code class="java_comment2"> </code><code class="java_comment2">restant</code>
+    <code class="java_function">addBehaviour</code>(<code class="java_keyword1">new</code> <code class="java_function">TickerBehaviour</code>(<code class="java_literal2">this</code>, <code class="java_digit">1000</code>) <code class="java_operator">{</code>
+      <code class="java_keyword1">protected</code> <code class="java_keyword3">void</code> <code class="java_function">onTick</code>() <code class="java_operator">{</code>
+        System.out.<code class="java_function">println</code>(<code class="java_literal1">"</code><code class="java_literal1">Il</code><code class="java_literal1"> </code><code class="java_literal1">reste</code><code class="java_literal1"> </code><code class="java_literal1">"</code><code class="java_operator">+</code>(nombreDeSecondes<code class="java_operator">-</code><code class="java_function">getTickCount</code>())<code class="java_operator">+</code><code class="java_literal1">"</code><code class="java_literal1"> </code><code class="java_literal1">seconds</code><code class="java_literal1">"</code>);
+      <code class="java_operator">}</code> 
+    <code class="java_operator">}</code>);
+
+    <code class="java_comment2">//</code><code class="java_comment2">ce</code><code class="java_comment2"> </code><code class="java_comment2">Behaviour</code><code class="java_comment2"> </code><code class="java_comment2">va</code><code class="java_comment2"> </code><code class="java_comment2">arreter</code><code class="java_comment2"> </code><code class="java_comment2">le</code><code class="java_comment2"> </code><code class="java_comment2">compte</code><code class="java_comment2"> </code><code class="java_comment2">et</code><code class="java_comment2"> </code><code class="java_comment2">terminer</code><code class="java_comment2"> </code><code class="java_comment2">l'agent</code>
+    <code class="java_function">addBehaviour</code>(<code class="java_keyword1">new</code> <code class="java_function">WakerBehaviour</code>(<code class="java_literal2">this</code>, <code class="java_digit">1000</code><code class="java_operator">*</code>nombreDeSecondes) <code class="java_operator">{</code>
+      <code class="java_keyword1">protected</code> <code class="java_keyword3">void</code> <code class="java_function">handleElapsedTimeout</code>() <code class="java_operator">{</code>
+        System.out.<code class="java_function">println</code>(<code class="java_literal1">"</code><code class="java_literal1">Terminé</code><code class="java_literal1">"</code>);
+        myAgent.<code class="java_function">doDelete</code>();
+      <code class="java_operator">}</code> 
+    <code class="java_operator">}</code>);
+  <code class="java_operator">}</code> 
+<code class="java_operator">}</code>
+</code></pre></div>
+        </div>
+      </div>
+      
+		<h2 class="TitreSection1" id="LIII-C">III-C. Les  Behaviours composés<a class="HautPage" href="http://djug.developpez.com/java/jade/behaviours/#" title="Haut de page">&#9650;</a></h2><div class="BlocSection1">
+        
+        <p>
+						Vous allez rapidement vous rendre compte que les Behaviours présentés jusqu'ici ne peuvent pas répondre d'une manière efficace à tous les besoin d'un développeur d'un système multi-agents. Pour cela JADE offre aussi un ensemble de Behaviours composés qui servent à présenter des tâches complexes.
+La classe mère de toutes les autres complexes est la classe <b>jade.core.behaviours.CompositeBehaviour</b> .<br>
+Une instance de cette classe, un Behaviour bien entendu, contient des sous-Behaviours, la méthode <b>action()</b>  est déjà implémentée et  invoque à chaque fois la méthode <b>action()</b> de l'un de ses sous-Behaviour. L'ordre d'exécution des Behaviours est à la charge des deux méthodes <b>scheduleFirst()</b> et <b>scheduleNext()</b> que les classes héritant  de la classe CompositeBehaviour doivent implémenter.
+Le programmeur n'est pas dans l'obligation d'utiliser directement la classe CompositeBehaviour car il on dispose de trois classes filles.
+	
+						</p>
+        
+		<h3 class="TitreSection2" id="LIII-C-1">III-C-1. SequentielBehaviour<a class="HautPage" href="http://djug.developpez.com/java/jade/behaviours/#" title="Haut de page">&#9650;</a></h3><div class="BlocSection2">
+          
+          <p>
+						La logique suivie dans les SequentielBehaviour est simple et intuitive. Le Behaviour commence par exécuter le premier sous-Behaviour et lorsque celui-là termine son exécution (sa méthode done() retourne true), il passe au prochain Behaviour, et ainsi de suite.<br>
+Les sous-Behaviours sont ajoutés au sequentielBehaviour par la méthode addSubBehaviour(). L'ordre de  l'ajout détermine l'ordre d'exécution.
+<br>Voici un exemple :<br></p>
+          <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e1094">&nbsp;<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e1094" onclick="selectionCode(&#39;contenuCoded0e1094&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e1094" class="contenuCode">
+<code class="java_keyword2">import</code> jade.core.Agent;
+<code class="java_keyword2">import</code> jade.core.behaviours.OneShotBehaviour;
+<code class="java_keyword2">import</code> jade.core.behaviours.SequentialBehaviour;
+<code class="java_keyword2">import</code> jade.core.behaviours.WakerBehaviour;
+
+
+<code class="java_keyword1">public</code> <code class="java_keyword3">class</code> Seq <code class="java_keyword1">extends</code> Agent <code class="java_operator">{</code>	
+	<code class="java_keyword1">protected</code> <code class="java_keyword3">void</code> <code class="java_function">setup</code>()<code class="java_operator">{</code>
+		SequentialBehaviour comportementSequentiel <code class="java_operator">=</code> <code class="java_keyword1">new</code> <code class="java_function">SequentialBehaviour</code>();
+		
+		comportementSequentiel.<code class="java_function">addSubBehaviour</code>(<code class="java_keyword1">new</code> <code class="java_function">OneShotBehaviour</code>()<code class="java_operator">{</code>
+			<code class="java_keyword4">@</code><code class="java_keyword4">Override</code>
+			<code class="java_keyword1">public</code> <code class="java_keyword3">void</code> <code class="java_function">action</code>() <code class="java_operator">{</code>
+				System.out.<code class="java_function">println</code>(<code class="java_literal1">"</code><code class="java_literal1">le</code><code class="java_literal1"> </code><code class="java_literal1">premier</code><code class="java_literal1"> </code><code class="java_literal1">sous-comportement</code><code class="java_literal1">"</code>);
+			<code class="java_operator">}</code>
+		<code class="java_operator">}</code>);
+		
+		comportementSequentiel.<code class="java_function">addSubBehaviour</code>(<code class="java_keyword1">new</code> <code class="java_function">OneShotBehaviour</code>()<code class="java_operator">{</code>
+			<code class="java_keyword4">@</code><code class="java_keyword4">Override</code>
+			<code class="java_keyword1">public</code> <code class="java_keyword3">void</code> <code class="java_function">action</code>() <code class="java_operator">{</code>
+				System.out.<code class="java_function">println</code>(<code class="java_literal1">"</code><code class="java_literal1">le</code><code class="java_literal1"> </code><code class="java_literal1">second</code><code class="java_literal1"> </code><code class="java_literal1">sous-comportement</code><code class="java_literal1">"</code>);
+			<code class="java_operator">}</code>
+		<code class="java_operator">}</code>);
+		
+		comportementSequentiel.<code class="java_function">addSubBehaviour</code>(<code class="java_keyword1">new</code> <code class="java_function">OneShotBehaviour</code>()<code class="java_operator">{</code>
+			<code class="java_keyword4">@</code><code class="java_keyword4">Override</code>
+			<code class="java_keyword1">public</code> <code class="java_keyword3">void</code> <code class="java_function">action</code>() <code class="java_operator">{</code>
+				System.out.<code class="java_function">println</code>(<code class="java_literal1">"</code><code class="java_literal1">le</code><code class="java_literal1"> </code><code class="java_literal1">derniers</code><code class="java_literal1"> </code><code class="java_literal1">sous-comportement</code><code class="java_literal1">"</code>);
+				myAgent.<code class="java_function">doDelete</code>();
+			<code class="java_operator">}</code>
+		<code class="java_operator">}</code>);
+		<code class="java_function">addBehaviour</code>(comportementSequentiel);
+	<code class="java_operator">}</code>
+<code class="java_operator">}</code>
+</code></pre></div>
+        </div>
+        
+		<h3 class="TitreSection2" id="LIII-C-2">III-C-2. FSMBehaviour<a class="HautPage" href="http://djug.developpez.com/java/jade/behaviours/#" title="Haut de page">&#9650;</a></h3><div class="BlocSection2">
+          
+          <p>
+						FSMBehaviour est une sorte de Behaviour qui implémente un automate à états finis dont chaque état correspond à l'exécution d'un sous-Behaviour.
+<br>L'introduction de l'automate se fait de la manière suivante :
+					</p>
+          <ul class="ListeDVP">
+            <li>L'ajout  d'un nouveau état  se fait par la méthode registerState (Behaviour state, String name) ;</li>
+            <li>L'ajout de l'état initial (il n'existe qu'un seule état initial) se fait par la méthode registerFirstState (Behaviour state, String name );</li>
+            <li>L'ajout d'un état final (il est possible d'en avoir plusieurs) se fait par le méthode registerLastState (Behaviour state, String name).  </li>
+          </ul>
+          <ol type="a">
+            <li>State : le Behaviour qui représente l'état;</li>
+            <li>name  :le nom de l'état.</li>
+          </ol>
+          <ul class="ListeDVP">
+            <li>L'ajout d'une nouvelle transition se fait par la méthode registerTransition(String s1, String s2, int event); </li>
+            <li>L'ajout d'une transition par défaut (la seule transition entre deux états ou bien la transition à prendre si aucune autre n'est prise) se fait par la méthode registerDefaultTransition(String s1, String s2, String[] toBeReset)</li>
+          </ul>
+          <ol type="a">
+            <li>s1 : l'état source;</li>
+            <li>s2 : l'état destination;</li>
+            <li>event: l'étiquette de la transition;</li>
+            <li>String[] toBeReset : l'ensemble d'état pour lesquels on doit faire un reset() avant de les ré-exécuter parcequ'on peut pas re-éxecuter un Behaviour une autre fois avant de lui faire un reset().</li>
+          </ol>
+          <p><b>Exemple :</b> considérons l'automate suivant :<br><br><a data-rel="lightbox[article]" href="./Les Behaviours dans JADE_files/FSM.png"><img src="./Les Behaviours dans JADE_files/FSM.png" alt="Image non disponible" width="270px" height="325px" class="ImgCliquable image_verticale"></a><br><br><br>
+
+voici le FSM  Behaviour qui le représente :
+<br></p>
+          <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e1382">&nbsp;<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e1382" onclick="selectionCode(&#39;contenuCoded0e1382&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e1382" class="contenuCode">
+<code class="java_keyword2">import</code> jade.core.Agent;
+<code class="java_keyword2">import</code> jade.core.behaviours.OneShotBehaviour;
+<code class="java_keyword2">import</code> jade.core.behaviours.FSMBehaviour;
+
+
+<code class="java_keyword1">public</code> <code class="java_keyword3">class</code> Agent_FSM <code class="java_keyword1">extends</code> Agent<code class="java_operator">{</code>
+	
+	<code class="java_keyword1">protected</code> <code class="java_keyword3">void</code> <code class="java_function">setup</code>()<code class="java_operator">{</code>
+		FSMBehaviour fsm <code class="java_operator">=</code> <code class="java_keyword1">new</code> <code class="java_function">FSMBehaviour</code>(<code class="java_literal2">this</code>) <code class="java_operator">{</code>
+			<code class="java_keyword1">public</code> <code class="java_keyword3">int</code> <code class="java_function">onEnd</code>() <code class="java_operator">{</code>
+				System.out.<code class="java_function">println</code>(<code class="java_literal1">"</code><code class="java_literal1">FSM</code><code class="java_literal1"> </code><code class="java_literal1">behaviour</code><code class="java_literal1"> </code><code class="java_literal1">terminé</code><code class="java_literal1">"</code>);
+				myAgent.<code class="java_function">doDelete</code>();
+				<code class="java_keyword1">return</code> <code class="java_literal2">super</code>.<code class="java_function">onEnd</code>();
+			<code class="java_operator">}</code>
+
+		<code class="java_operator">}</code>;
+		<code class="java_comment2">//</code><code class="java_comment2">definiton</code><code class="java_comment2"> </code><code class="java_comment2">des</code><code class="java_comment2"> </code><code class="java_comment2">etats</code>
+		fsm.registerFirstState	(<code class="java_keyword1">new</code> <code class="java_function">UnComportement</code>(),<code class="java_literal1">"</code><code class="java_literal1">A</code><code class="java_literal1">"</code>);
+		fsm.<code class="java_function">registerState</code>(<code class="java_keyword1">new</code> <code class="java_function">UnComportement</code>(),<code class="java_literal1">"</code><code class="java_literal1">B</code><code class="java_literal1">"</code>);
+		fsm.<code class="java_function">registerState</code>(<code class="java_keyword1">new</code> <code class="java_function">UnComportement</code>(),<code class="java_literal1">"</code><code class="java_literal1">C</code><code class="java_literal1">"</code>);
+		fsm.<code class="java_function">registerLastState</code>(<code class="java_keyword1">new</code> <code class="java_function">UnAutreComportement</code>(),<code class="java_literal1">"</code><code class="java_literal1">D</code><code class="java_literal1">"</code>);
+		
+		<code class="java_comment2">//</code><code class="java_comment2">definition</code><code class="java_comment2"> </code><code class="java_comment2">des</code><code class="java_comment2"> </code><code class="java_comment2">transaction</code>
+		fsm.<code class="java_function">registerDefaultTransition</code>(<code class="java_literal1">"</code><code class="java_literal1">A</code><code class="java_literal1">"</code>,<code class="java_literal1">"</code><code class="java_literal1">B</code><code class="java_literal1">"</code>);
+		fsm.<code class="java_function">registerTransition</code>(<code class="java_literal1">"</code><code class="java_literal1">B</code><code class="java_literal1">"</code>,<code class="java_literal1">"</code><code class="java_literal1">B</code><code class="java_literal1">"</code>,<code class="java_digit">1</code>);
+		fsm.<code class="java_function">registerTransition</code>(<code class="java_literal1">"</code><code class="java_literal1">B</code><code class="java_literal1">"</code>,<code class="java_literal1">"</code><code class="java_literal1">C</code><code class="java_literal1">"</code>,<code class="java_digit">0</code>);
+		fsm.<code class="java_function">registerTransition</code>(<code class="java_literal1">"</code><code class="java_literal1">C</code><code class="java_literal1">"</code>,<code class="java_literal1">"</code><code class="java_literal1">C</code><code class="java_literal1">"</code>,<code class="java_digit">1</code>);
+		fsm.<code class="java_function">registerTransition</code>(<code class="java_literal1">"</code><code class="java_literal1">C</code><code class="java_literal1">"</code>,<code class="java_literal1">"</code><code class="java_literal1">D</code><code class="java_literal1">"</code>,<code class="java_digit">0</code>);
+				
+		<code class="java_function">addBehaviour</code>(fsm);
+	<code class="java_operator">}</code>
+
+	<code class="java_comment2">//</code><code class="java_comment2">Inner</code><code class="java_comment2"> </code><code class="java_comment2">Class</code>
+	<code class="java_keyword1">private</code> <code class="java_keyword3">class</code> unComportement <code class="java_keyword1">extends</code> OneShotBehaviour<code class="java_operator">{</code>
+		<code class="java_keyword3">int</code> aleatoire;
+	
+		<code class="java_keyword4">@</code><code class="java_keyword4">Override</code>
+		<code class="java_keyword1">public</code> <code class="java_keyword3">void</code> <code class="java_function">action</code>() <code class="java_operator">{</code>
+			System.out.<code class="java_function">println</code>(<code class="java_literal1">"</code><code class="java_literal1">execution</code><code class="java_literal1"> </code><code class="java_literal1">de</code><code class="java_literal1"> </code><code class="java_literal1">l'etat</code><code class="java_literal1"> </code><code class="java_literal1"> </code><code class="java_literal1">"</code><code class="java_operator">+</code> <code class="java_function">getBehaviourName</code>());		
+			aleatoire <code class="java_operator">=</code> (<code class="java_keyword3">int</code>)Math.<code class="java_function">random</code>() <code class="java_operator">*</code> <code class="java_digit">1</code>;
+		<code class="java_operator">}</code>
+		
+		<code class="java_keyword1">public</code> <code class="java_keyword3">int</code> <code class="java_function">onEnd</code>()<code class="java_operator">{</code>
+			<code class="java_keyword1">return</code> aleatoire;
+		<code class="java_operator">}</code>		
+	<code class="java_operator">}</code>
+
+	<code class="java_keyword1">private</code> <code class="java_keyword3">class</code> unAutreComprtement <code class="java_keyword1">extends</code> OneShotBehaviour<code class="java_operator">{</code>
+
+		<code class="java_keyword4">@</code><code class="java_keyword4">Override</code>
+		<code class="java_keyword1">public</code> <code class="java_keyword3">void</code> <code class="java_function">action</code>() <code class="java_operator">{</code>		
+			System.out.<code class="java_function">println</code>(<code class="java_literal1">"</code><code class="java_literal1">arrivée</code><code class="java_literal1"> </code><code class="java_literal1">à</code><code class="java_literal1"> </code><code class="java_literal1">l'etat</code><code class="java_literal1"> </code><code class="java_literal1">finale</code><code class="java_literal1">"</code>);	
+		<code class="java_operator">}</code>
+	<code class="java_operator">}</code>
+<code class="java_operator">}</code>
+</code></pre></div>
+        </div>
+        
+		<h3 class="TitreSection2" id="LIII-C-3">III-C-3. ParallelBehaviour<a class="HautPage" href="http://djug.developpez.com/java/jade/behaviours/#" title="Haut de page">&#9650;</a></h3><div class="BlocSection2">
+          
+          <p>
+						    Le  parallelBehaviour permet d'exécuter plusieurs Behaviours en parallèle. Par parallèle on comprend qu'après avoir invoqué la méthode <b>action()</b> d'un sous-Behaviour, on pointe sur le suivant sans attendre que le premier termine son exécution.
+L'ajout de sous-Behaviour se fait par la méthode <b>addSubBehaviour()</b> .
+Si on veut  que le parallelBehaviour termine dès qu'un de ses sous-Behaviours termine alors on doit passer à son constructeur l'argument <b>WHEN_ANY</b>. (Pour attendre la fin de tous les sous-Behaviours on doit lui passer l'argument <b>WHEN_ALL</b>).
+
+					</p>
+          <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e1859">&nbsp;<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e1859" onclick="selectionCode(&#39;contenuCoded0e1859&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e1859" class="contenuCode">
+<code class="java_keyword2">import</code> jade.core.Agent;
+<code class="java_keyword2">import</code> jade.core.behaviours.OneShotBehaviour;
+<code class="java_keyword2">import</code> jade.core.behaviours.ParallelBehaviour;
+<code class="java_keyword2">import</code> jade.core.behaviours.TickerBehaviour;
+<code class="java_keyword2">import</code> jade.core.behaviours.WakerBehaviour;
+
+		<code class="java_keyword1">public</code> <code class="java_keyword3">class</code> agent_parallel <code class="java_keyword1">extends</code> Agent<code class="java_operator">{</code>
+			<code class="java_keyword1">protected</code> <code class="java_keyword3">void</code> <code class="java_function">setup</code>()<code class="java_operator">{</code>
+				ParallelBehaviour comportementparallele <code class="java_operator">=</code> <code class="java_keyword1">new</code> <code class="java_function">ParallelBehaviour</code>(ParallelBehaviour.WHEN_ANY);
+				comportementparallele.<code class="java_function">addSubBehaviour</code>(<code class="java_keyword1">new</code> <code class="java_function">WakerBehaviour</code>(<code class="java_literal2">this</code>,<code class="java_digit">1000</code>)<code class="java_operator">{</code>
+					<code class="java_keyword4">@</code><code class="java_keyword4">Override</code>
+					<code class="java_keyword1">protected</code> <code class="java_keyword3">void</code> <code class="java_function">handleElapsedTimeout</code>() <code class="java_operator">{</code>
+						System.out.<code class="java_function">println</code>(<code class="java_literal1">"</code><code class="java_literal1">le</code><code class="java_literal1"> </code><code class="java_literal1">temps</code><code class="java_literal1"> </code><code class="java_literal1">est</code><code class="java_literal1"> </code><code class="java_literal1">écoulé..</code><code class="java_literal1">"</code>);
+						myAgent.<code class="java_function">doDelete</code>();
+					<code class="java_operator">}</code>
+				<code class="java_operator">}</code>);
+				comportementparallele.<code class="java_function">addSubBehaviour</code>(<code class="java_keyword1">new</code> <code class="java_function">TickerBehaviour</code>(<code class="java_literal2">this</code>,<code class="java_digit">50</code>)<code class="java_operator">{</code>
+
+				<code class="java_keyword3">int</code> aleatoire;
+				<code class="java_keyword4">@</code><code class="java_keyword4">Override</code>
+				<code class="java_keyword1">protected</code> <code class="java_keyword3">void</code> <code class="java_function">onTick</code>() <code class="java_operator">{</code>
+					aleatoire<code class="java_operator">=</code>(<code class="java_keyword3">int</code>) (Math.<code class="java_function">random</code>()<code class="java_operator">*</code><code class="java_digit">100</code>);
+					System.out.<code class="java_function">println</code>(<code class="java_literal1">"</code><code class="java_literal1">aleatoire</code><code class="java_literal1"> </code><code class="java_literal1">=</code><code class="java_literal1"> </code><code class="java_literal1"> </code><code class="java_literal1">"</code><code class="java_operator">+</code>aleatoire);
+					<code class="java_keyword1">if</code>(aleatoire<code class="java_operator">=</code><code class="java_operator">=</code><code class="java_digit">5</code>)
+					<code class="java_operator">{</code>
+					System.out.<code class="java_function">println</code>(<code class="java_literal1">"</code><code class="java_literal1">Bingo!</code><code class="java_literal1">"</code>);
+					myAgent.<code class="java_function">doDelete</code>();
+					<code class="java_operator">}</code>					
+				<code class="java_operator">}</code>
+			<code class="java_operator">}</code>);	
+				<code class="java_function">addBehaviour</code>(comportementparallele);
+			<code class="java_operator">}</code>
+		<code class="java_operator">}</code>
+			
+</code></pre></div>
+        </div>
+      </div>
+      
+		<h2 class="TitreSection1" id="LIII-D">III-D. Combiner plusieurs Behaviours composés<a class="HautPage" href="http://djug.developpez.com/java/jade/behaviours/#" title="Haut de page">&#9650;</a></h2><div class="BlocSection1">
+        
+        <p>
+					Il est possible de combiner les différents comportements composés pour créer des comportements plus complexes.<br>      
+Par exemple on peut combiner le FSMBehaviours et le parallelBehaviour précédents de la manière suivante :<br>
+
+Attribuer à l'état C le parallelBehaviour.
+Si le Behaviour réussit à générer le 5 dans une second alors on passe à l'état D .Sinon on passe à l'état E
+
+				</p>
+        <figure class="TextAlign-center"><a data-rel="lightbox[article]" href="./Les Behaviours dans JADE_files/FSM_Parallel.png"><img class="ImgCliquable" src="./Les Behaviours dans JADE_files/FSM_Parallel.png" alt="Image non disponible" width="343px" height="325px"></a></figure>
+      </div>
+    </div>
+    
+		<h1 class="TitreSection0" id="LIV">IV. Conclusion<a class="HautPage" href="http://djug.developpez.com/java/jade/behaviours/#" title="Haut de page">&#9650;</a></h1><div class="BlocSection0">
+      
+      
+		<h2 class="TitreSection1" id="LIV-A">IV-A. Bibliographie<a class="HautPage" href="http://djug.developpez.com/java/jade/behaviours/#" title="Haut de page">&#9650;</a></h2><div class="BlocSection1">
+        
+        <ul class="ListeDVP">
+          <li><a class="lienArticle simple" href="http://www.amazon.fr/Developing-Multi-Agent-Systems-Fabio-Bellifemine/dp/0470057475" target="_blank">Developing multi-agent systems with JADE edition wiley</a>.</li>
+          <li>JADE PROGRAMMER'S GUIDE de la documentation officielle</li>
+        </ul>
+      </div>
+      
+		<h2 class="TitreSection1" id="LIV-B">IV-B. Remerciements<a class="HautPage" href="http://djug.developpez.com/java/jade/behaviours/#" title="Haut de page">&#9650;</a></h2><div class="BlocSection1">
+        
+        <p>
+					Je remercie <a class="lienArticle simple" href="http://www.developpez.net/forums/u254882/dourouc05/" target="_blank">dourouc05</a> pour la relecture et la correction orthographique.
+				</p>
+      </div>
+    </div>
+  </section><section class="articleBody" style="margin-left: 461px; margin-top: 20px; clear: none;"></section>
+</article>
+		<div class="clear">&nbsp;&nbsp;</div>
+<p class="licence" style="margin-left: 446px;">Copyright © 2009 djug. 
+Aucune reproduction, même partielle, ne peut être faite 
+de ce site et de l'ensemble de son contenu&nbsp;: textes, documents, images, etc.
+sans l'autorisation expresse de l'auteur. Sinon vous encourez selon la loi jusqu'à 
+trois ans de prison et jusqu'à 300&nbsp;000&nbsp;€ de dommages et intérêts. 
+</p><div style="clear: both;"></div>
+</div>
+</section>
+
+<footer class="layout">
+	<div id="gabarit_footer">
+			Responsables bénévoles
+		de la rubrique Java :
+
+			<a href="http://www.developpez.net/forums/u189827/mlny84/" target="_blank">		mlny84</a>		-
+					<a href="http://www.developpez.net/forums/u69211/keulkeul/" target="_blank">			Mickael Baron</a>			-
+		
+		
+			
+		<script type="text/javascript">
+	<!--
+	Ch=new Array(4);Res=new Array(4);
+	Ch[0]='le_club_des_developeur';Ch[1]='ÙÆÈÏàä';
+	Ch[2]='¬×ÄÇÍØÖÈÓÓ';Ch[3]='ÐÊÕÈØäÒÏÉß¡ÂÓÒ';
+	for(y=1;y<4;y++){Res[y]="";for(x=0;x<Ch[y].length;x++)
+	Res[y]+=String.fromCharCode(Ch[y].charCodeAt(x)-Ch[0].charCodeAt(x));}
+	var st = '<a href="'+Res[1]+':java'+Res[2]+'-'+Res[3]+'">Contacter par email<\/a>';	document.write(st);
+	//-->
+	</script><a href="mailto:java@redaction-developpez.com">Contacter par email</a>
+
+	</div>
+	
+	<script type="text/javascript">
+	<!--
+	xtn2 = "2";
+	//-->
+	</script>
+	
+
+<div id="gabarit_pied">
+	<div id="gabarit_pied_contenu">
+		<div class="gabarit_pied_div">
+			<span>Developpez.com</span>
+			<p><a href="http://club.developpez.com/contacts/">Nous contacter</a></p>
+			<p><a href="http://www.developpez.com/participez/">Participez</a></p>
+			<p><a href="http://www.developpez.com/legal/">Informations légales</a></p>
+		</div>
+		<div class="gabarit_pied_div_separation">&nbsp;</div>
+		<div class="gabarit_pied_div">
+			<span>Services</span>
+			<p><a href="http://www.developpez.net/forums/f6/java/" onclick="window.open(this.href); return false;">Forum Java</a></p>
+			<p><a href="http://blog.developpez.com/">Blogs</a></p>
+			<p><a href="http://www.developpez.com/hebergement/">Hébergement</a></p>
+		</div>
+		<div class="gabarit_pied_div_separation">&nbsp;</div>
+		<div class="gabarit_pied_div">
+			<span>Partenaires</span>
+			<p><a href="http://www.developpez.com/redirect/1058" target="_blank">PlanetHoster</a></p>
+		</div>
+		<div style="clear: both;"></div>
+		<div id="gabarit_pied_copyright">
+			<p>Copyright © 2000-2015 - www.developpez.com</p>
+		</div>
+	</div>
+</div>
+
+</footer>
+<!-- Google Analytics général -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28115938-1']);
+  _gaq.push(['_setDomainName', 'developpez.com']);
+  _gaq.push(['_setCustomVar', 1, 'rubrique', 'java', 3]);
+  _gaq.push(['_setCustomVar', 2, 'type', 'Autre', 3]);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+
+
+		
+<div id="lightboxOverlay" style="display: none;"></div><div id="lightbox" style="display: none;"><div class="lb-outerContainer"><div class="lb-container"><img class="lb-image"><div class="lb-nav"><a class="lb-prev"></a><a class="lb-next"></a></div><div class="lb-loader"><a class="lb-cancel"><img src="./Les Behaviours dans JADE_files/lightbox-ico-loading.gif"></a></div></div></div><div class="lb-dataContainer"><div class="lb-data"><div class="lb-details"><span class="lb-caption"></span><span class="lb-number"></span></div><div class="lb-closeContainer"><a class="lb-close"><img src="./Les Behaviours dans JADE_files/lightbox-btn-close.png"></a></div></div></div></div></body></html>

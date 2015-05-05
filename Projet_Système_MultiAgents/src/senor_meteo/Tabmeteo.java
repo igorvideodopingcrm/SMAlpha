@@ -1,4 +1,4 @@
-package outilsmeteo;
+package senor_meteo;
 
 public class Tabmeteo {
 

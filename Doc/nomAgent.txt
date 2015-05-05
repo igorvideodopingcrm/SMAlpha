@@ -1,4 +1,0 @@
-AgentEnergie: GladOS
-AgentMeteo: SenorMeteo
-AgentUtilisateur: C3PO
-AgentEquipement: R2D2

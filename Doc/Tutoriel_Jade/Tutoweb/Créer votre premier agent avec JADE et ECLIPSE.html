@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://djug.developpez.com/java/jade/creation-agent/ -->
+<html lang="fr" xmlns:og="http://ogp.me/ns#"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+	<meta charset="iso-8859-1">
+	<title>Créer votre premier agent avec JADE et ECLIPSE</title>
+	<meta name="generator" content="developpez-com">
+	<meta name="description" content="JADE agent eclipse">
+	<meta name="keywords" content="jade agent eclipse">
+	<script type="text/javascript" async="" src="./Créer votre premier agent avec JADE et ECLIPSE_files/ga.js"></script><script type="text/javascript" src="./Créer votre premier agent avec JADE et ECLIPSE_files/jquery-1.7.2.js"></script>
+	<script type="text/javascript" src="./Créer votre premier agent avec JADE et ECLIPSE_files/saved_resource"></script><style type="text/css"></style>
+	<link rel="shortcut icon" type="image/x-icon" href="http://djug.developpez.com/template/favicon.ico">
+	<link rel="image_src" href="http://www.developpez.com/facebook-icon.png">
+	<link rel="stylesheet" type="text/css" href="./Créer votre premier agent avec JADE et ECLIPSE_files/gabarit0.css">
+	<link rel="stylesheet" type="text/css" media="print" href="./Créer votre premier agent avec JADE et ECLIPSE_files/printer.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="./Créer votre premier agent avec JADE et ECLIPSE_files/developpez-kit-generation.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="./Créer votre premier agent avec JADE et ECLIPSE_files/code.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="./Créer votre premier agent avec JADE et ECLIPSE_files/lightbox.2.51.css">
+	<script type="text/javascript" src="./Créer votre premier agent avec JADE et ECLIPSE_files/developpez-kit-generation.js"></script>
+	<script type="text/javascript" src="./Créer votre premier agent avec JADE et ECLIPSE_files/lightbox.2.51.js"></script>
+	<script type="text/javascript" src="./Créer votre premier agent avec JADE et ECLIPSE_files/fonctions-kit.js"></script>
+	<meta name="author" content="djug">
+	<!--[if lt IE 7]>
+	<script src="/template/ie7/IE7.js" type="text/javascript"></script>
+	<![endif]-->
+
+	<!--[if IE 6]>
+	<link rel="stylesheet" type="text/css" href="/template/gabarit-ie6.css" />
+	<![endif]-->
+
+	<!--[if IE 7]>
+	<link rel="stylesheet" type="text/css" href="/template/gabarit-ie7.css" />
+	<![endif]-->
+
+	<!--[if IE 8]>
+	<link rel="stylesheet" type="text/css" href="/template/gabarit-ie8.css" />
+	<![endif]-->
+
+	<!--[if lt IE 9]>
+	<script type="text/javascript" src="/template/kit/html5_ie.js"></script>
+	<![endif]-->
+	<!--[if IE 9]><link rel="stylesheet" type="text/css" href="http://www.developpez.com/template/kit/ie9.css" /><![endif]-->
+	<!--[if IE 8]><link rel="stylesheet" type="text/css" href="http://www.developpez.com/template/kit/ie8.css" /><![endif]-->
+	<!--[if lt IE 9]><link rel="stylesheet" type="text/css" href="http://www.developpez.com/template/kit/ie.css" /><![endif]-->
+	<!--[if IE 7]><link rel="stylesheet" type="text/css" href="http://www.developpez.com/template/kit/ie7.css" /><![endif]-->
+	<!--[if lte IE 6]><link rel="stylesheet" type="text/css" href="http://www.developpez.com/template/kit/ie6.css" /><![endif]-->
+	<!--[if lt IE 9]><script type="text/javascript" src="http://www.developpez.com/template/kit/html5_ie.js"></script><![endif]-->
+
+</head>
+<body>
+<header class="layout">
+
+<div id="quicknav">
+	<div id="quicksearch">
+		<form method="get" action="http://www.developpez.com/recherche/" id="cse-search-box">
+			<p>
+				<input type="text" name="q" id="recherche_g" style="border: 1px solid rgb(126, 157, 185); padding: 2px; background: url(http://www.google.com/cse/intl/fr/images/google_custom_search_watermark.gif) 0% 50% no-repeat rgb(255, 255, 255);">
+				<input type="image" name="sa" id="recherche_submit" alt="Go" title="Rechercher" src="./Créer votre premier agent avec JADE et ECLIPSE_files/go-gray.png">
+				<input type="hidden" name="cx" value="006424388311999799839:-31tnf0iuqy">
+				<input type="hidden" name="cof" value="FORID:9">
+				<input type="hidden" name="ie" value="ISO-8859-1">
+			</p>
+		<input name="siteurl" type="hidden" value="djug.developpez.com/java/jade/creation-agent/"><input name="ref" type="hidden" value="djug.developpez.com/java/jade/behaviours/"><input name="ss" type="hidden" value=""></form>
+		<script type="text/javascript" src="./Créer votre premier agent avec JADE et ECLIPSE_files/brand"></script>
+	</div>
+<nav>	<ul id="quicklinks">
+		<li class="first"><a href="http://www.developpez.net/forums/" title="">Forums</a></li>
+		<li><a href="http://general.developpez.com/cours/" title="">Tutoriels</a></li>
+		<li><a href="http://magazine.developpez.com/" title="">Magazine</a></li>
+		<li><a href="http://general.developpez.com/faq/" title="">FAQs</a></li>
+		<li><a href="http://www.developpez.net/forums/blogs/" title="">Blogs</a></li>
+		<li><a href="http://projets.developpez.com/" title="">Projets</a></li>
+		<li><a href="http://chat.developpez.com/" title="">Chat</a></li>
+		<li><a href="http://www.developpez.com/newsletter/">Newsletter</a></li>
+		<li><a href="http://etudes.developpez.com/">Études</a></li>
+		<li><a href="http://emploi.developpez.com/" title="">Emploi</a></li>
+		<li><a href="http://club.developpez.com/">Club</a></li>
+		<li><a href="http://club.developpez.com/contacts/" title="">Contacts</a></li>
+	</ul>
+</nav></div>
+<div style="position: relative; clear: both; float: right; top: -2px; width: 728px; margin-top: 10px; margin-right: 10px; text-align: right; background-color: #E1E1E2">
+<iframe width="0" height="0" style="border: 0px; display: none !important; visibility: hidden !important; opacity: 0 !important; background-position: 728px 90px;" scrolling="no" seamless="seamless" src="about:blank"></iframe>
+</div>
+
+	<div id="logo_dvp">
+		<a href="http://www.developpez.com/" title="Accueil Developpez.com">
+			<img src="./Créer votre premier agent avec JADE et ECLIPSE_files/logo.png" alt="">
+		</a>
+	</div>
+
+<nav id="gabarit">
+
+<div id="gabarit_tabmenu">
+	<ul id="tabs">
+	<li class="item">
+
+	<a href="http://www.developpez.com/">
+		Accueil
+	<span class="tooltip">Actualités IT Pro</span>	</a>
+
+		</li>
+	<li class="item">
+
+	<a href="http://alm.developpez.com/">
+		ALM
+	<span class="tooltip">Cycle de vie du logiciel</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://alm.developpez.com/">ALM</a></li>
+					<li>			<a href="http://merise.developpez.com/">Merise</a></li>
+					<li class="last">			<a href="http://uml.developpez.com/">UML</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://java.developpez.com/" class="selected">
+		Java
+	<span class="tooltip">Plateforme et langage Java</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://java.developpez.com/">Java</a></li>
+					<li>			<a href="http://javaweb.developpez.com/">Java Web</a></li>
+					<li>			<a href="http://spring.developpez.com/">Spring</a></li>
+					<li>			<a href="http://android.developpez.com/">Android</a></li>
+					<li>			<a href="http://eclipse.developpez.com/">Eclipse</a></li>
+					<li class="last">			<a href="http://netbeans.developpez.com/">NetBeans</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://dotnet.developpez.com/">
+		.NET
+	<span class="tooltip">Microsoft Framework .NET</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://dotnet.developpez.com/">Microsoft DotNET</a></li>
+					<li>			<a href="http://dotnet.developpez.com/visual-studio/">Visual Studio</a></li>
+					<li>			<a href="http://dotnet.developpez.com/aspnet/">ASP.NET</a></li>
+					<li>			<a href="http://dotnet.developpez.com/csharp/">C#</a></li>
+					<li>			<a href="http://dotnet.developpez.com/vbnet/">VB.NET</a></li>
+					<li>			<a href="http://windowsphone.developpez.com/">Windows Phone</a></li>
+					<li class="last">			<a href="http://windows-azure.developpez.com/">Microsoft Azure</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://web.developpez.com/">
+		Dév. Web
+	<span class="tooltip">Développement Web et Webmarketing</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://web.developpez.com/">Développement Web</a></li>
+					<li>			<a href="http://ajax.developpez.com/">AJAX</a></li>
+					<li>			<a href="http://apache.developpez.com/">Apache</a></li>
+					<li>			<a href="http://asp.developpez.com/">ASP</a></li>
+					<li>			<a href="http://css.developpez.com/">CSS</a></li>
+					<li>			<a href="http://dart.developpez.com/">Dart</a></li>
+					<li>			<a href="http://flash.developpez.com/">Flash / Flex</a></li>
+					<li>			<a href="http://javascript.developpez.com/">JavaScript</a></li>
+					<li>			<a href="http://php.developpez.com/">PHP</a></li>
+					<li>			<a href="http://ruby.developpez.com/">Ruby &amp; Rails</a></li>
+					<li>			<a href="http://web-semantique.developpez.com/">Web sémantique</a></li>
+					<li>			<a href="http://webmarketing.developpez.com/">Webmarketing</a></li>
+					<li class="last">			<a href="http://xhtml.developpez.com/">(X)HTML</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://edi.developpez.com/">
+		EDI
+	<span class="tooltip">Environnements de Développement Intégré</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://edi.developpez.com/">EDI</a></li>
+					<li>			<a href="http://4d.developpez.com/">4D</a></li>
+					<li>			<a href="http://delphi.developpez.com/">Delphi</a></li>
+					<li>			<a href="http://eclipse.developpez.com/">Eclipse</a></li>
+					<li>			<a href="http://labview.developpez.com/">LabVIEW</a></li>
+					<li>			<a href="http://netbeans.developpez.com/">NetBeans</a></li>
+					<li>			<a href="http://matlab.developpez.com/">MATLAB</a></li>
+					<li>			<a href="http://scilab.developpez.com/">Scilab</a></li>
+					<li>			<a href="http://dotnet.developpez.com/visual-studio/">Visual Studio</a></li>
+					<li>			<a href="http://wind.developpez.com/">WinDev</a></li>
+					<li>			<a href="http://vb.developpez.com/">Visual Basic 6</a></li>
+					<li>			<a href="http://lazarus.developpez.com/">Lazarus</a></li>
+					<li class="last">			<a href="http://qt-creator.developpez.com/">Qt Creator</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://programmation.developpez.com/">
+		Programmation
+	<span class="tooltip">Programmation et langages de programmation applicatifs</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://programmation.developpez.com/">Programmation</a></li>
+					<li>			<a href="http://algo.developpez.com/">Débuter - Algorithmique</a></li>
+					<li>			<a href="http://jeux.developpez.com/">2D - 3D - Jeux</a></li>
+					<li>			<a href="http://asm.developpez.com/">Assembleur</a></li>
+					<li>			<a href="http://c.developpez.com/">C</a></li>
+					<li>			<a href="http://cpp.developpez.com/">C++</a></li>
+					<li>			<a href="http://go.developpez.com/">Go</a></li>
+					<li>			<a href="http://objective-c.developpez.com/">Objective C</a></li>
+					<li>			<a href="http://pascal.developpez.com/">Pascal</a></li>
+					<li>			<a href="http://perl.developpez.com/">Perl</a></li>
+					<li>			<a href="http://python.developpez.com/">Python</a></li>
+					<li>			<a href="http://swift.developpez.com/">Swift</a></li>
+					<li>			<a href="http://qt.developpez.com/">Qt</a></li>
+					<li>			<a href="http://xml.developpez.com/">XML</a></li>
+					<li class="last">			<a href="http://general.developpez.com/cours/">Autres</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://sgbd.developpez.com/">
+		SGBD
+	<span class="tooltip">Systèmes de Gestion de Bases de Données</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://sgbd.developpez.com/">SGBD &amp; SQL</a></li>
+					<li>			<a href="http://4d.developpez.com/">4D</a></li>
+					<li>			<a href="http://access.developpez.com/">Access</a></li>
+					<li>			<a href="http://big-data.developpez.com/">Big Data</a></li>
+					<li>			<a href="http://db2.developpez.com/">DB2</a></li>
+					<li>			<a href="http://firebird.developpez.com/">Firebird</a></li>
+					<li>			<a href="http://interbase.developpez.com/">InterBase</a></li>
+					<li>			<a href="http://mysql.developpez.com/">MySQL</a></li>
+					<li>			<a href="http://nosql.developpez.com/">NoSQL</a></li>
+					<li>			<a href="http://postgresql.developpez.com/">PostgreSQL</a></li>
+					<li>			<a href="http://oracle.developpez.com/">Oracle</a></li>
+					<li>			<a href="http://sybase.developpez.com/">Sybase</a></li>
+					<li class="last">			<a href="http://sqlserver.developpez.com/">SQL-Server</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://office.developpez.com/">
+		Office
+	<span class="tooltip">Bureautique pour l'entreprise</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://office.developpez.com/">Microsoft Office</a></li>
+					<li>			<a href="http://access.developpez.com/">Access</a></li>
+					<li>			<a href="http://excel.developpez.com/">Excel</a></li>
+					<li>			<a href="http://word.developpez.com/">Word</a></li>
+					<li>			<a href="http://outlook.developpez.com/">Outlook</a></li>
+					<li>			<a href="http://powerpoint.developpez.com/">PowerPoint</a></li>
+					<li>			<a href="http://sharepoint.developpez.com/">SharePoint</a></li>
+					<li>			<a href="http://project.developpez.com/">Microsoft Project</a></li>
+					<li class="last">			<a href="http://openoffice-libreoffice.developpez.com/">OpenOffice &amp; LibreOffice</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://solutions-entreprise.developpez.com/">
+		Solutions d'entreprise
+	<span class="tooltip">Autres logiciels pour l'entreprise</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://solutions-entreprise.developpez.com/">Solutions d'entreprise</a></li>
+					<li>			<a href="http://big-data.developpez.com/">Big Data</a></li>
+					<li>			<a href="http://business-intelligence.developpez.com/">Business Intelligence</a></li>
+					<li>			<a href="http://solutions-entreprise.developpez.com/erp-pgi/presentation-erp-pgi/">ERP / PGI</a></li>
+					<li>			<a href="http://crm.developpez.com/">CRM</a></li>
+					<li>			<a href="http://sas.developpez.com/">SAS</a></li>
+					<li>			<a href="http://cloud-computing.developpez.com/">Cloud Computing</a></li>
+					<li>			<a href="http://sap.developpez.com/">SAP</a></li>
+					<li>			<a href="http://www.developpez.net/forums/f1664/systemes/windows/windows-serveur/biztalk-server/">Microsoft BizTalk Server</a></li>
+					<li class="last">			<a href="http://talend.developpez.com/">Talend</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://applications.developpez.com/">
+		Applications
+	<span class="tooltip">Applications logicielles</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://applications.developpez.com/">Applications</a></li>
+					<li>			<a href="http://open-source.developpez.com/">Libres &amp; Open Source</a></li>
+					<li>			<a href="http://openoffice-libreoffice.developpez.com/">OpenOffice &amp; LibreOffice</a></li>
+					<li class="last">			<a href="http://portail-projets.developpez.com/">Projets</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://mobiles.developpez.com/">
+		Mobiles
+	<span class="tooltip">Logiciels et matériels mobiles</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://mobiles.developpez.com/">Mobiles</a></li>
+					<li>			<a href="http://android.developpez.com/">Android</a></li>
+					<li>			<a href="http://ios.developpez.com/">iOS</a></li>
+					<li class="last">			<a href="http://windowsphone.developpez.com/">Windows Phone</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://systeme.developpez.com/">
+		Systèmes
+	<span class="tooltip">Logiciels et matériels systèmes</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://systeme.developpez.com/">Systèmes</a></li>
+					<li>			<a href="http://windows.developpez.com/">Windows</a></li>
+					<li>			<a href="http://linux.developpez.com/">Linux</a></li>
+					<li>			<a href="http://securite.developpez.com/">Sécurité</a></li>
+					<li>			<a href="http://hardware.developpez.com/">PC</a></li>
+					<li>			<a href="http://mac.developpez.com/">Mac</a></li>
+					<li>			<a href="http://reseau.developpez.com/">Réseau</a></li>
+					<li>			<a href="http://green-it.developpez.com/">Green IT</a></li>
+					<li>			<a href="http://virtualisation.developpez.com/">Virtualisation</a></li>
+					<li class="last">			<a href="http://embarque.developpez.com/">Systèmes Embarqués</a></li>
+		
+			</ul>	</li>
+	</ul>
+</div>
+
+	<div id="gabarit_topicmenu">
+		<ul id="topics">
+												<li class="selected">
+								<a href="http://java.developpez.com/">Java</a></li>
+															<li>
+								<a href="http://javaweb.developpez.com/">Java Web</a>
+				</li>
+												<li>
+								<a href="http://spring.developpez.com/">Spring</a>
+				</li>
+												<li>
+								<a href="http://android.developpez.com/">Android</a>
+				</li>
+												<li>
+								<a href="http://eclipse.developpez.com/">Eclipse</a>
+				</li>
+												<li>
+								<a href="http://netbeans.developpez.com/">NetBeans</a>
+				</li>
+					</ul>
+	</div>
+
+<div id="gabarit_resourcemenu">
+	<div id="googleplus_bloc">
+		<a href="https://plus.google.com/114187622962832882709" rel="publisher" target="_blank"><img src="./Créer votre premier agent avec JADE et ECLIPSE_files/googleplus.png" alt="Google+" title="Retrouver Developpez sur Google+"></a>
+	</div>
+	<div id="facebook_bloc">
+		<a href="http://www.facebook.com/pages/Java/368176262168" target="_blank"><img src="./Créer votre premier agent avec JADE et ECLIPSE_files/facebook.png" alt="Facebook" title="Retrouver Developpez sur Facebook"></a>
+	</div>
+	<div id="twitter_bloc">
+		<a href="http://twitter.com/javaDeveloppez" target="_blank"><img src="./Créer votre premier agent avec JADE et ECLIPSE_files/twitter.png" alt="Twitter" title="Retrouver Developpez sur Twitter"></a>
+	</div>
+	<div id="rss_syndication">
+		<a href="http://java.developpez.com/index/rss" target="_blank"><img src="./Créer votre premier agent avec JADE et ECLIPSE_files/rss.png" alt="RSS" title="Flux RSS"></a>
+	</div>
+	<ul id="resources">		<li><a href="http://www.developpez.net/forums/f6/java/">Forums</a></li>
+			<li><a href="http://java.developpez.com/faq/">FAQs</a></li>
+			<li><a href="http://java.developpez.com/cours/">Tutoriels</a></li>
+			<li><a href="http://java.developpez.com/livres/">Livres</a></li>
+			<li><a href="http://java.developpez.com/videos/">Vidéos</a></li>
+			<li><a href="http://java.developpez.com/telecharger/index/categorie/43/Sources-Java">Sources</a></li>
+			<li><a href="http://java.developpez.com/outils/">Outils, EDI &amp; API</a></li>
+			<li><a href="http://javasearch.developpez.com/">JavaSearch</a></li>
+	</ul>
+</div>
+</nav>
+</header>
+
+<section class="layout">
+<div class="contenuPage">		<article class="ArticleComplet" itemscope="" itemtype="http://schema.org/Article" style="margin: 0px 20px;">
+<meta itemprop="genre" content="informatique">
+<meta itemprop="inLanguage" content="fr-FR">
+		
+<header class="EnteteTitres">
+<h1 class="titre-article" itemprop="name">Créez votre premier agent avec JADE et ECLIPSE</h1>
+
+</header><nav class="nav-sommaire fixed2" role="navigation" style="width: 446px;">
+<header><h1 class="TitreHeader StopArrondi ToggleGecko">Table des matières<img class="ToggleImgPlier" title="Plier" alt="Plier" src="./Créer votre premier agent avec JADE et ECLIPSE_files/fleche-haut-bleue.gif"><img class="ToggleImgDeplier" title="Déplier" alt="Déplier" src="./Créer votre premier agent avec JADE et ECLIPSE_files/fleche-bas-bleue.gif" style="display:none;"></h1></header>
+<ul id="nav_sommaire_ul_principal" class="nav-sommaire-ul" style="overflow-y: auto;">
+    <li><a class="summaryIndent0" href="http://djug.developpez.com/java/jade/creation-agent/#LI">I. Introduction</a></li>
+    <li><a class="summaryIndent0" href="http://djug.developpez.com/java/jade/creation-agent/#LII">II. Installation</a></li>
+    <li><a class="summaryIndent0" href="http://djug.developpez.com/java/jade/creation-agent/#LIII">III. Création du premier agent avec JADE et ECLIPSE</a></li>
+    <li><a class="summaryIndent0" href="http://djug.developpez.com/java/jade/creation-agent/#LIV">IV. Compilation et exécution de l'agent</a></li>
+    
+    
+    
+    
+    
+    
+    
+    
+    <li><a class="summaryIndent0" href="http://djug.developpez.com/java/jade/creation-agent/#LV">V. Remerciements</a></li>
+  </ul></nav>
+
+
+<div class="fixeMarge"><section itemprop="about" class="SectionSynopsis">
+    <p>
+				JADE est une plate-forme qui permet de construire des systèmes multi agents (SMA) créée par le laboratoire TILAB, entièrement implémenté en JAVA.
+Nous allons découvrir comment installer  et créer notre premier agent avec cette Plate-forme. 
+<br><a class="lienforum" href="http://www.developpez.net/forums/showthread.php?t=711808">172&nbsp;commentaires</a> <a href="http://www.developpez.net/forums/showthread.php?t=711808&nojs=1#goto_threadrating" title="Donner une note à l&#39;article (4.5)"><img src="./Créer votre premier agent avec JADE et ECLIPSE_files/kitstars-4-5.gif" width="66" height="14" style="border: none" alt="Donner une note à l&#39;article (4.5)"></a></p>
+  <p class="TextNbrVues" style="display: block;">Article lu <span id="NbrVues">12591</span> fois.</p></section></div><div class="InfoAuthArtBook" style="height: 133px;">
+	<section class="SectionAuteurs">
+	<header><h1 class="TitreHeader">L'auteur</h1></header>
+<p class="auteur" itemprop="author" itemscope="" itemtype="http://schema.org/Person"><a itemprop="url" class="auteur" href="http://www.developpez.net/forums/u166060/djug/"><span itemprop="author">Youghourta BENALI</span></a><a class="homepage" href="http://djug.developpez.com/"><img src="./Créer votre premier agent avec JADE et ECLIPSE_files/kitbm-site-personnel.png" title="Page perso de Djug" alt="Site personnel" style="vertical-align:middle;"></a></p>
+</section>
+<section class="SectionInformationArticle">
+<header><h1 class="TitreHeader">L'article</h1></header>
+
+<p class="InfoArticle">Publié&nbsp;le&nbsp;<span itemprop="datePublished">23&nbsp;mars&nbsp;2009&nbsp;</span></p><p>
+<span class="lientelechargementpdf"><a class="lientelechargement" href="http://djug.developpez.com/java/jade/creation-agent/JADE.pdf" title="Télécharger la version PDF de cet article.">Version PDF</a></span>
+<span class="lientelechargementzip"><a class="lientelechargement" href="http://djug.developpez.com/java/jade/creation-agent/JADE.zip" title="Télécharger la version HTML de cet article.">Version hors-ligne</a></span></p>
+<p><span class="lientelechargementebook"><a class="lientelechargement" href="http://djug.developpez.com/java/jade/creation-agent/JADE.epub" title="Télécharger la version ePub de l&#39;article compatible avec la plupart des liseuses non Kindle (Amazon).">ePub</a></span>, <span class="lientelechargementebook"><a class="lientelechargement" href="http://djug.developpez.com/java/jade/creation-agent/JADE.azw" title="Télécharger la version Azw spécifique aux liseuses Kindle (Amazon).">Azw</a></span> et <span class="lientelechargementebook"><a class="lientelechargement" href="http://djug.developpez.com/java/jade/creation-agent/JADE.mobi" title="Télécharger la version Mobi de l&#39;article compatible avec les liseuses Amazon.">Mobi</a></span></p>
+</section>
+<section class="SectionBookmarks">
+<header><h1 class="TitreHeader">Liens&nbsp;sociaux</h1></header>
+<div class="InfoBookmarks"><a title="Viadeo" href="http://www.viadeo.com/shareit/share/?url=http%3A%2F%2Fdjug.developpez.com%2Fjava%2Fjade%2Fcreation-agent%2F&Title=Cr%C3%A9ez+votre+premier+agent+avec+JADE+et+ECLIPSE" rel="nofollow"><img alt="Viadeo" src="./Créer votre premier agent avec JADE et ECLIPSE_files/kitbm-viadeo.gif"></a>&nbsp;<a title="Twitter" href="http://twitter.com/timeline/home?status=http%3A%2F%2Fdjug.developpez.com%2Fjava%2Fjade%2Fcreation-agent%2F" rel="nofollow"><img alt="Twitter" src="./Créer votre premier agent avec JADE et ECLIPSE_files/kitbm-twitter.png"></a>&nbsp;<a title="Facebook" href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fdjug.developpez.com%2Fjava%2Fjade%2Fcreation-agent%2F" rel="nofollow"><img alt="Facebook" src="./Créer votre premier agent avec JADE et ECLIPSE_files/kitbm-facebook.gif"></a>&nbsp;<a title="Google +" href="https://plus.google.com/share?url=http%3A%2F%2Fdjug.developpez.com%2Fjava%2Fjade%2Fcreation-agent%2F" onclick="javascript:window.open(this.href, &#39;&#39;, &#39;menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600&#39;);return false;"><img src="./Créer votre premier agent avec JADE et ECLIPSE_files/gplus-16.png" alt="Share on Google+"></a>&nbsp;</div>
+</section></div><section itemprop="articleBody" class="articleBody" style="margin-left: 461px; margin-top: 20px; clear: none;">
+    
+		<h1 class="TitreSection0" id="LI">I. Introduction<a class="HautPage" href="http://djug.developpez.com/java/jade/creation-agent/#" title="Haut de page">&#9650;</a></h1><div class="BlocSection0">
+      
+      <p>
+        <br>
+        <br>
+        <br>
+      </p>
+      <figure class="TextAlign-center"><img src="./Créer votre premier agent avec JADE et ECLIPSE_files/jade.jpg" alt="Image non disponible" width="164px" height="64px"></figure>
+      <p><br><br><br>
+			
+				Jade est un middleware qui facilite le développement des <a class="lienArticle Fr" href="http://fr.wikipedia.org/wiki/Syst%C3%A8me_multi-agents" target="_blank">systèmes multi agents (SMA)</a>. JADE contient :
+			</p>
+      <ul class="ListeDVP">
+        <li><span class="mot_souligne"><b>Un runtime Environment :</b></span> l'environnement ou les <a class="lienArticle Fr" href="http://www.developpez.net/forums/redirect-to/?redirect=http%3A%2F%2Ffr.wikipedia.org%2Fwiki%2FAgent_mobile" target="_blank">agents</a> peuvent vivre. Ce runtime environment doit être activé pour pouvoir lancer les agents.</li>
+        <li><span class="mot_souligne"><b>Une librairie de classes :</b></span> que les développeurs utilisent pour écrire leurs agents</li>
+        <li><span class="mot_souligne"><b>Une suite d'outils graphiques :</b></span> qui facilitent la gestion et la supervision de la plateforme des agents</li>
+      </ul>
+      <p>
+Chaque instance du JADE est appelée conteneur " container ",  et peut  contenir plusieurs agents.
+ Un ensemble de conteneurs constituent une plateforme. Chaque plateforme doit contenir un conteneur spécial appelé main-container et tous les autres conteneurs s'enregistrent auprès de celui-là dés leur lancement
+			</p>
+      <p>
+				La figure suivante illustre  les concepts de base du jade en montrant un petit exemple de deux plateformes jade composées respectivement de trois et un conteneur 
+Chaque agent est identifié par un identifiant unique et peut communiquer avec n'importe quel autre agent sans avoir besoin de connaître son emplacement :
+
+			</p>
+      <figure class="TextAlign-center"><a data-rel="lightbox[article]" href="./Créer votre premier agent avec JADE et ECLIPSE_files/PlateformesJade.JPG"><img class="ImgCliquable" src="./Créer votre premier agent avec JADE et ECLIPSE_files/PlateformesJade.JPG" alt="Image non disponible" width="469px" height="325px"></a></figure>
+      <ul class="ListeDVP">
+        <li>Dans le même conteneur (exemple agents A2 et A3)</li>
+        <li>Dans la même plateforme mais dans des conteneurs différant (ex A1 et A2) </li>
+        <li>Dans deux plateformes différentes (ex. A4 and A5).</li>
+      </ul>
+      <p>
+				Un main-container se distingue des autres " simples " conteneurs par une autre chose; il contient toujours deux agents spéciaux appelés  <b>AMS</b>  et <b>DF</b> qui sont lancés automatiquement au lancement du main-container
+			</p>
+      <ul class="ListeDVP">
+        <li><b>AMS</b> (Agent Management System) qui fournit le service de nommage (pour assurer par exemple que chaque agent possède un identifiant unique dans la plateforme) et qui  représente l'autorité de la plateforme (par exemple il est possible de créer/arrêter  des agents en envoyant des requêtes à l'AMS)</li>
+        <li><b>DF</b> (Directory Facilitator) qui fournit un système de pages jaunes qui permet aux agents de retrouver les agents fournisseurs de services.</li>
+      </ul>
+      <p>
+				Source: " Developing multi-agent applications with JADE. Tutorial for beginners " de la documentation officielle du JADE 
+			</p>
+    </div>
+    
+		<h1 class="TitreSection0" id="LII">II. Installation<a class="HautPage" href="http://djug.developpez.com/java/jade/creation-agent/#" title="Haut de page">&#9650;</a></h1><div class="BlocSection0">
+      
+      <p>
+				Voici les étapes à suivre pour installer JADE :
+			</p>
+      <ol type="1">
+        <li>téléchargez le fichier JADE-all-3.6.zip de l'adresse suivante : <br>    http://jade.tilab.com/download.php</li>
+        <li>décompressez le fichier (on va supposer tout au long de ce tutorial que le chemin du répertoire JADE-all-3.6  est le c:\ JADE-all-3.6 ). Apres avoir décompressé le fichier  vous retrouvez  quatre autres fichiers ZIP (JADE-bin-3.6.zip , JADE-doc-3.6.zip, JADE-examples-3.6.zip, JADE-src-3.6.zip). Décompressez ces 4 fichiers</li>
+        <li>on doit maintenant mettre à jour la variable <b>classpath</b> (si elle  n'existe pas encore il faut la créer) En faisant comme suit :</li>
+      </ol>
+      <ol type="a">
+        <li>par Clic  droit sur le poste de travail, choisissez  propriétés. La fenêtre propriétés système apparaît ,choisissez l'onglet Avancé
+Puis cliquez sur variables d'environnement 
+</li>
+      </ol>
+      <figure class="TextAlign-center"><a data-rel="lightbox[article]" href="./Créer votre premier agent avec JADE et ECLIPSE_files/02propriete systeme.JPG"><img class="ImgCliquable" src="./Créer votre premier agent avec JADE et ECLIPSE_files/02propriete systeme.JPG" alt="Image non disponible" width="292px" height="325px"></a></figure>
+      <p>
+				Une petite fenêtre intitulée " variables d'environnement " apparaît
+			</p>
+      <figure class="TextAlign-center"><a data-rel="lightbox[article]" href="./Créer votre premier agent avec JADE et ECLIPSE_files/03VarEnv.JPG"><img class="ImgCliquable" src="./Créer votre premier agent avec JADE et ECLIPSE_files/03VarEnv.JPG" alt="Image non disponible" width="294px" height="325px"></a></figure>
+      <p>
+				Dans la zone variables système, essayez de trouver la variable d'environnement qui porte le nom CLASSPATH. Si vous ne la trouvez pas,il faut la créer
+Maintenant que la variable est trouvée/créée on doit  lui attribuer une valeur .cette valeur est la concaténation des   chemins des  quatre fichiers jar http.jar, iiop.jar, jade.jar, jadeTools.jar situés dans le chemin c:\JADE-all-3.6\JADE-bin-3.6\jade\lib
+			</p>
+      <figure class="TextAlign-center"><img src="./Créer votre premier agent avec JADE et ECLIPSE_files/04classpath.JPG" alt="Image non disponible" width="354px" height="135px"></figure>
+      <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e244">&nbsp;<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e244" onclick="selectionCode(&#39;contenuCoded0e244&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e244" class="contenuCode">
+C:\JADE-all-3.6\JADE-bin-3.6\jade\lib\http.jar;C:\JADE-all-3.6\JADE-bin-3.6\jade\lib\iiop.jar;
+C:\JADE-all-3.6\JADE-bin-3.6\jade\lib\jade.jar;C:\JADE-all-3.6\JADE-bin-3.6\jade\lib\jadeTools.jar
+</code></pre></div>
+      <p>	
+Séparez les chemins  par des ;
+et Sauvegardez les modifications.
+Pour vérifier que l'opération est bien réalisée, tapez dans la fenêtre exécuter(démarrer-&gt;Exécuter) ou dans l'invite de commande la commande suivante :
+			</p>
+      <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e250">&nbsp;<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e250" onclick="selectionCode(&#39;contenuCoded0e250&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e250" class="contenuCode">
+Java jade.Boot -gui
+</code></pre></div>
+      <p>
+Une fenêtre dos s'ouvre qui lance la plateforme jade. La fenêtre suivante apparaît :
+
+			</p>
+      <figure class="TextAlign-center"><a data-rel="lightbox[article]" href="./Créer votre premier agent avec JADE et ECLIPSE_files/05JADEPlatform.JPG"><img class="ImgCliquable" src="./Créer votre premier agent avec JADE et ECLIPSE_files/05JADEPlatform.JPG" alt="Image non disponible" width="484px" height="325px"></a></figure>
+    </div>
+    
+		<h1 class="TitreSection0" id="LIII">III. Création du premier agent avec JADE et ECLIPSE<a class="HautPage" href="http://djug.developpez.com/java/jade/creation-agent/#" title="Haut de page">&#9650;</a></h1><div class="BlocSection0">
+      
+      <p>
+				Maintenant, nous allons créer notre premier agent. Nous allons utiliser l'exemple fourni avec la plateforme situé dans :
+C:\JADE-all-3.6\JADE-examples-3.6\jade\src\examples\hello. Ouvrez eclipse et créez un nouveau projet (MyFirstAgent par exemple), ajoutez un package (firstAgent)  puis créez une nouvelle classe appelée HelloWorldAgent.
+Collez le code suivant dans la classe. 
+
+			</p>
+      <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e267">&nbsp;<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e267" onclick="selectionCode(&#39;contenuCoded0e267&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e267" class="contenuCode">
+<code class="java_keyword2">package</code> firstAgent;
+<code class="java_keyword2">import</code> jade.core.Agent;
+
+<code class="java_comment3">/**</code>
+<code class="java_comment3"> </code><code class="java_comment3"> </code><code class="java_comment3"> </code><code class="java_comment3">This</code><code class="java_comment3"> </code><code class="java_comment3">example</code><code class="java_comment3"> </code><code class="java_comment3">shows</code><code class="java_comment3"> </code><code class="java_comment3">a</code><code class="java_comment3"> </code><code class="java_comment3">minimal</code><code class="java_comment3"> </code><code class="java_comment3">agent</code><code class="java_comment3"> </code><code class="java_comment3">that</code><code class="java_comment3"> </code><code class="java_comment3">just</code><code class="java_comment3"> </code><code class="java_comment3">prints</code><code class="java_comment3"> </code><code class="java_comment3">"</code><code class="java_comment3">Hello</code><code class="java_comment3"> </code><code class="java_comment3">World</code><code class="java_comment3">!</code><code class="java_comment3">"</code><code class="java_comment3"> </code>
+<code class="java_comment3"> </code><code class="java_comment3"> </code><code class="java_comment3"> </code><code class="java_comment3">and</code><code class="java_comment3"> </code><code class="java_comment3">then</code><code class="java_comment3"> </code><code class="java_comment3">terminates</code><code class="java_comment3">.</code>
+<code class="java_comment3"> </code><code class="java_comment3"> </code><code class="java_comment3"> </code><code class="java_label">@author</code><code class="java_comment3"> </code><code class="java_comment3">Giovanni</code><code class="java_comment3"> </code><code class="java_comment3">Caire</code><code class="java_comment3"> </code><code class="java_comment3">-</code><code class="java_comment3"> </code><code class="java_comment3">TILAB</code>
+<code class="java_comment3"> </code><code class="java_comment3">*/</code>
+<code class="java_keyword1">public</code> <code class="java_keyword3">class</code> HelloWorldAgent <code class="java_keyword1">extends</code> Agent <code class="java_operator">{</code>
+
+  <code class="java_keyword1">protected</code> <code class="java_keyword3">void</code> <code class="java_function">setup</code>() <code class="java_operator">{</code>
+  	System.out.<code class="java_function">println</code>(<code class="java_literal1">"</code><code class="java_literal1">Hello</code><code class="java_literal1"> </code><code class="java_literal1">World!</code><code class="java_literal1"> </code><code class="java_literal1">My</code><code class="java_literal1"> </code><code class="java_literal1">name</code><code class="java_literal1"> </code><code class="java_literal1">is</code><code class="java_literal1"> </code><code class="java_literal1">"</code><code class="java_operator">+</code><code class="java_function">getLocalName</code>());
+   	<code class="java_comment2">//</code><code class="java_comment2"> </code><code class="java_comment2">Make</code><code class="java_comment2"> </code><code class="java_comment2">this</code><code class="java_comment2"> </code><code class="java_comment2">agent</code><code class="java_comment2"> </code><code class="java_comment2">terminate</code>
+  	<code class="java_function">doDelete</code>();
+  <code class="java_operator">}</code> 
+<code class="java_operator">}</code>
+
+<code class="java_comment2">//</code><code class="java_comment2"> </code><code class="java_comment2">On</code><code class="java_comment2"> </code><code class="java_comment2">ne</code><code class="java_comment2"> </code><code class="java_comment2">va</code><code class="java_comment2"> </code><code class="java_comment2">pas</code><code class="java_comment2"> </code><code class="java_comment2">s'intéresser</code><code class="java_comment2"> </code><code class="java_comment2">à</code><code class="java_comment2"> </code><code class="java_comment2">comprendre</code><code class="java_comment2"> </code><code class="java_comment2">chaque</code><code class="java_comment2"> </code><code class="java_comment2">ligne</code><code class="java_comment2"> </code><code class="java_comment2">du</code><code class="java_comment2"> </code><code class="java_comment2">code</code><code class="java_comment2"> </code><code class="java_comment2">mais</code><code class="java_comment2"> </code><code class="java_comment2">juste</code><code class="java_comment2"> </code><code class="java_comment2">comment</code><code class="java_comment2"> </code><code class="java_comment2">compiler</code><code class="java_comment2"> </code><code class="java_comment2">et</code><code class="java_comment2"> </code><code class="java_comment2">lancer</code><code class="java_comment2"> </code><code class="java_comment2">l'agent.</code>
+</code></pre></div>
+      <p>
+				Vous remarquez l'existence de plusieurs erreurs dans ce petit   code. 
+Pour résoudre ce petit problème,effectuez un clic droit sur le nom du projet  Puis choisissez propriétés.
+Cliquez sur java build path &gt;&gt; Libraries&gt;&gt; add external JARs
+
+			</p>
+      <figure class="TextAlign-center"><a data-rel="lightbox[article]" href="./Créer votre premier agent avec JADE et ECLIPSE_files/06buildpath.JPG"><img class="ImgCliquable" src="./Créer votre premier agent avec JADE et ECLIPSE_files/06buildpath.JPG" alt="Image non disponible" width="401px" height="325px"></a></figure>
+      <p>
+				Ajoutez les quatre jar "http.jar" "iiop.jar" "jade.jar" "jadeTools.jar" situés dans
+C:\JADE-all-3.6\JADE-bin-3.6\jade\lib puis cliquez sur Ok
+
+			</p>
+    </div>
+    
+		<h1 class="TitreSection0" id="LIV">IV. Compilation et exécution de l'agent<a class="HautPage" href="http://djug.developpez.com/java/jade/creation-agent/#" title="Haut de page">&#9650;</a></h1><div class="BlocSection0">
+      
+      <p>
+				Il reste à compiler et lancer l'agent pour cela :
+Allez dans run&gt;&gt;Run configuration puis double-cliquez sur  java application
+Dans l'onglet " main "  et dans la zone de saisie Main class, tapez le code suivant : jade.Boot
+puis cochez la case : " Include librairies when searching for a main class "
+
+			</p>
+      <figure class="TextAlign-center"><a data-rel="lightbox[article]" href="./Créer votre premier agent avec JADE et ECLIPSE_files/07configuration1.JPG"><img class="ImgCliquable" src="./Créer votre premier agent avec JADE et ECLIPSE_files/07configuration1.JPG" alt="Image non disponible" width="408px" height="325px"></a></figure>
+    </div>
+    <p>
+			Et dans l'onglet arguments : tapez le code suivant :
+		</p>
+    <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e567">&nbsp;<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e567" onclick="selectionCode(&#39;contenuCoded0e567&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e567" class="contenuCode">
+-gui jade.Boot  NomDuL'agent:LeNomDuPackage.LeNomDeLaClasse
+</code></pre></div>
+    <p>
+			Dans notre exemple on tape le code suivant :
+		</p>
+    <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e573">&nbsp;<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e573" onclick="selectionCode(&#39;contenuCoded0e573&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e573" class="contenuCode">
+-gui jade.boot smith:firstAgent.HelloWorldAgent
+</code></pre></div>
+    <p>
+puis cliquez sur apply pour ne pas refaire cette configuration plusieurs fois dans le même projet
+
+		</p>
+    <figure class="TextAlign-center"><a data-rel="lightbox[article]" href="./Créer votre premier agent avec JADE et ECLIPSE_files/08configuration2.JPG"><img class="ImgCliquable" src="./Créer votre premier agent avec JADE et ECLIPSE_files/08configuration2.JPG" alt="Image non disponible" width="407px" height="325px"></a></figure>
+    <p>
+			Cliquez sur run pour voir le résultat (affichage de  Hello World! My name is smith
+ Dans la console et ouverture du la plateforme jade)
+
+		</p>
+    <figure class="TextAlign-center"><a data-rel="lightbox[article]" href="./Créer votre premier agent avec JADE et ECLIPSE_files/09resultat.JPG"><img class="ImgCliquable" src="./Créer votre premier agent avec JADE et ECLIPSE_files/09resultat.JPG" alt="Image non disponible" width="550px" height="325px"></a></figure>
+    
+		<h1 class="TitreSection0" id="LV">V. Remerciements<a class="HautPage" href="http://djug.developpez.com/java/jade/creation-agent/#" title="Haut de page">&#9650;</a></h1><div class="BlocSection0">
+      
+      <p>
+				Je remercie  Ricky81 et Pierre Fauconnier pour la relecture et l'encouragement.
+			</p>
+    </div>
+  </section>
+</article>
+		<div class="clear">&nbsp;&nbsp;</div>
+<p class="licence" style="margin-left: 446px;">Copyright ©  djug. 
+Aucune reproduction, même partielle, ne peut être faite 
+de ce site et de l'ensemble de son contenu&nbsp;: textes, documents, images, etc.
+sans l'autorisation expresse de l'auteur. Sinon vous encourez selon la loi jusqu'à 
+trois ans de prison et jusqu'à 300&nbsp;000&nbsp;€ de dommages et intérêts. 
+</p><div style="clear: both;"></div>
+</div>
+</section>
+
+<footer class="layout">
+	<div id="gabarit_footer">
+			Responsables bénévoles
+		de la rubrique Java :
+
+			<a href="http://www.developpez.net/forums/u189827/mlny84/" target="_blank">		mlny84</a>		-
+					<a href="http://www.developpez.net/forums/u69211/keulkeul/" target="_blank">			Mickael Baron</a>			-
+		
+		
+			
+		<script type="text/javascript">
+	<!--
+	Ch=new Array(4);Res=new Array(4);
+	Ch[0]='le_club_des_developeur';Ch[1]='ÙÆÈÏàä';
+	Ch[2]='¬×ÄÇÍØÖÈÓÓ';Ch[3]='ÐÊÕÈØäÒÏÉß¡ÂÓÒ';
+	for(y=1;y<4;y++){Res[y]="";for(x=0;x<Ch[y].length;x++)
+	Res[y]+=String.fromCharCode(Ch[y].charCodeAt(x)-Ch[0].charCodeAt(x));}
+	var st = '<a href="'+Res[1]+':java'+Res[2]+'-'+Res[3]+'">Contacter par email<\/a>';	document.write(st);
+	//-->
+	</script><a href="mailto:java@redaction-developpez.com">Contacter par email</a>
+
+	</div>
+	
+	<script type="text/javascript">
+	<!--
+	xtn2 = "2";
+	//-->
+	</script>
+	
+
+<div id="gabarit_pied">
+	<div id="gabarit_pied_contenu">
+		<div class="gabarit_pied_div">
+			<span>Developpez.com</span>
+			<p><a href="http://club.developpez.com/contacts/">Nous contacter</a></p>
+			<p><a href="http://www.developpez.com/participez/">Participez</a></p>
+			<p><a href="http://www.developpez.com/legal/">Informations légales</a></p>
+		</div>
+		<div class="gabarit_pied_div_separation">&nbsp;</div>
+		<div class="gabarit_pied_div">
+			<span>Services</span>
+			<p><a href="http://www.developpez.net/forums/f6/java/" onclick="window.open(this.href); return false;">Forum Java</a></p>
+			<p><a href="http://blog.developpez.com/">Blogs</a></p>
+			<p><a href="http://www.developpez.com/hebergement/">Hébergement</a></p>
+		</div>
+		<div class="gabarit_pied_div_separation">&nbsp;</div>
+		<div class="gabarit_pied_div">
+			<span>Partenaires</span>
+			<p><a href="http://www.developpez.com/redirect/1058" target="_blank">PlanetHoster</a></p>
+		</div>
+		<div style="clear: both;"></div>
+		<div id="gabarit_pied_copyright">
+			<p>Copyright © 2000-2015 - www.developpez.com</p>
+		</div>
+	</div>
+</div>
+
+</footer>
+<!-- Google Analytics général -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28115938-1']);
+  _gaq.push(['_setDomainName', 'developpez.com']);
+  _gaq.push(['_setCustomVar', 1, 'rubrique', 'java', 3]);
+  _gaq.push(['_setCustomVar', 2, 'type', 'Autre', 3]);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+
+
+		
+<div id="lightboxOverlay" style="display: none;"></div><div id="lightbox" style="display: none;"><div class="lb-outerContainer"><div class="lb-container"><img class="lb-image"><div class="lb-nav"><a class="lb-prev"></a><a class="lb-next"></a></div><div class="lb-loader"><a class="lb-cancel"><img src="./Créer votre premier agent avec JADE et ECLIPSE_files/lightbox-ico-loading.gif"></a></div></div></div><div class="lb-dataContainer"><div class="lb-data"><div class="lb-details"><span class="lb-caption"></span><span class="lb-number"></span></div><div class="lb-closeContainer"><a class="lb-close"><img src="./Créer votre premier agent avec JADE et ECLIPSE_files/lightbox-btn-close.png"></a></div></div></div></div></body></html>

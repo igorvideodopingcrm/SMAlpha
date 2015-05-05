@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<!-- saved from url=(0051)http://djug.developpez.com/java/jade/communication/ -->
+<html lang="fr" xmlns:og="http://ogp.me/ns#"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+	<meta charset="iso-8859-1">
+	<title>Les communications des agents JADE</title>
+	<meta name="generator" content="developpez-com">
+	<meta name="description" content="Les communications des agents JADE">
+	<meta name="keywords" content="communications,agents,JADE, systeme multi agent,sma,acl,acl message,">
+	<script type="text/javascript" async="" src="./Les communications des agents JADE_files/ga.js"></script><script type="text/javascript" src="./Les communications des agents JADE_files/jquery-1.7.2.js"></script><style type="text/css"></style>
+	<script type="text/javascript" src="./Les communications des agents JADE_files/saved_resource"></script>
+	<link rel="shortcut icon" type="image/x-icon" href="http://djug.developpez.com/template/favicon.ico">
+	<link rel="image_src" href="http://www.developpez.com/facebook-icon.png">
+	<link rel="stylesheet" type="text/css" href="./Les communications des agents JADE_files/gabarit0.css">
+	<link rel="stylesheet" type="text/css" media="print" href="./Les communications des agents JADE_files/printer.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="./Les communications des agents JADE_files/developpez-kit-generation.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="./Les communications des agents JADE_files/code.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="./Les communications des agents JADE_files/lightbox.2.51.css">
+	<script type="text/javascript" src="./Les communications des agents JADE_files/developpez-kit-generation.js"></script>
+	<script type="text/javascript" src="./Les communications des agents JADE_files/lightbox.2.51.js"></script>
+	<script type="text/javascript" src="./Les communications des agents JADE_files/fonctions-kit.js"></script>
+	<meta name="author" content="djug">
+	<!--[if lt IE 7]>
+	<script src="/template/ie7/IE7.js" type="text/javascript"></script>
+	<![endif]-->
+
+	<!--[if IE 6]>
+	<link rel="stylesheet" type="text/css" href="/template/gabarit-ie6.css" />
+	<![endif]-->
+
+	<!--[if IE 7]>
+	<link rel="stylesheet" type="text/css" href="/template/gabarit-ie7.css" />
+	<![endif]-->
+
+	<!--[if IE 8]>
+	<link rel="stylesheet" type="text/css" href="/template/gabarit-ie8.css" />
+	<![endif]-->
+
+	<!--[if lt IE 9]>
+	<script type="text/javascript" src="/template/kit/html5_ie.js"></script>
+	<![endif]-->
+	<!--[if IE 9]><link rel="stylesheet" type="text/css" href="http://www.developpez.com/template/kit/ie9.css" /><![endif]-->
+	<!--[if IE 8]><link rel="stylesheet" type="text/css" href="http://www.developpez.com/template/kit/ie8.css" /><![endif]-->
+	<!--[if lt IE 9]><link rel="stylesheet" type="text/css" href="http://www.developpez.com/template/kit/ie.css" /><![endif]-->
+	<!--[if IE 7]><link rel="stylesheet" type="text/css" href="http://www.developpez.com/template/kit/ie7.css" /><![endif]-->
+	<!--[if lte IE 6]><link rel="stylesheet" type="text/css" href="http://www.developpez.com/template/kit/ie6.css" /><![endif]-->
+	<!--[if lt IE 9]><script type="text/javascript" src="http://www.developpez.com/template/kit/html5_ie.js"></script><![endif]-->
+
+</head>
+<body>
+<header class="layout">
+
+<div id="quicknav">
+	<div id="quicksearch">
+		<form method="get" action="http://www.developpez.com/recherche/" id="cse-search-box">
+			<p>
+				<input type="text" name="q" id="recherche_g" style="border: 1px solid rgb(126, 157, 185); padding: 2px; background: url(http://www.google.com/cse/intl/fr/images/google_custom_search_watermark.gif) 0% 50% no-repeat rgb(255, 255, 255);">
+				<input type="image" name="sa" id="recherche_submit" alt="Go" title="Rechercher" src="./Les communications des agents JADE_files/go-gray.png">
+				<input type="hidden" name="cx" value="006424388311999799839:-31tnf0iuqy">
+				<input type="hidden" name="cof" value="FORID:9">
+				<input type="hidden" name="ie" value="ISO-8859-1">
+			</p>
+		<input name="siteurl" type="hidden" value="djug.developpez.com/java/jade/communication/"><input name="ref" type="hidden" value="www.developpez.net/forums/d792666/java/general-java/langage/autres/programmation-agent/communications-agents-jade/"><input name="ss" type="hidden" value=""></form>
+		<script type="text/javascript" src="./Les communications des agents JADE_files/brand"></script>
+	</div>
+<nav>	<ul id="quicklinks">
+		<li class="first"><a href="http://www.developpez.net/forums/" title="">Forums</a></li>
+		<li><a href="http://general.developpez.com/cours/" title="">Tutoriels</a></li>
+		<li><a href="http://magazine.developpez.com/" title="">Magazine</a></li>
+		<li><a href="http://general.developpez.com/faq/" title="">FAQs</a></li>
+		<li><a href="http://www.developpez.net/forums/blogs/" title="">Blogs</a></li>
+		<li><a href="http://projets.developpez.com/" title="">Projets</a></li>
+		<li><a href="http://chat.developpez.com/" title="">Chat</a></li>
+		<li><a href="http://www.developpez.com/newsletter/">Newsletter</a></li>
+		<li><a href="http://etudes.developpez.com/">Études</a></li>
+		<li><a href="http://emploi.developpez.com/" title="">Emploi</a></li>
+		<li><a href="http://club.developpez.com/">Club</a></li>
+		<li><a href="http://club.developpez.com/contacts/" title="">Contacts</a></li>
+	</ul>
+</nav></div>
+<div style="position: relative; clear: both; float: right; top: -2px; width: 728px; margin-top: 10px; margin-right: 10px; text-align: right; background-color: #E1E1E2">
+<iframe width="0" height="0" style="border: 0px; display: none !important; visibility: hidden !important; opacity: 0 !important; background-position: 728px 90px;" scrolling="no" seamless="seamless" src="about:blank"></iframe>
+</div>
+
+	<div id="logo_dvp">
+		<a href="http://www.developpez.com/" title="Accueil Developpez.com">
+			<img src="./Les communications des agents JADE_files/logo.png" alt="">
+		</a>
+	</div>
+
+<nav id="gabarit">
+
+<div id="gabarit_tabmenu">
+	<ul id="tabs">
+	<li class="item">
+
+	<a href="http://www.developpez.com/">
+		Accueil
+	<span class="tooltip">Actualités IT Pro</span>	</a>
+
+		</li>
+	<li class="item">
+
+	<a href="http://alm.developpez.com/">
+		ALM
+	<span class="tooltip">Cycle de vie du logiciel</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://alm.developpez.com/">ALM</a></li>
+					<li>			<a href="http://merise.developpez.com/">Merise</a></li>
+					<li class="last">			<a href="http://uml.developpez.com/">UML</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://java.developpez.com/" class="selected">
+		Java
+	<span class="tooltip">Plateforme et langage Java</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://java.developpez.com/">Java</a></li>
+					<li>			<a href="http://javaweb.developpez.com/">Java Web</a></li>
+					<li>			<a href="http://spring.developpez.com/">Spring</a></li>
+					<li>			<a href="http://android.developpez.com/">Android</a></li>
+					<li>			<a href="http://eclipse.developpez.com/">Eclipse</a></li>
+					<li class="last">			<a href="http://netbeans.developpez.com/">NetBeans</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://dotnet.developpez.com/">
+		.NET
+	<span class="tooltip">Microsoft Framework .NET</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://dotnet.developpez.com/">Microsoft DotNET</a></li>
+					<li>			<a href="http://dotnet.developpez.com/visual-studio/">Visual Studio</a></li>
+					<li>			<a href="http://dotnet.developpez.com/aspnet/">ASP.NET</a></li>
+					<li>			<a href="http://dotnet.developpez.com/csharp/">C#</a></li>
+					<li>			<a href="http://dotnet.developpez.com/vbnet/">VB.NET</a></li>
+					<li>			<a href="http://windowsphone.developpez.com/">Windows Phone</a></li>
+					<li class="last">			<a href="http://windows-azure.developpez.com/">Microsoft Azure</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://web.developpez.com/">
+		Dév. Web
+	<span class="tooltip">Développement Web et Webmarketing</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://web.developpez.com/">Développement Web</a></li>
+					<li>			<a href="http://ajax.developpez.com/">AJAX</a></li>
+					<li>			<a href="http://apache.developpez.com/">Apache</a></li>
+					<li>			<a href="http://asp.developpez.com/">ASP</a></li>
+					<li>			<a href="http://css.developpez.com/">CSS</a></li>
+					<li>			<a href="http://dart.developpez.com/">Dart</a></li>
+					<li>			<a href="http://flash.developpez.com/">Flash / Flex</a></li>
+					<li>			<a href="http://javascript.developpez.com/">JavaScript</a></li>
+					<li>			<a href="http://php.developpez.com/">PHP</a></li>
+					<li>			<a href="http://ruby.developpez.com/">Ruby &amp; Rails</a></li>
+					<li>			<a href="http://web-semantique.developpez.com/">Web sémantique</a></li>
+					<li>			<a href="http://webmarketing.developpez.com/">Webmarketing</a></li>
+					<li class="last">			<a href="http://xhtml.developpez.com/">(X)HTML</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://edi.developpez.com/">
+		EDI
+	<span class="tooltip">Environnements de Développement Intégré</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://edi.developpez.com/">EDI</a></li>
+					<li>			<a href="http://4d.developpez.com/">4D</a></li>
+					<li>			<a href="http://delphi.developpez.com/">Delphi</a></li>
+					<li>			<a href="http://eclipse.developpez.com/">Eclipse</a></li>
+					<li>			<a href="http://labview.developpez.com/">LabVIEW</a></li>
+					<li>			<a href="http://netbeans.developpez.com/">NetBeans</a></li>
+					<li>			<a href="http://matlab.developpez.com/">MATLAB</a></li>
+					<li>			<a href="http://scilab.developpez.com/">Scilab</a></li>
+					<li>			<a href="http://dotnet.developpez.com/visual-studio/">Visual Studio</a></li>
+					<li>			<a href="http://wind.developpez.com/">WinDev</a></li>
+					<li>			<a href="http://vb.developpez.com/">Visual Basic 6</a></li>
+					<li>			<a href="http://lazarus.developpez.com/">Lazarus</a></li>
+					<li class="last">			<a href="http://qt-creator.developpez.com/">Qt Creator</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://programmation.developpez.com/">
+		Programmation
+	<span class="tooltip">Programmation et langages de programmation applicatifs</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://programmation.developpez.com/">Programmation</a></li>
+					<li>			<a href="http://algo.developpez.com/">Débuter - Algorithmique</a></li>
+					<li>			<a href="http://jeux.developpez.com/">2D - 3D - Jeux</a></li>
+					<li>			<a href="http://asm.developpez.com/">Assembleur</a></li>
+					<li>			<a href="http://c.developpez.com/">C</a></li>
+					<li>			<a href="http://cpp.developpez.com/">C++</a></li>
+					<li>			<a href="http://go.developpez.com/">Go</a></li>
+					<li>			<a href="http://objective-c.developpez.com/">Objective C</a></li>
+					<li>			<a href="http://pascal.developpez.com/">Pascal</a></li>
+					<li>			<a href="http://perl.developpez.com/">Perl</a></li>
+					<li>			<a href="http://python.developpez.com/">Python</a></li>
+					<li>			<a href="http://swift.developpez.com/">Swift</a></li>
+					<li>			<a href="http://qt.developpez.com/">Qt</a></li>
+					<li>			<a href="http://xml.developpez.com/">XML</a></li>
+					<li class="last">			<a href="http://general.developpez.com/cours/">Autres</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://sgbd.developpez.com/">
+		SGBD
+	<span class="tooltip">Systèmes de Gestion de Bases de Données</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://sgbd.developpez.com/">SGBD &amp; SQL</a></li>
+					<li>			<a href="http://4d.developpez.com/">4D</a></li>
+					<li>			<a href="http://access.developpez.com/">Access</a></li>
+					<li>			<a href="http://big-data.developpez.com/">Big Data</a></li>
+					<li>			<a href="http://db2.developpez.com/">DB2</a></li>
+					<li>			<a href="http://firebird.developpez.com/">Firebird</a></li>
+					<li>			<a href="http://interbase.developpez.com/">InterBase</a></li>
+					<li>			<a href="http://mysql.developpez.com/">MySQL</a></li>
+					<li>			<a href="http://nosql.developpez.com/">NoSQL</a></li>
+					<li>			<a href="http://postgresql.developpez.com/">PostgreSQL</a></li>
+					<li>			<a href="http://oracle.developpez.com/">Oracle</a></li>
+					<li>			<a href="http://sybase.developpez.com/">Sybase</a></li>
+					<li class="last">			<a href="http://sqlserver.developpez.com/">SQL-Server</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://office.developpez.com/">
+		Office
+	<span class="tooltip">Bureautique pour l'entreprise</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://office.developpez.com/">Microsoft Office</a></li>
+					<li>			<a href="http://access.developpez.com/">Access</a></li>
+					<li>			<a href="http://excel.developpez.com/">Excel</a></li>
+					<li>			<a href="http://word.developpez.com/">Word</a></li>
+					<li>			<a href="http://outlook.developpez.com/">Outlook</a></li>
+					<li>			<a href="http://powerpoint.developpez.com/">PowerPoint</a></li>
+					<li>			<a href="http://sharepoint.developpez.com/">SharePoint</a></li>
+					<li>			<a href="http://project.developpez.com/">Microsoft Project</a></li>
+					<li class="last">			<a href="http://openoffice-libreoffice.developpez.com/">OpenOffice &amp; LibreOffice</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://solutions-entreprise.developpez.com/">
+		Solutions d'entreprise
+	<span class="tooltip">Autres logiciels pour l'entreprise</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://solutions-entreprise.developpez.com/">Solutions d'entreprise</a></li>
+					<li>			<a href="http://big-data.developpez.com/">Big Data</a></li>
+					<li>			<a href="http://business-intelligence.developpez.com/">Business Intelligence</a></li>
+					<li>			<a href="http://solutions-entreprise.developpez.com/erp-pgi/presentation-erp-pgi/">ERP / PGI</a></li>
+					<li>			<a href="http://crm.developpez.com/">CRM</a></li>
+					<li>			<a href="http://sas.developpez.com/">SAS</a></li>
+					<li>			<a href="http://cloud-computing.developpez.com/">Cloud Computing</a></li>
+					<li>			<a href="http://sap.developpez.com/">SAP</a></li>
+					<li>			<a href="http://www.developpez.net/forums/f1664/systemes/windows/windows-serveur/biztalk-server/">Microsoft BizTalk Server</a></li>
+					<li class="last">			<a href="http://talend.developpez.com/">Talend</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://applications.developpez.com/">
+		Applications
+	<span class="tooltip">Applications logicielles</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://applications.developpez.com/">Applications</a></li>
+					<li>			<a href="http://open-source.developpez.com/">Libres &amp; Open Source</a></li>
+					<li>			<a href="http://openoffice-libreoffice.developpez.com/">OpenOffice &amp; LibreOffice</a></li>
+					<li class="last">			<a href="http://portail-projets.developpez.com/">Projets</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://mobiles.developpez.com/">
+		Mobiles
+	<span class="tooltip">Logiciels et matériels mobiles</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://mobiles.developpez.com/">Mobiles</a></li>
+					<li>			<a href="http://android.developpez.com/">Android</a></li>
+					<li>			<a href="http://ios.developpez.com/">iOS</a></li>
+					<li class="last">			<a href="http://windowsphone.developpez.com/">Windows Phone</a></li>
+		
+			</ul>	</li>
+	<li class="item">
+
+	<a href="http://systeme.developpez.com/">
+		Systèmes
+	<span class="tooltip">Logiciels et matériels systèmes</span>	</a>
+
+	<ul class="submenu">
+		<li><a href="http://systeme.developpez.com/">Systèmes</a></li>
+					<li>			<a href="http://windows.developpez.com/">Windows</a></li>
+					<li>			<a href="http://linux.developpez.com/">Linux</a></li>
+					<li>			<a href="http://securite.developpez.com/">Sécurité</a></li>
+					<li>			<a href="http://hardware.developpez.com/">PC</a></li>
+					<li>			<a href="http://mac.developpez.com/">Mac</a></li>
+					<li>			<a href="http://reseau.developpez.com/">Réseau</a></li>
+					<li>			<a href="http://green-it.developpez.com/">Green IT</a></li>
+					<li>			<a href="http://virtualisation.developpez.com/">Virtualisation</a></li>
+					<li class="last">			<a href="http://embarque.developpez.com/">Systèmes Embarqués</a></li>
+		
+			</ul>	</li>
+	</ul>
+</div>
+
+	<div id="gabarit_topicmenu">
+		<ul id="topics">
+												<li class="selected">
+								<a href="http://java.developpez.com/">Java</a></li>
+															<li>
+								<a href="http://javaweb.developpez.com/">Java Web</a>
+				</li>
+												<li>
+								<a href="http://spring.developpez.com/">Spring</a>
+				</li>
+												<li>
+								<a href="http://android.developpez.com/">Android</a>
+				</li>
+												<li>
+								<a href="http://eclipse.developpez.com/">Eclipse</a>
+				</li>
+												<li>
+								<a href="http://netbeans.developpez.com/">NetBeans</a>
+				</li>
+					</ul>
+	</div>
+
+<div id="gabarit_resourcemenu">
+	<div id="googleplus_bloc">
+		<a href="https://plus.google.com/114187622962832882709" rel="publisher" target="_blank"><img src="./Les communications des agents JADE_files/googleplus.png" alt="Google+" title="Retrouver Developpez sur Google+"></a>
+	</div>
+	<div id="facebook_bloc">
+		<a href="http://www.facebook.com/pages/Java/368176262168" target="_blank"><img src="./Les communications des agents JADE_files/facebook.png" alt="Facebook" title="Retrouver Developpez sur Facebook"></a>
+	</div>
+	<div id="twitter_bloc">
+		<a href="http://twitter.com/javaDeveloppez" target="_blank"><img src="./Les communications des agents JADE_files/twitter.png" alt="Twitter" title="Retrouver Developpez sur Twitter"></a>
+	</div>
+	<div id="rss_syndication">
+		<a href="http://java.developpez.com/index/rss" target="_blank"><img src="./Les communications des agents JADE_files/rss.png" alt="RSS" title="Flux RSS"></a>
+	</div>
+	<ul id="resources">		<li><a href="http://www.developpez.net/forums/f6/java/">Forums</a></li>
+			<li><a href="http://java.developpez.com/faq/">FAQs</a></li>
+			<li><a href="http://java.developpez.com/cours/">Tutoriels</a></li>
+			<li><a href="http://java.developpez.com/livres/">Livres</a></li>
+			<li><a href="http://java.developpez.com/videos/">Vidéos</a></li>
+			<li><a href="http://java.developpez.com/telecharger/index/categorie/43/Sources-Java">Sources</a></li>
+			<li><a href="http://java.developpez.com/outils/">Outils, EDI &amp; API</a></li>
+			<li><a href="http://javasearch.developpez.com/">JavaSearch</a></li>
+	</ul>
+</div>
+</nav>
+</header>
+
+<section class="layout">
+<div class="contenuPage">		<article class="ArticleComplet" itemscope="" itemtype="http://schema.org/Article" style="margin: 0px 20px;">
+<meta itemprop="genre" content="informatique">
+<meta itemprop="inLanguage" content="fr-FR">
+		
+<header class="EnteteTitres">
+<h1 class="titre-article" itemprop="name">Les communications des agents JADE</h1>
+
+</header><nav class="nav-sommaire" role="navigation" style="">
+<header><h1 class="TitreHeader StopArrondi ToggleGecko">Table des matières<img class="ToggleImgPlier" title="Plier" alt="Plier" src="./Les communications des agents JADE_files/fleche-haut-bleue.gif"><img class="ToggleImgDeplier" title="Déplier" alt="Déplier" src="./Les communications des agents JADE_files/fleche-bas-bleue.gif" style="display:none;"></h1></header>
+<ul id="nav_sommaire_ul_principal" class="nav-sommaire-ul" style="overflow-y: auto;">
+    <li><a class="summaryIndent0" href="http://djug.developpez.com/java/jade/communication/#LI">I. Introduction</a></li>
+    <li><a class="summaryIndent0" href="http://djug.developpez.com/java/jade/communication/#LII">II. Format d'un message JADE</a></li>
+    <li><a class="summaryIndent0" href="http://djug.developpez.com/java/jade/communication/#LIII">III. L'envoi d'un message </a></li>
+    <li><a class="summaryIndent0" href="http://djug.developpez.com/java/jade/communication/#LIV">IV. La réception d'un message </a></li>
+    <li><a class="summaryIndent0" href="http://djug.developpez.com/java/jade/communication/#LV">V. L'attente d'un message </a></li>
+    <li><a class="summaryIndent0" href="http://djug.developpez.com/java/jade/communication/#LVI">VI. Choisir un message de la boite aux lettres</a></li>
+    <li><a class="summaryIndent0" href="http://djug.developpez.com/java/jade/communication/#LVII">VII. Exemple</a></li>
+    <li><a class="summaryIndent0" href="http://djug.developpez.com/java/jade/communication/#LVIII">VIII. Conclusion</a></li>
+    <li><a class="summaryIndent0" href="http://djug.developpez.com/java/jade/communication/#LIX">IX. Remerciement</a></li>
+  </ul></nav>
+
+
+<div class="fixeMarge"><section itemprop="about" class="SectionSynopsis">
+    <p>
+		Après avoir vu <a class="lienArticle simple" href="http://djug.developpez.com/java/jade/creation-agent/" target="_blank">comment créer un agent JADE</a> et <a class="lienArticle simple" href="http://djug.developpez.com/java/jade/behaviours/" target="_blank">comment définir ses tâches</a> ; alors pour parler d'un véritable système multi-agents et non pas d'un ensemble d'agents agissant d'une manière individuelle, il est temps de voir comment les agents  communiquent et s'échangent les messages.
+Cet article a comme but de montrer comment les agents JADE s'échangent les messages, et comment créer des conversations entre les agents JADE.
+<a class="lienforum" href="http://www.developpez.net/forums/showthread.php?t=792666">245&nbsp;commentaires</a> <a href="http://www.developpez.net/forums/showthread.php?t=792666&nojs=1#goto_threadrating" title="Donner une note à l&#39;article (4.5)"><img src="./Les communications des agents JADE_files/kitstars-4-5.gif" width="66" height="14" style="border: none" alt="Donner une note à l&#39;article (4.5)"></a></p>
+  <p class="TextNbrVues" style="display: block;">Article lu <span id="NbrVues">5156</span> fois.</p></section></div><div class="InfoAuthArtBook" style="height: 133px;">
+	<section class="SectionAuteurs">
+	<header><h1 class="TitreHeader">L'auteur</h1></header>
+<p class="auteur" itemprop="author" itemscope="" itemtype="http://schema.org/Person"><a itemprop="url" class="auteur" href="http://www.developpez.net/forums/u166060/djug/"><span itemprop="author">Youghourta BENALI</span></a><a class="homepage" href="http://djug.developpez.com/"><img src="./Les communications des agents JADE_files/kitbm-site-personnel.png" title="site de Djug" alt="Site personnel" style="vertical-align:middle;"></a></p>
+</section>
+<section class="SectionInformationArticle">
+<header><h1 class="TitreHeader">L'article</h1></header>
+
+<p class="InfoArticle">Publié&nbsp;le&nbsp;<span itemprop="datePublished">10&nbsp;août&nbsp;2009&nbsp;</span></p><p>
+<span class="lientelechargementpdf"><a class="lientelechargement" href="http://djug.developpez.com/java/jade/communication/communication-jade.pdf" title="Télécharger la version PDF de cet article.">Version PDF</a></span>
+<span class="lientelechargementzip"><a class="lientelechargement" href="http://djug.developpez.com/java/jade/communication/communication-jade.zip" title="Télécharger la version HTML de cet article.">Version hors-ligne</a></span></p>
+<p><span class="lientelechargementebook"><a class="lientelechargement" href="http://djug.developpez.com/java/jade/communication/communication-jade.epub" title="Télécharger la version ePub de l&#39;article compatible avec la plupart des liseuses non Kindle (Amazon).">ePub</a></span>, <span class="lientelechargementebook"><a class="lientelechargement" href="http://djug.developpez.com/java/jade/communication/communication-jade.azw" title="Télécharger la version Azw spécifique aux liseuses Kindle (Amazon).">Azw</a></span> et <span class="lientelechargementebook"><a class="lientelechargement" href="http://djug.developpez.com/java/jade/communication/communication-jade.mobi" title="Télécharger la version Mobi de l&#39;article compatible avec les liseuses Amazon.">Mobi</a></span></p>
+</section>
+<section class="SectionBookmarks">
+<header><h1 class="TitreHeader">Liens&nbsp;sociaux</h1></header>
+<div class="InfoBookmarks"><a title="Viadeo" href="http://www.viadeo.com/shareit/share/?url=http%3A%2F%2Fdjug.developpez.com%2Fjava%2Fjade%2Fcommunication%2F&Title=Les+communications+des+agents+JADE" rel="nofollow"><img alt="Viadeo" src="./Les communications des agents JADE_files/kitbm-viadeo.gif"></a>&nbsp;<a title="Twitter" href="http://twitter.com/timeline/home?status=http%3A%2F%2Fdjug.developpez.com%2Fjava%2Fjade%2Fcommunication%2F" rel="nofollow"><img alt="Twitter" src="./Les communications des agents JADE_files/kitbm-twitter.png"></a>&nbsp;<a title="Facebook" href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fdjug.developpez.com%2Fjava%2Fjade%2Fcommunication%2F" rel="nofollow"><img alt="Facebook" src="./Les communications des agents JADE_files/kitbm-facebook.gif"></a>&nbsp;<a title="Google +" href="https://plus.google.com/share?url=http%3A%2F%2Fdjug.developpez.com%2Fjava%2Fjade%2Fcommunication%2F" onclick="javascript:window.open(this.href, &#39;&#39;, &#39;menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600&#39;);return false;"><img src="./Les communications des agents JADE_files/gplus-16.png" alt="Share on Google+"></a>&nbsp;</div>
+</section></div><section itemprop="articleBody" class="articleBody" style="margin-left: 471px; margin-top: 20px; clear: none;">
+    
+		<h1 class="TitreSection0" id="LI">I. Introduction<a class="HautPage" href="http://djug.developpez.com/java/jade/communication/#" title="Haut de page">&#9650;</a></h1><div class="BlocSection0">
+      
+      <p>
+				Pour que plusieurs agents  JADE arrivent à collaborer, ils doivent s'échanger des messages. Chaque agent JADE possède une sorte de boite aux lettres qui contient les messages qui lui sont envoyés par les autres agents. Ces boites aux lettres sont sous forme d'une liste qui contient les messages selon l'ordre chronologique de leur arrivée.
+			</p>
+    </div>
+    
+		<h1 class="TitreSection0" id="LII">II. Format d'un message JADE<a class="HautPage" href="http://djug.developpez.com/java/jade/communication/#" title="Haut de page">&#9650;</a></h1><div class="BlocSection0">
+      
+      <p>
+				Les agents JADE utilisent des messages conformes aux spécifications de la FIPA  (<a class="lienArticle En" href="http://www.fipa.org/specs/fipa00061/SC00061G.html" target="_blank">FIPA-ACL</a> ) .les messages JADE sont des instances de la classe  ACLMessage du package  jade.lang.acl. Ces messages sont composés en général de :
+			</p>
+      <ul class="ListeDVP">
+        <li>L'émetteur du message : un champ rempli automatiquement lors de l'envoi d'un message.</li>
+        <li>L'ensemble des récepteurs du message : un message peut être envoyé à plusieurs agents simultanément.</li>
+        <li>L'acte de communication : qui représente le but de l'envoi du message en cours (informer l'agent récepteur, appel d'offre, réponse à une requête,…)</li>
+        <li>Le contenu du message.</li>
+        <li>Un ensemble de champs facultatifs, comme la langue utilisée, l'ontologie, le timeOut, l'adresse de réponse…</li>
+      </ul>
+    </div>
+    
+		<h1 class="TitreSection0" id="LIII">III. L'envoi d'un message <a class="HautPage" href="http://djug.developpez.com/java/jade/communication/#" title="Haut de page">&#9650;</a></h1><div class="BlocSection0">
+      
+      <p>
+				Pour envoyer un message, il suffit de  remplir les champs nécessaires  (l'ensemble des récepteur et le contenu du message et l'acte  de communication)  d'un message JADE, puis d'appeler la méthode send() de la classe Agent.
+Voici un exemple d'envoi d'un message JADE.
+
+			</p>
+      <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e150">&nbsp;<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e150" onclick="selectionCode(&#39;contenuCoded0e150&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e150" class="contenuCode">
+ACLMessage message <code class="java_operator">=</code> <code class="java_keyword1">new</code> <code class="java_function">ACLMessage</code>(ACLMessage.INFORM);
+message.<code class="java_function">addReceiver</code>(<code class="java_keyword1">new</code> <code class="java_function">AID</code>(<code class="java_literal1">"</code><code class="java_literal1">said</code><code class="java_literal1">"</code>, AID.ISLOCALNAME));
+message.<code class="java_function">setContent</code>(<code class="java_literal1">"</code><code class="java_literal1">bonjour…</code><code class="java_literal1">"</code>);
+<code class="java_function">send</code>(message);
+</code></pre></div>
+      <p>
+				ce message est envoyé  à l'agent appelé Said pour lui dire bonjour.
+			</p>
+    </div>
+    
+		<h1 class="TitreSection0" id="LIV">IV. La réception d'un message <a class="HautPage" href="http://djug.developpez.com/java/jade/communication/#" title="Haut de page">&#9650;</a></h1><div class="BlocSection0">
+      
+      <p>
+				La réception d'un message est aussi simple que l'envoi. Il suffit d'appeler la méthode reveive() de la classe Agent pour récupérer le première message  non encore lu de l'agent.
+<br>Exemple :<br></p>
+      <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e206">&nbsp;<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e206" onclick="selectionCode(&#39;contenuCoded0e206&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e206" class="contenuCode">
+ACLMessage messageRecu <code class="java_operator">=</code> <code class="java_function">receive</code>();
+</code></pre></div>
+      <p>
+				Pour répondre à un message reçu on récupère l'identité de l'émetteur du message par la méthode getSender() ;
+<br>Voici un exemple :<br></p>
+      <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e221">&nbsp;<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e221" onclick="selectionCode(&#39;contenuCoded0e221&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e221" class="contenuCode">
+ACLMessage message <code class="java_operator">=</code> <code class="java_keyword1">new</code> <code class="java_function">ACLMessage</code>(ACLMessage.INFORM);
+message.<code class="java_function">addReceiver</code>(messageRecu.<code class="java_function">getSender</code>());
+message.<code class="java_function">setContent</code>(<code class="java_literal1">"</code><code class="java_literal1">la</code><code class="java_literal1"> </code><code class="java_literal1">reponse</code><code class="java_literal1">"</code>);  
+<code class="java_function">send</code>(message);  
+</code></pre></div>
+    </div>
+    
+		<h1 class="TitreSection0" id="LV">V. L'attente d'un message <a class="HautPage" href="http://djug.developpez.com/java/jade/communication/#" title="Haut de page">&#9650;</a></h1><div class="BlocSection0">
+      
+      <p>
+				Il se peut qu'un agent doive effectuer un certain traitement ou lancer quelques tâches après avoir reçu un message d'un autre agent.
+Il est possible de faire une attente active jusqu'à l'arrivé du message de la manière suivante :
+
+			</p>
+      <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e265">&nbsp;<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e265" onclick="selectionCode(&#39;contenuCoded0e265&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e265" class="contenuCode">
+ACLMessage message <code class="java_operator">=</code><code class="java_literal2">null</code> ;
+While (message <code class="java_operator">=</code><code class="java_operator">=</code> <code class="java_literal2">null</code>)<code class="java_operator">{</code>
+Message <code class="java_operator">=</code> <code class="java_function">receive</code>() ;
+<code class="java_operator">}</code>
+<code class="java_comment2">//</code><code class="java_comment2">traitement</code><code class="java_comment2"> </code><code class="java_comment2">à</code><code class="java_comment2"> </code><code class="java_comment2">faire</code><code class="java_comment2"> </code><code class="java_comment2">après</code><code class="java_comment2"> </code><code class="java_comment2">avoir</code><code class="java_comment2"> </code><code class="java_comment2">reçu</code><code class="java_comment2"> </code><code class="java_comment2">le</code><code class="java_comment2"> </code><code class="java_comment2">message.</code>
+</code></pre></div>
+      <p>
+				Mais ce genre d'attente active consomme énormément les ressources de la machine sur laquelle l'agent s'exécute.
+On peut aussi bloquer un Behaviour d'un agent jusqu'à la réception du message, et ceci grâce à la méthode block() de la classe Behaviour.
+
+			</p>
+      <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e329">&nbsp;<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e329" onclick="selectionCode(&#39;contenuCoded0e329&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e329" class="contenuCode">
+Message <code class="java_operator">=</code> <code class="java_function">receive</code>() ;
+If (message <code class="java_operator">=</code><code class="java_operator">=</code> <code class="java_literal2">null</code>) <code class="java_function">block</code>();
+<code class="java_comment2">//</code><code class="java_comment2">traitement</code><code class="java_comment2"> </code><code class="java_comment2">à</code><code class="java_comment2"> </code><code class="java_comment2">faire</code><code class="java_comment2"> </code><code class="java_comment2">après</code><code class="java_comment2"> </code><code class="java_comment2">avoir</code><code class="java_comment2"> </code><code class="java_comment2">reçu</code><code class="java_comment2"> </code><code class="java_comment2">le</code><code class="java_comment2"> </code><code class="java_comment2">message.</code>
+</code></pre></div>
+      <p>
+				Le Behaviour se bloque jusqu'à la réception d'un message.
+			</p>
+      <p class="imgtext-info">
+				A la réception d'un message tous les Behaviour bloqués de l'agent continuent leur exécution.
+			</p>
+    </div>
+    
+		<h1 class="TitreSection0" id="LVI">VI. Choisir un message de la boite aux lettres<a class="HautPage" href="http://djug.developpez.com/java/jade/communication/#" title="Haut de page">&#9650;</a></h1><div class="BlocSection0">
+      
+      <p>
+				Lorsqu'un agent communique simultanément avec plusieurs agents,  il peut décider un moment de ne lire que les messages de la provenance d'un agent particulier ou les messages ayant un acte  de communication particulier.
+Pour cela un agent peut définir un modèle de message à recevoir.<br>Exemple :<br></p>
+      <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e400">&nbsp;<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e400" onclick="selectionCode(&#39;contenuCoded0e400&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e400" class="contenuCode">
+MessageTemplate modele <code class="java_operator">=</code> MessageTemplate.<code class="java_function">MatchPerformative</code>(ACLMessage.INFORM);			 
+ACLMessage msg <code class="java_operator">=</code> myAgent.<code class="java_function">receive</code>(modele);
+</code></pre></div>
+    </div>
+    
+		<h1 class="TitreSection0" id="LVII">VII. Exemple<a class="HautPage" href="http://djug.developpez.com/java/jade/communication/#" title="Haut de page">&#9650;</a></h1><div class="BlocSection0">
+      
+      <p>
+				
+Voici un exemple de communication entre deux agents. Nous avons deux agents : AgentA et AgentB. AgentA produit des nombres aléatoires puis les envoies à AgentB qui cumule ces nombre aléatoires. Tant que la somme ne dépasse pas un certain seuil (50 dans l'exemple), il informe AgentA qu'il est prêt à recevoir d'autres nombres aléatoires. Dés que le seuil est dépassé, AgentB informe AgentA et s'arrête. Dès qu'AgentA reçoit le message d'arrêt, il s'arrête également. 
+			</p>
+      <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e424">AgentA.java<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e424" onclick="selectionCode(&#39;contenuCoded0e424&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e424" class="contenuCode">
+
+<code class="java_keyword2">import</code> jade.core.AID;
+<code class="java_keyword2">import</code> jade.core.Agent;
+<code class="java_keyword2">import</code> jade.core.behaviours.FSMBehaviour;
+<code class="java_keyword2">import</code> jade.core.behaviours.OneShotBehaviour;
+<code class="java_keyword2">import</code> jade.lang.acl.ACLMessage;
+
+<code class="java_keyword1">public</code> <code class="java_keyword3">class</code> AgentA <code class="java_keyword1">extends</code> Agent <code class="java_operator">{</code>
+  
+<code class="java_keyword1">protected</code> <code class="java_keyword3">void</code> <code class="java_function">setup</code>()<code class="java_operator">{</code>
+  
+  System.out.<code class="java_function">println</code>(<code class="java_literal1">"</code><code class="java_literal1">---------------------------------------</code><code class="java_literal1">"</code>);
+  System.out.<code class="java_function">println</code>(<code class="java_literal1">"</code><code class="java_literal1">----------------agent</code><code class="java_literal1"> </code><code class="java_literal1">A----------------</code><code class="java_literal1">"</code>);
+  System.out.<code class="java_function">println</code>(<code class="java_literal1">"</code><code class="java_literal1">---------------------------------------</code><code class="java_literal1">"</code>);
+  
+  FSMBehaviour agentA_beh<code class="java_operator">=</code> <code class="java_keyword1">new</code> <code class="java_function">FSMBehaviour</code>();
+  
+  agentA_beh.<code class="java_function">registerFirstState</code>(<code class="java_keyword1">new</code> <code class="java_function">attendreAgentB</code>(), <code class="java_literal1">"</code><code class="java_literal1">attendreAgentB</code><code class="java_literal1">"</code>);
+  agentA_beh.<code class="java_function">registerState</code>(<code class="java_keyword1">new</code> <code class="java_function">envoiChiffre</code>(), <code class="java_literal1">"</code><code class="java_literal1">envoiChiffre</code><code class="java_literal1">"</code>);
+  agentA_beh.<code class="java_function">registerLastState</code>(<code class="java_keyword1">new</code> <code class="java_function">fin</code>(), <code class="java_literal1">"</code><code class="java_literal1">fin</code><code class="java_literal1">"</code>);
+  
+  agentA_beh.<code class="java_function">registerDefaultTransition</code>(<code class="java_literal1">"</code><code class="java_literal1">attendreAgentB</code><code class="java_literal1">"</code>, <code class="java_literal1">"</code><code class="java_literal1">envoiChiffre</code><code class="java_literal1">"</code>);
+  agentA_beh.<code class="java_function">registerTransition</code>(<code class="java_literal1">"</code><code class="java_literal1">envoiChiffre</code><code class="java_literal1">"</code>, <code class="java_literal1">"</code><code class="java_literal1">attendreAgentB</code><code class="java_literal1">"</code>,<code class="java_digit">0</code>);
+  agentA_beh.<code class="java_function">registerTransition</code>(<code class="java_literal1">"</code><code class="java_literal1">envoiChiffre</code><code class="java_literal1">"</code>, <code class="java_literal1">"</code><code class="java_literal1">fin</code><code class="java_literal1">"</code>, <code class="java_digit">1</code>);
+  
+  <code class="java_function">addBehaviour</code>(agentA_beh);  
+<code class="java_operator">}</code>
+
+<code class="java_keyword1">private</code> <code class="java_keyword3">class</code> attendreAgentB <code class="java_keyword1">extends</code> OneShotBehaviour<code class="java_operator">{</code>
+
+  <code class="java_keyword4">@</code><code class="java_keyword4">Override</code>
+  <code class="java_keyword1">public</code> <code class="java_keyword3">void</code> <code class="java_function">action</code>() <code class="java_operator">{</code>
+
+  System.out.<code class="java_function">println</code>(<code class="java_literal1">"</code><code class="java_literal1">en</code><code class="java_literal1"> </code><code class="java_literal1">attente</code><code class="java_literal1"> </code><code class="java_literal1">de</code><code class="java_literal1"> </code><code class="java_literal1">l</code><code class="java_literal1"> </code><code class="java_literal1">agent</code><code class="java_literal1"> </code><code class="java_literal1">B</code><code class="java_literal1">"</code>);
+  <code class="java_function">block</code>();
+  <code class="java_operator">}</code>
+<code class="java_operator">}</code>
+<code class="java_comment3">/**</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*/</code>
+<code class="java_keyword1">private</code> <code class="java_keyword3">class</code> envoiChiffre <code class="java_keyword1">extends</code> OneShotBehaviour<code class="java_operator">{</code>
+
+  <code class="java_keyword3">int</code> valeurRetour <code class="java_operator">=</code> <code class="java_digit">0</code>;
+  <code class="java_keyword4">@</code><code class="java_keyword4">Override</code>
+  <code class="java_keyword1">public</code> <code class="java_keyword3">void</code> <code class="java_function">action</code>() <code class="java_operator">{</code>
+  
+  ACLMessage messageRecu <code class="java_operator">=</code> <code class="java_function">receive</code>();
+  <code class="java_keyword1">if</code> (messageRecu.<code class="java_function">getContent</code>().<code class="java_function">equalsIgnoreCase</code>(<code class="java_literal1">"</code><code class="java_literal1">pret</code><code class="java_literal1">"</code>) ) valeurRetour<code class="java_operator">=</code><code class="java_digit">0</code>;
+  <code class="java_keyword1">else</code>  valeurRetour<code class="java_operator">=</code><code class="java_digit">1</code>;
+  
+  <code class="java_keyword3">int</code> chiffre <code class="java_operator">=</code> (<code class="java_keyword3">int</code>)(Math.<code class="java_function">random</code>()<code class="java_operator">*</code><code class="java_digit">10</code>);
+  System.out.<code class="java_function">println</code>(<code class="java_literal1">"</code><code class="java_literal1">envoi</code><code class="java_literal1"> </code><code class="java_literal1">de</code><code class="java_literal1"> </code><code class="java_literal1">la</code><code class="java_literal1"> </code><code class="java_literal1">valeur</code><code class="java_literal1"> </code><code class="java_literal1">"</code><code class="java_operator">+</code> chiffre);
+  ACLMessage message <code class="java_operator">=</code> <code class="java_keyword1">new</code> <code class="java_function">ACLMessage</code>(ACLMessage.INFORM);
+  message.<code class="java_function">addReceiver</code>(messageRecu.<code class="java_function">getSender</code>());
+  message.<code class="java_function">setContent</code>(chiffre<code class="java_operator">+</code><code class="java_literal1">"</code><code class="java_literal1">"</code>);  
+  <code class="java_function">send</code>(message);
+  <code class="java_operator">}</code>      
+  
+  <code class="java_keyword1">public</code> <code class="java_keyword3">int</code> <code class="java_function">onEnd</code>()<code class="java_operator">{</code>
+  <code class="java_keyword1">return</code> valeurRetour;   
+  <code class="java_operator">}</code>  
+<code class="java_operator">}</code>
+<code class="java_comment3">/**</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*/</code>
+<code class="java_keyword1">private</code> <code class="java_keyword3">class</code> fin <code class="java_keyword1">extends</code> OneShotBehaviour<code class="java_operator">{</code>
+
+  <code class="java_keyword4">@</code><code class="java_keyword4">Override</code>
+  <code class="java_keyword1">public</code> <code class="java_keyword3">void</code> <code class="java_function">action</code>() <code class="java_operator">{</code>
+  System.out.<code class="java_function">println</code>(<code class="java_literal1">"</code><code class="java_literal1">arret</code><code class="java_literal1"> </code><code class="java_literal1">de</code><code class="java_literal1"> </code><code class="java_literal1">l'agent</code><code class="java_literal1">"</code>);
+  myAgent.<code class="java_function">doDelete</code>();  
+  <code class="java_operator">}</code>  
+<code class="java_operator">}</code>
+<code class="java_operator">}</code>
+</code></pre></div>
+      <div class="code_et_titre"><div class="titre_des_codes" id="IdTitreCode-d0e1173">AgentB.java<div class="selectionner_code"><span class="selectionner_code LienSelectionne" id="code-d0e1173" onclick="selectionCode(&#39;contenuCoded0e1173&#39;);">Sélectionnez</span></div></div><pre class="code_uniquement" style="overflow:auto;"><code id="contenuCoded0e1173" class="contenuCode">
+<code class="java_keyword2">import</code> java.security.acl.Acl;
+<code class="java_keyword2">import</code> jade.core.AID;
+<code class="java_keyword2">import</code> jade.core.Agent;
+<code class="java_keyword2">import</code> jade.core.behaviours.FSMBehaviour;
+<code class="java_keyword2">import</code> jade.core.behaviours.OneShotBehaviour;
+<code class="java_keyword2">import</code> jade.lang.acl.ACLMessage;
+
+<code class="java_keyword1">public</code> <code class="java_keyword3">class</code> AgentB <code class="java_keyword1">extends</code> Agent <code class="java_operator">{</code>
+  
+  <code class="java_keyword3">int</code> somme <code class="java_operator">=</code> <code class="java_digit">0</code>;
+  <code class="java_keyword3">boolean</code> stop <code class="java_operator">=</code> <code class="java_literal2">false</code>;
+  <code class="java_keyword1">protected</code> <code class="java_keyword3">void</code> <code class="java_function">setup</code>()<code class="java_operator">{</code>
+    System.out.<code class="java_function">println</code>(<code class="java_literal1">"</code><code class="java_literal1">----------------agent</code><code class="java_literal1"> </code><code class="java_literal1">B----------------</code><code class="java_literal1">"</code>);
+    FSMBehaviour agentB_beh<code class="java_operator">=</code> <code class="java_keyword1">new</code> <code class="java_function">FSMBehaviour</code>();
+    
+    agentB_beh.<code class="java_function">registerFirstState</code>(<code class="java_keyword1">new</code> <code class="java_function">attendrechiffre</code>(), <code class="java_literal1">"</code><code class="java_literal1">attendrechiffre</code><code class="java_literal1">"</code>);
+    agentB_beh.<code class="java_function">registerState</code>(<code class="java_keyword1">new</code> <code class="java_function">afficher</code>(), <code class="java_literal1">"</code><code class="java_literal1">afficher</code><code class="java_literal1">"</code>);
+    agentB_beh.<code class="java_function">registerState</code>(<code class="java_keyword1">new</code> <code class="java_function">fin</code>(), <code class="java_literal1">"</code><code class="java_literal1">fin</code><code class="java_literal1">"</code>);
+    
+    agentB_beh.<code class="java_function">registerTransition</code>(<code class="java_literal1">"</code><code class="java_literal1">attendrechiffre</code><code class="java_literal1">"</code>, <code class="java_literal1">"</code><code class="java_literal1">afficher</code><code class="java_literal1">"</code>,<code class="java_digit">0</code>);
+    agentB_beh.<code class="java_function">registerTransition</code>(<code class="java_literal1">"</code><code class="java_literal1">attendrechiffre</code><code class="java_literal1">"</code>, <code class="java_literal1">"</code><code class="java_literal1">fin</code><code class="java_literal1">"</code>,<code class="java_digit">1</code>);
+    agentB_beh.<code class="java_function">registerDefaultTransition</code>(<code class="java_literal1">"</code><code class="java_literal1">afficher</code><code class="java_literal1">"</code>, <code class="java_literal1">"</code><code class="java_literal1">attendrechiffre</code><code class="java_literal1">"</code>);
+      
+    <code class="java_function">addBehaviour</code>(agentB_beh);
+  <code class="java_operator">}</code>
+  <code class="java_keyword1">private</code> <code class="java_keyword3">class</code> attendrechiffre <code class="java_keyword1">extends</code> OneShotBehaviour<code class="java_operator">{</code>
+
+    <code class="java_keyword3">int</code> valeurRetour <code class="java_operator">=</code> <code class="java_digit">0</code>;
+	
+    <code class="java_keyword1">public</code> <code class="java_keyword3">void</code> <code class="java_function">action</code>() <code class="java_operator">{</code>
+    ACLMessage message <code class="java_operator">=</code> <code class="java_keyword1">new</code> <code class="java_function">ACLMessage</code>(ACLMessage.INFORM);
+    message.<code class="java_function">addReceiver</code>(<code class="java_keyword1">new</code> <code class="java_function">AID</code>(<code class="java_literal1">"</code><code class="java_literal1">AgentA</code><code class="java_literal1">"</code>, AID.ISLOCALNAME));  
+        
+      <code class="java_keyword1">if</code>(<code class="java_operator">!</code>stop)<code class="java_operator">{</code>
+        message.<code class="java_function">setContent</code>(<code class="java_literal1">"</code><code class="java_literal1">pret</code><code class="java_literal1">"</code>);
+        <code class="java_function">send</code>(message);
+        valeurRetour<code class="java_operator">=</code><code class="java_digit">0</code>;
+        <code class="java_function">block</code>();
+      <code class="java_operator">}</code><code class="java_keyword1">else</code><code class="java_operator">{</code>
+        message.<code class="java_function">setContent</code>(<code class="java_literal1">"</code><code class="java_literal1">arret</code><code class="java_literal1">"</code>);
+        <code class="java_function">send</code>(message);
+        valeurRetour<code class="java_operator">=</code><code class="java_digit">1</code>;  
+      <code class="java_operator">}</code>    
+    <code class="java_operator">}</code>
+  <code class="java_keyword1">public</code> <code class="java_keyword3">int</code> <code class="java_function">onEnd</code>()<code class="java_operator">{</code>
+    <code class="java_keyword1">return</code> valeurRetour;
+  <code class="java_operator">}</code>  
+  <code class="java_operator">}</code>
+  <code class="java_comment3">/**</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*/</code>
+  <code class="java_keyword1">private</code> <code class="java_keyword3">class</code> afficher <code class="java_keyword1">extends</code> OneShotBehaviour<code class="java_operator">{</code>  
+    <code class="java_keyword4">@</code><code class="java_keyword4">Override</code>
+    <code class="java_keyword1">public</code> <code class="java_keyword3">void</code> <code class="java_function">action</code>() <code class="java_operator">{</code>
+      ACLMessage messageRecu <code class="java_operator">=</code> <code class="java_function">receive</code>();
+      somme<code class="java_operator">+</code><code class="java_operator">=</code> Integer.<code class="java_function">parseInt</code>(messageRecu.<code class="java_function">getContent</code>());
+      System.out.<code class="java_function">println</code>(<code class="java_literal1">"</code><code class="java_literal1">message</code><code class="java_literal1"> </code><code class="java_literal1">recu=</code><code class="java_literal1"> </code><code class="java_literal1">"</code><code class="java_operator">+</code> messageRecu.<code class="java_function">getContent</code>());
+      System.out.<code class="java_function">println</code>(<code class="java_literal1">"</code><code class="java_literal1">la</code><code class="java_literal1"> </code><code class="java_literal1">somme</code><code class="java_literal1"> </code><code class="java_literal1">actuelle</code><code class="java_literal1"> </code><code class="java_literal1">=</code><code class="java_literal1"> </code><code class="java_literal1">"</code><code class="java_operator">+</code>somme);
+      <code class="java_keyword1">if</code> (somme <code class="java_operator">&gt;</code> <code class="java_digit">50</code>) stop <code class="java_operator">=</code> <code class="java_literal2">true</code>;
+    <code class="java_operator">}</code>  
+  <code class="java_operator">}</code>
+  <code class="java_comment3">/**</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*</code><code class="java_comment3">*/</code>
+  <code class="java_keyword1">private</code> <code class="java_keyword3">class</code> fin <code class="java_keyword1">extends</code> OneShotBehaviour<code class="java_operator">{</code>
+    <code class="java_keyword4">@</code><code class="java_keyword4">Override</code>
+    <code class="java_keyword1">public</code> <code class="java_keyword3">void</code> <code class="java_function">action</code>() <code class="java_operator">{</code>
+      System.out.<code class="java_function">println</code>(<code class="java_literal1">"</code><code class="java_literal1">fin</code><code class="java_literal1"> </code><code class="java_literal1">de</code><code class="java_literal1"> </code><code class="java_literal1">l'agent</code><code class="java_literal1">"</code>);
+      myAgent.<code class="java_function">doDelete</code>();
+    <code class="java_operator">}</code>  
+  <code class="java_operator">}</code>
+<code class="java_operator">}</code>
+</code></pre></div>
+    </div>
+    
+		<h1 class="TitreSection0" id="LVIII">VIII. Conclusion<a class="HautPage" href="http://djug.developpez.com/java/jade/communication/#" title="Haut de page">&#9650;</a></h1><div class="BlocSection0">
+      
+      <p>
+				A travers cet article nous avons pu voir les briques de base de la communication des agents JADE.<br>  J'espère que cet article va vous aider à créer un véritable  système multi-agents.
+			</p>
+    </div>
+    
+		<h1 class="TitreSection0" id="LIX">IX. Remerciement<a class="HautPage" href="http://djug.developpez.com/java/jade/communication/#" title="Haut de page">&#9650;</a></h1><div class="BlocSection0">
+      
+      <p>
+				Je remercie  <a class="lienArticle simple" href="http://www.developpez.net/forums/u75080/baptiste-wicht/" target="_blank">Baptiste Wicht</a> pour l'aide  et la correction orthographique.
+			</p>
+    </div>
+  </section>
+</article>
+		<div class="clear">&nbsp;&nbsp;</div>
+<p class="licence" style="">Copyright © 2009 djug. 
+Aucune reproduction, même partielle, ne peut être faite 
+de ce site et de l'ensemble de son contenu&nbsp;: textes, documents, images, etc.
+sans l'autorisation expresse de l'auteur. Sinon vous encourez selon la loi jusqu'à 
+trois ans de prison et jusqu'à 300&nbsp;000&nbsp;€ de dommages et intérêts. 
+</p><div style="clear: both;"></div>
+</div>
+</section>
+
+<footer class="layout">
+	<div id="gabarit_footer">
+			Responsables bénévoles
+		de la rubrique Java :
+
+			<a href="http://www.developpez.net/forums/u189827/mlny84/" target="_blank">		mlny84</a>		-
+					<a href="http://www.developpez.net/forums/u69211/keulkeul/" target="_blank">			Mickael Baron</a>			-
+		
+		
+			
+		<script type="text/javascript">
+	<!--
+	Ch=new Array(4);Res=new Array(4);
+	Ch[0]='le_club_des_developeur';Ch[1]='ÙÆÈÏàä';
+	Ch[2]='¬×ÄÇÍØÖÈÓÓ';Ch[3]='ÐÊÕÈØäÒÏÉß¡ÂÓÒ';
+	for(y=1;y<4;y++){Res[y]="";for(x=0;x<Ch[y].length;x++)
+	Res[y]+=String.fromCharCode(Ch[y].charCodeAt(x)-Ch[0].charCodeAt(x));}
+	var st = '<a href="'+Res[1]+':java'+Res[2]+'-'+Res[3]+'">Contacter par email<\/a>';	document.write(st);
+	//-->
+	</script><a href="mailto:java@redaction-developpez.com">Contacter par email</a>
+
+	</div>
+	
+	<script type="text/javascript">
+	<!--
+	xtn2 = "2";
+	//-->
+	</script>
+	
+
+<div id="gabarit_pied">
+	<div id="gabarit_pied_contenu">
+		<div class="gabarit_pied_div">
+			<span>Developpez.com</span>
+			<p><a href="http://club.developpez.com/contacts/">Nous contacter</a></p>
+			<p><a href="http://www.developpez.com/participez/">Participez</a></p>
+			<p><a href="http://www.developpez.com/legal/">Informations légales</a></p>
+		</div>
+		<div class="gabarit_pied_div_separation">&nbsp;</div>
+		<div class="gabarit_pied_div">
+			<span>Services</span>
+			<p><a href="http://www.developpez.net/forums/f6/java/" onclick="window.open(this.href); return false;">Forum Java</a></p>
+			<p><a href="http://blog.developpez.com/">Blogs</a></p>
+			<p><a href="http://www.developpez.com/hebergement/">Hébergement</a></p>
+		</div>
+		<div class="gabarit_pied_div_separation">&nbsp;</div>
+		<div class="gabarit_pied_div">
+			<span>Partenaires</span>
+			<p><a href="http://www.developpez.com/redirect/1058" target="_blank">PlanetHoster</a></p>
+		</div>
+		<div style="clear: both;"></div>
+		<div id="gabarit_pied_copyright">
+			<p>Copyright © 2000-2015 - www.developpez.com</p>
+		</div>
+	</div>
+</div>
+
+</footer>
+<!-- Google Analytics général -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28115938-1']);
+  _gaq.push(['_setDomainName', 'developpez.com']);
+  _gaq.push(['_setCustomVar', 1, 'rubrique', 'java', 3]);
+  _gaq.push(['_setCustomVar', 2, 'type', 'Autre', 3]);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+
+
+		
+<div id="lightboxOverlay" style="display: none;"></div><div id="lightbox" style="display: none;"><div class="lb-outerContainer"><div class="lb-container"><img class="lb-image"><div class="lb-nav"><a class="lb-prev"></a><a class="lb-next"></a></div><div class="lb-loader"><a class="lb-cancel"><img src="./Les communications des agents JADE_files/lightbox-ico-loading.gif"></a></div></div></div><div class="lb-dataContainer"><div class="lb-data"><div class="lb-details"><span class="lb-caption"></span><span class="lb-number"></span></div><div class="lb-closeContainer"><a class="lb-close"><img src="./Les communications des agents JADE_files/lightbox-btn-close.png"></a></div></div></div></div></body></html>

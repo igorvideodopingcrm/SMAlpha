@@ -1,0 +1,52 @@
+
+
+import jade.core.Agent;
+import jade.core.behaviours.OneShotBehaviour;
+import jade.core.behaviours.ParallelBehaviour;
+import jade.core.behaviours.TickerBehaviour;
+import jade.core.behaviours.WakerBehaviour;
+import jade.core.behaviours.CyclicBehaviour;
+
+import jade.lang.acl.ACLMessage;
+
+		public class AgentPara extends Agent{
+			protected void setup(){
+				ParallelBehaviour comportementparallele = new ParallelBehaviour(ParallelBehaviour.WHEN_ANY);
+				comportementparallele.addSubBehaviour(new TickerBehaviour(this,2500){
+					@Override
+					protected void onTick() {
+						System.out.println("ay ay Senor Carlos");
+					}
+				});
+			
+				comportementparallele.addSubBehaviour(new TickerBehaviour(this,3000){
+					@Override
+					protected void onTick() {
+						System.out.println("Ah la la, quel frigo");
+
+					}
+				});
+				
+				comportementparallele.addSubBehaviour(new CyclicBehaviour(this){
+					public void action() { 
+
+					ACLMessage message = receive();
+					if(message!= null)  {;
+					System.out.println("Johny...");
+					try {
+						Thread.sleep(3000);
+					} catch (InterruptedException e) {
+						System.out.println("Aaarrgg");
+					}
+					System.out.println("optiiiiccc 2000 !!!");
+					doDelete();}
+					else{
+						;
+						}
+					;
+				}
+			});	
+				addBehaviour(comportementparallele);
+			}
+		}
+			
