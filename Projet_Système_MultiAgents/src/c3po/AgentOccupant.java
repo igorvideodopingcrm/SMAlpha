@@ -12,6 +12,7 @@ import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.core.behaviours.ParallelBehaviour;
+import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
 
 
@@ -39,7 +40,19 @@ public class AgentOccupant  extends Agent{
 					send(message);
 			  }
 				
-		  });			
+		  });
+			
+			occuparallele.addSubBehaviour(new TickerBehaviour(this,20000){// 43200000 = 12 heures en milisecondes | à modifier selon le rafraichissement voulu
+				protected void onTick() {
+					
+					ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+					message.addReceiver(new AID("senor_meteo", AID.ISLOCALNAME));
+					message.setContent("météo!");
+					send(message);
+				
+				}
+			});
+			
 			occuparallele.addSubBehaviour(new CyclicBehaviour(this) { // behaviour de réception de message
 				
 				public void action()
@@ -48,7 +61,7 @@ public class AgentOccupant  extends Agent{
 				ACLMessage rep = new ACLMessage(ACLMessage.INFORM);
 				if(msg!= null)  {
 					String contenu=msg.getContent();
-					System.out.println("je suis C3PO " + contenu);
+					System.out.println("je suis C3PO et j'ai reçu " + contenu);
 					}
 				else{
 					block();
