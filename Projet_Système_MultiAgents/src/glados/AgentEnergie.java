@@ -7,12 +7,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import senor_meteo.Tabmeteo;
+import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.core.behaviours.ParallelBehaviour;
 import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
+
 
 public class AgentEnergie extends Agent{
 	
@@ -61,8 +63,14 @@ public class AgentEnergie extends Agent{
 		//recup équipement -> ajout dans init
 		ArrayList <Equipement> init = new ArrayList <Equipement>();
 		ArrayList <Equipement> planning = new ArrayList <Equipement>();
-	// TODO récupération de la météo auprès de senor météo (message ACL)
-	//	recup paramêtre ( pref users) 
+		
+		ACLMessage demandemeteo = new ACLMessage(ACLMessage.INFORM);
+		demandemeteo.setContent("");
+		demandemeteo.addReceiver(new AID("senor_meteo", AID.ISLOCALNAME));
+	//	send(demandemeteo);
+		
+	
+	//	recup parameter ( pref users) 
 		//	-surface
 		//	-temperature 
 	//	recup conso max // récupère la consommation max que peut s'autoriser glados à l'instant T

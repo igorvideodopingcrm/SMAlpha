@@ -1,0 +1,14 @@
+<table><tr>
+{foreach from=$meteo item=day}
+	<td>
+		<table>
+			<tr>
+				<img src="./image/{$day[0]}.png" alt="{$day[0]}"/>
+			</tr>
+			<tr>
+				{$day[1]} °C
+			</tr>
+		</table>
+	</td>
+{/foreach}
+</tr></table>

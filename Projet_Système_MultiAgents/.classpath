@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/Eclipse/JAR externes/JADE/JADE-3.6.1/jade/lib/commons-codec/commons-codec-1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/Eclipse/JAR externes/JADE/JADE-3.6.1/jade/lib/jade.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/Eclipse/JAR externes/httpcomponents-client-4.4.1-bin/httpcomponents-client-4.4.1/lib/httpcore-4.4.1.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/Eclipse/JAR externes/httpcomponents-client-4.4.1-bin/httpcomponents-client-4.4.1/lib/httpclient-win-4.4.1.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/Eclipse/JAR externes/httpcomponents-client-4.4.1-bin/httpcomponents-client-4.4.1/lib/httpclient-cache-4.4.1.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/Eclipse/JAR externes/httpcomponents-client-4.4.1-bin/httpcomponents-client-4.4.1/lib/httpclient-4.4.1.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/Eclipse/JAR externes/org.json.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
