@@ -89,7 +89,7 @@ public class AgentMeteo extends Agent{
 						//	System.out.println(tab[i].toString());
 							}
 						  
-//						  valtest=10;
+
 					} catch (IOException | JSONException e) {
 						// TODO Auto-generated catch block
 						System.out.println("erreur: Senor meteo n'a pas reçu de donnée du web.");
@@ -102,23 +102,17 @@ public class AgentMeteo extends Agent{
 				public void action()
 				{
 				ACLMessage msg = receive();
-				ACLMessage rep = new ACLMessage(ACLMessage.INFORM);
 				if(msg!= null)  {
 					AID A = msg.getSender();
-					rep.addReceiver(A);
 					String reponse ="";
-					
 					for (int i = 0; i < tab.length; i++) {
 						reponse = reponse+tab[i].toString()+";";
-
 						}
-					rep.setContent(reponse);
-					send(rep); 
+					envoimessageAID(A,reponse);
 					}
 				
 				else{
 					block();
-					
 							};
 				//TODO  gérer la reception de message et l'envoi de message pour donner les prévision météo 
 				}
@@ -126,5 +120,13 @@ public class AgentMeteo extends Agent{
 			
 			addBehaviour(meteoparallele);
 			// ajout du comportement décrit au dessus.
+	}
+	
+	
+	public void envoimessageAID(AID A,String contenu){
+		ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+		message.setContent(contenu);
+		message.addReceiver(A);
+		send(message);
 	}
 }

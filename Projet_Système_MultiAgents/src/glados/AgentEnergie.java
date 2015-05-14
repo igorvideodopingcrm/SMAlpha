@@ -34,57 +34,36 @@ public class AgentEnergie extends Agent{
 	  });
 		energieparallele.addSubBehaviour(new TickerBehaviour(this,86400000){ // une fois par jour
 			protected void onTick() {
+
 				faireplanning();
 			}
 			});
-		
-		energieparallele.addSubBehaviour(new CyclicBehaviour(this) {  // boite de reception de message
-			public void action()
-			{
-				ACLMessage msg = receive();
-				if(msg!= null)  {
-					String A = msg.getContent();
-					// TODO gérer la reception de message contenant les questions et l'envoi de réponses.
-					}
-				else
-					{
-					block();
-					// le block ici bloque le behaviour jusqu'à ce qu'il reçoive un message pour éviter l'attente active
-							};
-				
-			}
-		});
 		
 		addBehaviour(energieparallele);
 		// ajout du comportement décrit au dessus.
 	}
 
-	public static void faireplanning(){	
+	public void faireplanning(){	
 		//recup équipement -> ajout dans init
 		ArrayList <Equipement> init = new ArrayList <Equipement>();
 		ArrayList <Equipement> planning = new ArrayList <Equipement>();
 		
-		ACLMessage demandemeteo = new ACLMessage(ACLMessage.INFORM);
-		demandemeteo.setContent("");
-		demandemeteo.addReceiver(new AID("senor_meteo", AID.ISLOCALNAME));
-	//	send(demandemeteo);
-		
-	
-	//	recup parameter ( pref users) 
-		//	-surface
-		//	-temperature 
+		envoimessage("senor_meteo","meteo demande");
+		envoimessage("c3po","prefs demandes");
 	//	recup conso max // récupère la consommation max que peut s'autoriser glados à l'instant T
 		int consoT[]= new int[24]; 
 		Equipement eCourrant;
 		while(!init.isEmpty()) {
-	//		déterminer le plus compliqué 
+	//			déterminer le plus compliqué 
 	//			+grosse conso
 	//			++dif entre durée et taille plage faible.
 		//	planning.add(eCourrant);
 		//	init.remove(eCourrant);
 		//	placerEquipement(eCourrant,consoT);}
 	//	}
-	//TODO	préparer le message ACL pour l'envoi du planning 
+	//TODO	préparer le message ACL pour l'envoi du planning
+		envoimessage("c3po","planning");
+		envoimessage("r2d2","planning");
 		
 	}
 	}
@@ -104,7 +83,15 @@ public class AgentEnergie extends Agent{
 					consoT[i]+= e.getConso();
 					}
 				}
-
+	
+	public void envoimessage(String destinataire,String contenu){
+		ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+		message.setContent(contenu);
+		message.addReceiver(new AID(destinataire, AID.ISLOCALNAME));
+		send(message);
+	}
+	
+	
 	public static int penalite (Equipement e,int h, int[] consoT){
 		int pTot=0;
 		for(int i=h; i<h + e.getDurée();i++){
