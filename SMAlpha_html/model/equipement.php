@@ -1,7 +1,20 @@
 <?php
 function create_equipement($nom,$conso,$debut,$fin,$duree){
-	if($fin<$debut+$duree)
-		$fin=$debut+$duree;
+	if($duree>24)
+		$duree=24;
+	else if($duree<0)
+		$duree=0;
+	if($debut+$duree>24)
+		$debut=24-$duree;
+	if($debut<0)
+		$debut=0;
+	if($fin<$debut+$duree){
+		if($debut+$duree>24)
+			$fin=24;
+			$debut=$fin-$duree;
+		else
+			$fin=$debut+$duree;
+	}
 	$query="INSERT INTO `equipement`(`nom`, `conso`, `debut_min`, `fin_max`, `duree`) VALUES ('".$nom."','".$conso."','".$debut."','".$fin."','".$duree."')";
 // var_dump($query);
 	query($query);
