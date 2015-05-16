@@ -10,6 +10,7 @@ import senor_meteo.Tabmeteo;
 
 import java.util.ArrayList;
 
+
 //import src.BasicNameValuePair;
 //import src.ClientProtocolException;
 //import src.DefaultHttpClient;
@@ -19,9 +20,11 @@ import java.util.ArrayList;
 //import src.HttpResponse;
 //import src.NameValuePair;
 import org.apache.*;
+
 import java.lang.Exception;
 import java.lang.String;
 import java.io.UnsupportedEncodingException;
+
 
 //import src.UrlEncodedFormEntity;
 import jade.core.AID;
@@ -50,7 +53,7 @@ public class AgentOccupant  extends Agent{
 			occuparallele.addSubBehaviour(new OneShotBehaviour(this){
 				
 				public void action(){
-					System.out.println(this.getClass().toString()+" lancé");
+					System.out.println(getLocalName()+" lancé");
 					
 					ACLMessage message = new ACLMessage(ACLMessage.INFORM);
 					message.addReceiver(new AID("senor_meteo", AID.ISLOCALNAME));
@@ -61,7 +64,7 @@ public class AgentOccupant  extends Agent{
 		  });
 			
 			occuparallele.addSubBehaviour(new TickerBehaviour(this,20000){// 43200000 = 12 heures en milisecondes | à modifier selon le rafraichissement voulu
-				protected void onTick() {
+				protected void onTick() {									// timer d'obtention de la météo par l'agentoccupant auprès de l'agent météo
 					
 					ACLMessage message = new ACLMessage(ACLMessage.INFORM);
 					message.addReceiver(new AID("senor_meteo", AID.ISLOCALNAME));
@@ -79,7 +82,7 @@ public class AgentOccupant  extends Agent{
 				ACLMessage rep = new ACLMessage(ACLMessage.INFORM);
 				if(msg!= null)  {
 					String contenu=msg.getContent();
-					//System.out.println("je suis C3PO et j'ai reçu " + contenu);
+					System.out.println("je suis C3PO et j'ai reçu " + contenu);
 			//		HttpClient httpclient = new DefaultHttpClient();
 			//        HttpPost httppost = new HttpPost((String) params[0]);//rajouter de quoi joindre le serveur
 			        

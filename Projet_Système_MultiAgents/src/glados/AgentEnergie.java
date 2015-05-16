@@ -57,13 +57,12 @@ public class AgentEnergie extends Agent{
 	//			déterminer le plus compliqué 
 	//			+grosse conso
 	//			++dif entre durée et taille plage faible.
-		//	planning.add(eCourrant);
-		//	init.remove(eCourrant);
-		//	placerEquipement(eCourrant,consoT);}
+	//	planning.add(eCourrant);
+	//	init.remove(eCourrant);
+	//	placerEquipement(eCourrant,consoT);}
 	//	}
-	//TODO	préparer le message ACL pour l'envoi du planning
-		envoimessage("c3po","planning");
-		envoimessage("r2d2","planning");
+		envoimessage("c3po","planning à écrire ici");
+		envoimessage("r2d2","planning à écrire ici");
 		
 	}
 	}

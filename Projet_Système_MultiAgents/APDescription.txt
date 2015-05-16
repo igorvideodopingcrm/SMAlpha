@@ -1,1 +1,1 @@
-( ap-description  :name "AntOne-PC:1099/JADE" :ap-services (set ( ap-service  :name fipa.mts.mtp.http.std :type fipa.mts.mtp.http.std :addresses (sequence http://AntOne-PC.mshome.net:7778/acc))))
+( ap-description  :name "AntOne-PC:1099/JADE" :ap-services (set ( ap-service  :name fipa.mts.mtp.http.std :type fipa.mts.mtp.http.std :addresses (sequence http://AntOne-PC:7778/acc))))

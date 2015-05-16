@@ -1,1 +1,1 @@
-http://AntOne-PC.mshome.net:7778/acc
+http://AntOne-PC:7778/acc
