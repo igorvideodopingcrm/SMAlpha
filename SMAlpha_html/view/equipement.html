@@ -1,0 +1,35 @@
+<table style="margin-top:10px;" class="table">
+	<tr>
+		<th>Id</th>
+		<th>nom</th>
+		<th>consommation</th>
+		<th>fouchette</th>
+		<th>durée</th>
+		<th></th>
+	</tr>
+{foreach from=$equipements item=e}
+	<tr>
+		<form action="./equipement.php" method="post">
+		<td><input type="hidden" name="id" class="form-control" value="{$e.id}">{$e.id}</td>
+		<td><input name="nom" type="text" class="form-control" value="{$e.nom}"></td>
+		<td><input name="conso" type="number" value="{$e.conso}"></td>
+		<td><input name="debut" type="number" min="0" max="24" value="{$e.debut_min}">&nbsp;-&nbsp;<input name="fin" type="number" min="0" max="24" value="{$e.fin_max}"></td>
+		<td><input name="duree" type="number" min="0" max="24" class="form-control" value="{$e.duree}"></td>
+		<td><button name="update" type="submit" class="btn btn-primary glyphicon glyphicon-pencil"></button></td>
+		</form>
+		<form action="./equipement.php" method="post">
+		<td><input type="hidden" name="id" value="{$e.id}"><button type="submit" name="delete" class="btn btn-danger glyphicon glyphicon-trash"></button></td>
+		</form>
+	</tr>
+{/foreach}
+	<tr>
+		<form action="./equipement.php" method="post">
+		<td>#</td>
+		<td><input name="nom" type="text" class="form-control" placeholder="nom"></td>
+		<td><input name="conso" type="number" min="0" max="1000" class="form-control" placeholder="consommation"></td>
+		<td><input name="debut" type="number" min="0" max="24" placeholder="debut">&nbsp;-&nbsp;<input name="fin" type="number" min="0" max="24" placeholder="fin"></td>
+		<td><input name="duree" type="number" min="0" max="24" class="form-control" placeholder="durée"></td>
+		<td><button name="create" type="submit" class="btn btn-primary glyphicon glyphicon-plus-sign"></button></td>
+		</form>
+	</tr>
+</table>
