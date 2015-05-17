@@ -11,6 +11,7 @@ import senor_meteo.Tabmeteo;
 import java.util.ArrayList;
 
 
+
 //import src.BasicNameValuePair;
 //import src.ClientProtocolException;
 //import src.DefaultHttpClient;
@@ -26,6 +27,7 @@ import java.lang.String;
 import java.io.UnsupportedEncodingException;
 
 
+
 //import src.UrlEncodedFormEntity;
 import jade.core.AID;
 import jade.core.Agent;
@@ -35,6 +37,8 @@ import jade.core.behaviours.OneShotBehaviour;
 import jade.core.behaviours.ParallelBehaviour;
 import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
+import jade.wrapper.AgentController;
+import jade.wrapper.StaleProxyException;
 
 
 public class AgentOccupant  extends Agent{
@@ -81,39 +85,59 @@ public class AgentOccupant  extends Agent{
 				ACLMessage msg = receive();
 				ACLMessage rep = new ACLMessage(ACLMessage.INFORM);
 				if(msg!= null)  {
-					String contenu=msg.getContent();
-					System.out.println("je suis C3PO et j'ai reçu " + contenu);
+					String expe=msg.getSender().getLocalName();
+					switch (expe) {
 					
-			//		HttpClient httpclient = new DefaultHttpClient();
-			//        HttpPost httppost = new HttpPost((String) params[0]);//rajouter de quoi joindre le serveur
-			        
-			//        ArrayList<NameValuePair> queryParams = new ArrayList<NameValuePair>();
-			//        queryParams.add(new BasicNameValuePair("contenu", contenu));
-			        
-			        // create and launch the POST request
-			        try {
-		//				httppost.setEntity(new UrlEncodedFormEntity(queryParams));
-		//		        HttpResponse httpResponse;
-		//				httpResponse = httpclient.execute(httppost);
-		//				response = EntityUtils.toString(httpResponse.getEntity());
-						/*JSONObject jsonResponse = new JSONObject(jsonString);
-						response = jsonResponse.get("message").toString();*/
-		//			} catch (UnsupportedEncodingException e) {
-						//Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
-		//			}  catch (ClientProtocolException e) {
-						//Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
-		//			} catch (IOException e) {
-						//Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
-					}  catch (ParseException e) {
+			        case "glados": // envoyer les prefs utilisateurs à glados
+			        	
+			        	envoimessage("glados","prefs utilisateur");
+			                 break;
+			                 
+			        case "senor_meteo":  // envoyer la météo sur l'application
+			        	
 						
-						//Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
-					} //catch (JSONException e) {
-						//Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
-					//}
-					}
-				else{
-					block();
-					};
+						//		HttpClient httpclient = new DefaultHttpClient();
+						//        HttpPost httppost = new HttpPost((String) params[0]);//rajouter de quoi joindre le serveur
+						        
+						//        ArrayList<NameValuePair> queryParams = new ArrayList<NameValuePair>();
+						//        queryParams.add(new BasicNameValuePair("contenu", contenu));
+						        
+						        // create and launch the POST request
+					//	        try {
+					//				httppost.setEntity(new UrlEncodedFormEntity(queryParams));
+					//		        HttpResponse httpResponse;
+					//				httpResponse = httpclient.execute(httppost);
+					//				response = EntityUtils.toString(httpResponse.getEntity());
+									/*JSONObject jsonResponse = new JSONObject(jsonString);
+									response = jsonResponse.get("message").toString();*/
+					//			} catch (UnsupportedEncodingException e) {
+									//Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+					//			}  catch (ClientProtocolException e) {
+									//Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+					//			} catch (IOException e) {
+									//Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+					//			}  catch (ParseException e) {
+									
+									//Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+								 //catch (JSONException e) {
+									//Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+								//}
+								
+						//	else{
+					//			block();
+						//		};
+						//		}
+			        		break; 
+			        	
+			        case "ams":
+			        	
+			        	break;
+			        	
+			        default: System.out.println("je suis C3PO et j'ai reçu " + msg.getContent()); ;
+			                 break;}
+					
+
+				}
 				}
 				});
 			addBehaviour(occuparallele);

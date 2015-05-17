@@ -2,14 +2,9 @@ package glados;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import senor_meteo.Tabmeteo;
 import jade.core.AID;
 import jade.core.Agent;
-import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.core.behaviours.ParallelBehaviour;
 import jade.core.behaviours.TickerBehaviour;
@@ -30,7 +25,6 @@ public class AgentEnergie extends Agent{
 
 			public void action(){
 				System.out.println(getLocalName()+" lancé");
-				// TODO faire planning en tant que fonction pour la mettre ici
 				faireplanning();
 		  }
 			
@@ -45,8 +39,9 @@ public class AgentEnergie extends Agent{
 		addBehaviour(energieparallele);
 		// ajout du comportement décrit au dessus.
 	}
-
-	public void faireplanning(){	
+	
+	
+	public void faireplanning(){
 		//recup équipement -> ajout dans init
 		
 		ArrayList <Equipement> init = new ArrayList <Equipement>();
@@ -56,8 +51,8 @@ public class AgentEnergie extends Agent{
 		
 		envoimessage("senor_meteo","meteo demande");
 		receptionmessage("senor_meteo","meteo demande");
-		envoimessage("c3po","prefs demandes");
-		receptionmessage("c3po","prefs demande");
+		envoimessage("c3po","prefs");
+		receptionmessage("c3po","prefs");
 	//	recup conso max // récupère la consommation max que peut s'autoriser glados à l'instant T
 		int consoT[]= new int[24]; 
 		Equipement eCourrant;
@@ -72,7 +67,6 @@ public class AgentEnergie extends Agent{
 		envoimessage("c3po","planning à écrire ici");
 		envoimessage("r2d2","planning à écrire ici");
 		receptionmessage("r2d2","planning");
-		
 	}
 
 	
@@ -103,10 +97,11 @@ public class AgentEnergie extends Agent{
 		System.out.println("en attente de receptions");
 		ACLMessage msg = blockingReceive();
 		System.out.println("reçu message de"+ msg.getSender().getLocalName());
-		if (msg.getSender().getLocalName()!=agentcontacte)
+		if (msg.getSender().getLocalName().contains("ams"))
 		{
 			defibrillateur(agentcontacte);
 			envoimessage(agentcontacte,messageoriginal);
+			receptionmessage(agentcontacte,messageoriginal);
 		}
 	}
 	
