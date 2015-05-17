@@ -65,23 +65,8 @@ public class AgentEquipement extends Agent{
 			public void action()
 			{
 			ACLMessage msg = blockingReceive();
-			System.out.println("je suis r2d2 et j'ai reçu un message de " + msg.getContent());
-			String string = msg.getContent();
-			String[] parts = string.split(":");
-			String part = parts[6];
-			System.out.println(part);
-			String[] part2 = part.split(" ");
-			String bon =part2[1];
-			System.out.println(bon);
-			
-			ContainerController cc = getContainerController();
-			try {
-				AgentController ac = cc.createNewAgent(bon,bon+".AgentOccupant", null);
-				ac.start();
-			} catch (StaleProxyException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			//System.out.println("je suis r2d2 et j'ai reçu un message de " + msg.getContent());
+			System.out.println("je suis r2d2 et j'ai reçu un message de " );
 			}
 		});
 		equiparallele.addSubBehaviour(new CyclicBehaviour(this) {
@@ -94,4 +79,11 @@ public class AgentEquipement extends Agent{
 		// ajout du comportement décrit au dessus.
 	}
 
+	public void envoimessage(String destinataire,String contenu){
+		ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+		message.setContent(contenu);
+		message.addReceiver(new AID(destinataire, AID.ISLOCALNAME));
+		send(message);
+	}
+	
 }

@@ -83,6 +83,7 @@ public class AgentOccupant  extends Agent{
 				if(msg!= null)  {
 					String contenu=msg.getContent();
 					System.out.println("je suis C3PO et j'ai reçu " + contenu);
+					
 			//		HttpClient httpclient = new DefaultHttpClient();
 			//        HttpPost httppost = new HttpPost((String) params[0]);//rajouter de quoi joindre le serveur
 			        
@@ -138,4 +139,12 @@ public class AgentOccupant  extends Agent{
 		}
 		
 	}
+	
+	public void envoimessage(String destinataire,String contenu){
+		ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+		message.setContent(contenu);
+		message.addReceiver(new AID(destinataire, AID.ISLOCALNAME));
+		send(message);
+	}
+	
 }

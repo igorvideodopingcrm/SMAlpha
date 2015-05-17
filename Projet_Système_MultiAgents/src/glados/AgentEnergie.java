@@ -14,6 +14,9 @@ import jade.core.behaviours.OneShotBehaviour;
 import jade.core.behaviours.ParallelBehaviour;
 import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
+import jade.wrapper.AgentController;
+import jade.wrapper.ContainerController;
+import jade.wrapper.StaleProxyException;
 
 
 public class AgentEnergie extends Agent{
@@ -45,15 +48,20 @@ public class AgentEnergie extends Agent{
 
 	public void faireplanning(){	
 		//recup équipement -> ajout dans init
+		
 		ArrayList <Equipement> init = new ArrayList <Equipement>();
 		ArrayList <Equipement> planning = new ArrayList <Equipement>();
 		
+		System.out.println("envoi des messages");
+		
 		envoimessage("senor_meteo","meteo demande");
+		receptionmessage("senor_meteo","meteo demande");
 		envoimessage("c3po","prefs demandes");
+		receptionmessage("c3po","prefs demande");
 	//	recup conso max // récupère la consommation max que peut s'autoriser glados à l'instant T
 		int consoT[]= new int[24]; 
 		Equipement eCourrant;
-		while(!init.isEmpty()) {
+	//	while(!init.isEmpty()) {
 	//			déterminer le plus compliqué 
 	//			+grosse conso
 	//			++dif entre durée et taille plage faible.
@@ -63,9 +71,10 @@ public class AgentEnergie extends Agent{
 	//	}
 		envoimessage("c3po","planning à écrire ici");
 		envoimessage("r2d2","planning à écrire ici");
+		receptionmessage("r2d2","planning");
 		
 	}
-	}
+
 	
 	public static void placerEquipement(Equipement e, int [] consoT){	
 				int min[]= new int[2]; // 0=p 1=i | créa tableau 2 dimension min
@@ -90,6 +99,70 @@ public class AgentEnergie extends Agent{
 		send(message);
 	}
 	
+	public void receptionmessage(String agentcontacte, String messageoriginal){
+		System.out.println("en attente de receptions");
+		ACLMessage msg = blockingReceive();
+		System.out.println("reçu message de"+ msg.getSender().getLocalName());
+		if (msg.getSender().getLocalName()!=agentcontacte)
+		{
+			defibrillateur(agentcontacte);
+			envoimessage(agentcontacte,messageoriginal);
+		}
+	}
+	
+	public void defibrillateur(String agentmort){
+		System.out.println("defib en cours");
+		ContainerController cc = getContainerController();
+		
+		switch (agentmort) {
+		
+        case "senor_meteo":
+        	
+        	try {
+			AgentController ac = cc.createNewAgent("senor_meteo","senor_meteo.AgentMeteo", null);
+			ac.start();} 
+        	catch (StaleProxyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+        	};
+                 break;
+                 
+        case "r2d2":
+        	
+        	try {
+			AgentController ac = cc.createNewAgent("r2d2","r2d2.AgentEquipement", null);
+			ac.start();}
+        	catch (StaleProxyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+        	};
+                 break;
+                 
+        case "c3po":  
+        	
+        	try {
+			AgentController ac = cc.createNewAgent("c3po","c3po.AgentOccupant", null);
+			ac.start();} 
+        	catch (StaleProxyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+        	};
+                 break;
+                 
+        case "glados": 
+        	try {
+			AgentController ac = cc.createNewAgent("senor_meteo","senor_meteo.AgentMeteo", null);
+			ac.start();} 
+        	catch (StaleProxyException e) {
+			// TODO Auto-generated catch block
+        		e.printStackTrace();
+        	};
+        		break; 
+        		
+        default: System.out.println("Erreur dans le reboot d'un agent par defibrillateur.") ;
+                 break;}
+		
+	}
 	
 	public static int penalite (Equipement e,int h, int[] consoT){
 		int pTot=0;

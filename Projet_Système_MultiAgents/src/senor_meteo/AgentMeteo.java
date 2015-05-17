@@ -16,6 +16,9 @@ import jade.core.behaviours.OneShotBehaviour;
 import jade.core.behaviours.ParallelBehaviour;
 import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
+import jade.wrapper.AgentController;
+import jade.wrapper.ContainerController;
+import jade.wrapper.StaleProxyException;
 
 
 public class AgentMeteo extends Agent{
@@ -103,12 +106,12 @@ public class AgentMeteo extends Agent{
 				{
 				ACLMessage msg = receive();
 				if(msg!= null)  {
-					AID A = msg.getSender();
+					String nom = msg.getSender().getLocalName();
 					String reponse ="";
 					for (int i = 0; i < tab.length; i++) {
 						reponse = reponse+tab[i].toString()+";";
 						}
-					envoimessageAID(A,reponse);
+					envoimessage(nom,reponse);
 					}
 				
 				else{
@@ -123,10 +126,73 @@ public class AgentMeteo extends Agent{
 	}
 	
 	
-	public void envoimessageAID(AID A,String contenu){
+	public void envoimessageAID (AID A,String contenu){
 		ACLMessage message = new ACLMessage(ACLMessage.INFORM);
 		message.setContent(contenu);
 		message.addReceiver(A);
 		send(message);
 	}
+	
+	public void envoimessage (String destinataire,String contenu){
+		ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+		message.setContent(contenu);
+		message.addReceiver(new AID(destinataire, AID.ISLOCALNAME));
+		send(message);
+	}
+	
+	public void defibrillateur(String agentmort){
+		
+		ContainerController cc = getContainerController();
+		
+		switch (agentmort) {
+		
+        case "senor_meteo":
+        	
+        	try {
+			AgentController ac = cc.createNewAgent("senor_meteo","senor_meteo.AgentMeteo", null);
+			ac.start();} 
+        	catch (StaleProxyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+        	};
+                 break;
+                 
+        case "r2d2":
+        	
+        	try {
+			AgentController ac = cc.createNewAgent("r2d2","r2d2.AgentEquipement", null);
+			ac.start();}
+        	catch (StaleProxyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+        	};
+                 break;
+                 
+        case "c3po":  
+        	
+        	try {
+			AgentController ac = cc.createNewAgent("c3po","c3po.AgentOccupant", null);
+			ac.start();} 
+        	catch (StaleProxyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+        	};
+                 break;
+                 
+        case "glados": 
+        	try {
+			AgentController ac = cc.createNewAgent("senor_meteo","senor_meteo.AgentMeteo", null);
+			ac.start();} 
+        	catch (StaleProxyException e) {
+			// TODO Auto-generated catch block
+        		e.printStackTrace();
+        	};
+        		break; 
+        		
+        default: System.out.println("Erreur dans le reboot d'un agent par defibrillateur.") ;
+                 break;}
+		
+	}
 }
+
+
