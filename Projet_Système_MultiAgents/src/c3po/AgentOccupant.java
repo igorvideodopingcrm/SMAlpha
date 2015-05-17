@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 
 
+
+
 //import src.BasicNameValuePair;
 //import src.ClientProtocolException;
 //import src.DefaultHttpClient;
@@ -24,7 +26,10 @@ import org.apache.*;
 
 import java.lang.Exception;
 import java.lang.String;
+import java.io.File;
 import java.io.UnsupportedEncodingException;
+
+
 
 
 
@@ -38,11 +43,13 @@ import jade.core.behaviours.ParallelBehaviour;
 import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.wrapper.AgentController;
+import jade.wrapper.ContainerController;
 import jade.wrapper.StaleProxyException;
 
 
-public class AgentOccupant  extends Agent{
+public class AgentOccupant  extends jade.core.Agent{
 	
+	File fichier = new File("sauvc3po.txt");
 	Tabmeteo[] tab= new Tabmeteo[7];//TODO enlever ce tableau test une fois les tests terminé
 	protected void setup(){
 
@@ -58,6 +65,16 @@ public class AgentOccupant  extends Agent{
 				
 				public void action(){
 					System.out.println(getLocalName()+" lancé");
+					
+					
+					if (! fichier.exists()) // si le fichier n'existe pas, le créer
+					{
+						try {
+							fichier.createNewFile();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+						}
+					}
 					
 					ACLMessage message = new ACLMessage(ACLMessage.INFORM);
 					message.addReceiver(new AID("senor_meteo", AID.ISLOCALNAME));
@@ -83,19 +100,27 @@ public class AgentOccupant  extends Agent{
 				public void action()
 				{
 				ACLMessage msg = receive();
-				ACLMessage rep = new ACLMessage(ACLMessage.INFORM);
 				if(msg!= null)  {
 					String expe=msg.getSender().getLocalName();
 					switch (expe) {
 					
 			        case "glados": // envoyer les prefs utilisateurs à glados
 			        	
-			        	envoimessage("glados","prefs utilisateur");
+			        		
+			        		if (msg.getContent().toString().equals("prefs")){
+			        			
+			        			// envoi des préférences utilisateurs
+			        			envoimessage("glados","prefs utilisateur");
+			        		}
+			        		else
+			        		{
+			        			
+			        			envoimessage("glados","confirmation planning");
+			        		}
 			                 break;
 			                 
 			        case "senor_meteo":  // envoyer la météo sur l'application
-			        	
-						
+			        			
 						//		HttpClient httpclient = new DefaultHttpClient();
 						//        HttpPost httppost = new HttpPost((String) params[0]);//rajouter de quoi joindre le serveur
 						        
@@ -130,6 +155,13 @@ public class AgentOccupant  extends Agent{
 			        		break; 
 			        	
 			        case "ams":
+			        	
+			        	String contenu = msg.getContent();
+			        	String[] part1 = contenu.split(":");
+			        	String separation1 = part1[6];
+			        	String[] part2 = separation1.split(" ");
+			        	String agentareboot = part2[1]; 
+			        	defibrillateur(agentareboot);
 			        	
 			        	break;
 			        	
@@ -169,6 +201,53 @@ public class AgentOccupant  extends Agent{
 		message.setContent(contenu);
 		message.addReceiver(new AID(destinataire, AID.ISLOCALNAME));
 		send(message);
+	}
+	
+	public void defibrillateur(String agentmort){
+		if (agentmort.contains("@"))
+		{
+			String[] part2 = agentmort.split("@");
+        	agentmort = part2[0]; 
+		}
+		ContainerController cc = getContainerController();
+		
+		switch (agentmort) {
+		
+        case "senor_meteo":
+        	
+        	try {
+			AgentController ac = cc.createNewAgent("senor_meteo","senor_meteo.AgentMeteo", null);
+			ac.start();} 
+        	catch (StaleProxyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+        	};
+                 break;
+                 
+        case "r2d2":
+        	
+        	try {
+			AgentController ac = cc.createNewAgent("r2d2","r2d2.AgentEquipement", null);
+			ac.start();}
+        	catch (StaleProxyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+        	};
+                 break;
+                 
+        case "glados": 
+        	try {
+			AgentController ac = cc.createNewAgent("senor_meteo","senor_meteo.AgentMeteo", null);
+			ac.start();} 
+        	catch (StaleProxyException e) {
+			// TODO Auto-generated catch block
+        		e.printStackTrace();
+        	};
+        		break; 
+        		
+        default: System.out.println("Erreur dans le reboot d'un agent par defibrillateur.") ;
+                 break;}
+		
 	}
 	
 }

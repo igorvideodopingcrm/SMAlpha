@@ -1,6 +1,9 @@
 package senor_meteo;
 
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import org.json.JSONArray;
@@ -19,10 +22,12 @@ import jade.wrapper.ContainerController;
 import jade.wrapper.StaleProxyException;
 
 
-public class AgentMeteo extends Agent{
+public class AgentMeteo extends jade.core.Agent{
 
 	Tabmeteo[] tab= new Tabmeteo[7];
 	String nomprecedent = "";
+	File fichier = new File("sauvsenor_meteo.txt");
+	
 	protected void setup(){
 		
 		ParallelBehaviour meteoparallele = new ParallelBehaviour(ParallelBehaviour.WHEN_ALL);
@@ -34,6 +39,18 @@ public class AgentMeteo extends Agent{
 			
 			public void action(){
 				System.out.println(getLocalName()+" lancé");
+				File fichier = new File("sauvsenor_meteo.txt");
+				if (! fichier.exists()) // si le fichier n'existe pas, le créer
+				
+				{
+					try {
+						fichier.createNewFile();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+					}
+				}
+				
+		         
 				try {
 				
 					JSONObject json = senor_meteo.JsonReader.meteoFromUrl();// importation de la météo depuis la fonction du package
@@ -53,7 +70,7 @@ public class AgentMeteo extends Agent{
 						tab[i].setDate(valdat);
 						tab[i].setTemperature(temperature);
 						tab[i].setMeteo(meteo);
-					//	System.out.println(tab[i].toString());
+						 
 						}
 					  
 //					  valtest=10;
@@ -62,6 +79,18 @@ public class AgentMeteo extends Agent{
 					System.out.println("erreur: Senor meteo n'a pas reçu de donnée du web.");
 					e.printStackTrace();
 				}
+				try {
+		        	 FileWriter fw = new FileWriter (fichier);
+		        	 String save ="";
+						for (int i = 0; i < tab.length; i++) {
+							save = save+tab[i].toString()+";";
+							}
+					fw.write (save);
+					fw.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+				}
+				
 		  }
 			
 	  });
@@ -87,7 +116,7 @@ public class AgentMeteo extends Agent{
 							tab[i].setDate(valdat);
 							tab[i].setTemperature(temperature);
 							tab[i].setMeteo(meteo);
-						//	System.out.println(tab[i].toString());
+		
 							}
 						  
 
@@ -95,6 +124,17 @@ public class AgentMeteo extends Agent{
 						// TODO Auto-generated catch block
 						System.out.println("erreur: Senor meteo n'a pas reçu de donnée du web.");
 						e.printStackTrace();
+					}
+					try {
+			        	 FileWriter fw = new FileWriter(fichier);
+			        	 String save ="";
+							for (int i = 0; i < tab.length; i++) {
+								save = save+tab[i].toString()+";";
+								}
+						fw.write (save);
+						fw.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
 					}
 				}
 			});
@@ -130,6 +170,53 @@ public class AgentMeteo extends Agent{
 		message.setContent(contenu);
 		message.addReceiver(new AID(destinataire, AID.ISLOCALNAME));
 		send(message);
+	}
+	
+	public void defibrillateur(String agentmort){
+		if (agentmort.contains("@"))
+		{
+			String[] part2 = agentmort.split("@");
+        	agentmort = part2[0]; 
+		}
+		ContainerController cc = getContainerController();
+		
+		switch (agentmort) {
+		
+        case "r2d2":
+        	
+        	try {
+			AgentController ac = cc.createNewAgent("r2d2","r2d2.AgentEquipement", null);
+			ac.start();}
+        	catch (StaleProxyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+        	};
+                 break;
+                 
+        case "c3po":  
+        	
+        	try {
+			AgentController ac = cc.createNewAgent("c3po","c3po.AgentOccupant", null);
+			ac.start();} 
+        	catch (StaleProxyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+        	};
+                 break;
+                 
+        case "glados": 
+        	try {
+			AgentController ac = cc.createNewAgent("senor_meteo","senor_meteo.AgentMeteo", null);
+			ac.start();} 
+        	catch (StaleProxyException e) {
+			// TODO Auto-generated catch block
+        		e.printStackTrace();
+        	};
+        		break; 
+        		
+        default: System.out.println("Erreur dans le reboot d'un agent par defibrillateur.") ;
+                 break;}
+		
 	}
 	
 }

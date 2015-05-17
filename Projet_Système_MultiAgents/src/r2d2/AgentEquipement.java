@@ -1,4 +1,9 @@
 package r2d2;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.OneShotBehaviour;
@@ -10,8 +15,9 @@ import jade.wrapper.AgentController;
 import jade.wrapper.ContainerController;
 import jade.wrapper.StaleProxyException;
 
-public class AgentEquipement extends Agent{
-	
+public class AgentEquipement extends jade.core.Agent{
+	File fichier = new File("sauvr2d2.txt");
+	File equips = new File("equipement.txt");
 	protected void setup(){
 		
 		ParallelBehaviour equiparallele = new ParallelBehaviour(ParallelBehaviour.WHEN_ALL);
@@ -24,6 +30,24 @@ public class AgentEquipement extends Agent{
 				public void action() {
 					
 					System.out.println(getLocalName()+" lancé");
+					
+					
+					if (! fichier.exists()) // si le fichier n'existe pas, le créer
+					
+					{
+						try {
+							fichier.createNewFile();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+						}
+					}
+					
+			         try {
+			        	 FileWriter fw = new FileWriter (fichier);
+			        	 FileReader fr = new FileReader (fichier);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+					}
 				}
 			});
 		
@@ -31,9 +55,70 @@ public class AgentEquipement extends Agent{
 			public void action()
 			{
 				ACLMessage msg = receive();
-				if(msg!= null)  {														// lorsqu'un message est traité avec du contenu
-					System.out.println("je suis r2d2 et j'ai reçu " + msg.getContent());
-					}
+				if(msg!= null)  {
+					String expe=msg.getSender().getLocalName();
+					switch (expe) {
+					
+			        case "glados": // envoyer les prefs utilisateurs à glados
+			        	
+			        		if (msg.getContent()=="planning"){
+			        			
+			        			envoimessage("glados","confirmation planning");
+			        		}
+			        		
+			                 break;
+			                 
+			        case "senor_meteo":  // envoyer la météo sur l'application
+			        			
+						//		HttpClient httpclient = new DefaultHttpClient();
+						//        HttpPost httppost = new HttpPost((String) params[0]);//rajouter de quoi joindre le serveur
+						        
+						//        ArrayList<NameValuePair> queryParams = new ArrayList<NameValuePair>();
+						//        queryParams.add(new BasicNameValuePair("contenu", contenu));
+						        
+						        // create and launch the POST request
+					//	        try {
+					//				httppost.setEntity(new UrlEncodedFormEntity(queryParams));
+					//		        HttpResponse httpResponse;
+					//				httpResponse = httpclient.execute(httppost);
+					//				response = EntityUtils.toString(httpResponse.getEntity());
+									/*JSONObject jsonResponse = new JSONObject(jsonString);
+									response = jsonResponse.get("message").toString();*/
+					//			} catch (UnsupportedEncodingException e) {
+									//Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+					//			}  catch (ClientProtocolException e) {
+									//Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+					//			} catch (IOException e) {
+									//Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+					//			}  catch (ParseException e) {
+									
+									//Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+								 //catch (JSONException e) {
+									//Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+								//}
+								
+						//	else{
+					//			block();
+						//		};
+						//		}
+			        		break; 
+			        	
+			        case "ams":
+			        	
+			        	String contenu = msg.getContent();
+			        	String[] part1 = contenu.split(":");
+			        	String separation1 = part1[6];
+			        	String[] part2 = separation1.split(" ");
+			        	String agentareboot = part2[1]; 
+			        	defibrillateur(agentareboot);
+			        	
+			        	break;
+			        	
+			        default: System.out.println("je suis C3PO et j'ai reçu " + msg.getContent()); ;
+			                 break;}
+					
+
+				}
 				else{
 					block();
 							};
@@ -42,7 +127,9 @@ public class AgentEquipement extends Agent{
 		
 		equiparallele.addSubBehaviour(new CyclicBehaviour(this) {
 			public void action() {
-				//TODO utilisation du planning reçu par l'agentEquipement.
+				//regarde l'heure
+				//regarde le planning
+				//annonce l'état de chaque équipement.
 					
 			}
 		});
@@ -58,7 +145,11 @@ public class AgentEquipement extends Agent{
 	}
 	
 	public void defibrillateur(String agentmort){
-		
+		if (agentmort.contains("@"))
+		{
+			String[] part2 = agentmort.split("@");
+        	agentmort = part2[0]; 
+		}
 		ContainerController cc = getContainerController();
 		
 		switch (agentmort) {
@@ -73,18 +164,6 @@ public class AgentEquipement extends Agent{
 			e.printStackTrace();
         	};
                  break;
-                 
-        case "r2d2":
-        	
-        	try {
-			AgentController ac = cc.createNewAgent("r2d2","r2d2.AgentEquipement", null);
-			ac.start();}
-        	catch (StaleProxyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-        	};
-                 break;
-                 
         case "c3po":  
         	
         	try {

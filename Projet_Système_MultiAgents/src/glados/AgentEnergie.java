@@ -1,8 +1,4 @@
 package glados;
-import java.io.IOException;
-import java.util.ArrayList;
-
-
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.OneShotBehaviour;
@@ -13,9 +9,19 @@ import jade.wrapper.AgentController;
 import jade.wrapper.ContainerController;
 import jade.wrapper.StaleProxyException;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 
-public class AgentEnergie extends Agent{
-	
+
+public class AgentEnergie extends jade.core.Agent{
+	File fichier = new File("sauvglados.txt");
 	protected void setup(){
 		
 		ParallelBehaviour energieparallele = new ParallelBehaviour(ParallelBehaviour.WHEN_ALL);
@@ -25,6 +31,18 @@ public class AgentEnergie extends Agent{
 
 			public void action(){
 				System.out.println(getLocalName()+" lancé");
+				
+				if (! fichier.exists()) // si le fichier n'existe pas, le créer
+				
+				{
+					try {
+						fichier.createNewFile();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+					}
+				}
+				
+		         
 				faireplanning();
 		  }
 			
@@ -46,13 +64,14 @@ public class AgentEnergie extends Agent{
 		
 		ArrayList <Equipement> init = new ArrayList <Equipement>();
 		ArrayList <Equipement> planning = new ArrayList <Equipement>();
-		
-		System.out.println("envoi des messages");
-		
+				
 		envoimessage("senor_meteo","meteo demande");
-		receptionmessage("senor_meteo","meteo demande");
+		String meteo = receptionmessage("senor_meteo","meteo demande");
+		System.out.println(meteo);
 		envoimessage("c3po","prefs");
-		receptionmessage("c3po","prefs");
+		String prefs = receptionmessage("c3po","prefs");
+		System.out.println(prefs);
+		
 	//	recup conso max // récupère la consommation max que peut s'autoriser glados à l'instant T
 		int consoT[]= new int[24]; 
 		Equipement eCourrant;
@@ -64,9 +83,30 @@ public class AgentEnergie extends Agent{
 	//	init.remove(eCourrant);
 	//	placerEquipement(eCourrant,consoT);}
 	//	}
-		envoimessage("c3po","planning à écrire ici");
-		envoimessage("r2d2","planning à écrire ici");
-		receptionmessage("r2d2","planning");
+		try {
+			FileWriter fw = new FileWriter("sauvglados.txt");
+			FileReader fr = new FileReader("sauvglados.txt");
+			BufferedReader br = new BufferedReader (fr);
+			fw.write("planning");
+			fw.close();
+			String line = br.readLine();
+			 
+		        while (line != null)
+		        {
+		            System.out.println (line);
+		            line = br.readLine();
+		        }
+		 
+		    br.close();
+		    fr.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		envoimessage("c3po","planning");
+		String S =receptionmessage("c3po","planning");
+		envoimessage("r2d2","planning");
+		String J = receptionmessage("r2d2","planning");
 	}
 
 	
@@ -93,20 +133,27 @@ public class AgentEnergie extends Agent{
 		send(message);
 	}
 	
-	public void receptionmessage(String agentcontacte, String messageoriginal){
-		System.out.println("en attente de receptions");
+	public String receptionmessage(String agentcontacte, String messageoriginal){
 		ACLMessage msg = blockingReceive();
-		System.out.println("reçu message de"+ msg.getSender().getLocalName());
+		String contenu ;
 		if (msg.getSender().getLocalName().contains("ams"))
 		{
 			defibrillateur(agentcontacte);
 			envoimessage(agentcontacte,messageoriginal);
-			receptionmessage(agentcontacte,messageoriginal);
+			contenu =receptionmessage(agentcontacte,messageoriginal);
 		}
+		else{
+			contenu = msg.getContent();
+		}
+		return contenu;
 	}
 	
 	public void defibrillateur(String agentmort){
-		System.out.println("defib en cours");
+		if (agentmort.contains("@"))
+		{
+			String[] part2 = agentmort.split("@");
+        	agentmort = part2[0]; 
+		}
 		ContainerController cc = getContainerController();
 		
 		switch (agentmort) {
@@ -143,16 +190,6 @@ public class AgentEnergie extends Agent{
 			e.printStackTrace();
         	};
                  break;
-                 
-        case "glados": 
-        	try {
-			AgentController ac = cc.createNewAgent("senor_meteo","senor_meteo.AgentMeteo", null);
-			ac.start();} 
-        	catch (StaleProxyException e) {
-			// TODO Auto-generated catch block
-        		e.printStackTrace();
-        	};
-        		break; 
         		
         default: System.out.println("Erreur dans le reboot d'un agent par defibrillateur.") ;
                  break;}
