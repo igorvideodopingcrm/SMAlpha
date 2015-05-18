@@ -181,13 +181,16 @@ public class AgentOccupant  extends jade.core.Agent{
 		send(message);
 	}
 	
-	public static void postserver(String title,String message) throws IOException {
+	public static JSONObject postserver(String title,String message) throws IOException {
 			
 			String tempText = "http://"+server+"/SMAlpha_html/c3po.php"?"+title+"="+message;
 			
 		    InputStream is = new URL(tempText).openStream();
 		    try {
 		      BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+		      String jsonText = readAll(rd);
+		      JSONObject json = new JSONObject(jsonText);
+		      return json;
 		    } finally {
 		      is.close();
 		    }
