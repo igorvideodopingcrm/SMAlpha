@@ -24,7 +24,7 @@ import jade.wrapper.StaleProxyException;
 
 public class AgentMeteo extends jade.core.Agent{
 
-	private Meteo[] tab= new Meteo[7];
+	private Meteo[] tabMeteo= new Meteo[7];
 	// String nomprecedent = "";
 	private static File save = new File("savesenor_meteo.txt");
 	
@@ -61,13 +61,13 @@ public class AgentMeteo extends jade.core.Agent{
 					
 									// entrée dans le tableau
 					JSONObject temp1;
-					for (int i = 0; i < tab.length; i++) {
+					for (int i = 0; i < tabMeteo.length; i++) {
 						temp1 = listejour.getJSONObject(i);
 						temperature = temp1.getJSONObject("temp").getInt("day");
 						date=temp1.getLong("dt");
 						meteo = temp1.getJSONArray("weather").getJSONObject(0).getString("description");
 
-						tab[i] = new Meteo(date,temperature,meteo);			// entrée des données dans le tableau
+						tabMeteo[i] = new Meteo(date,temperature,meteo);			// entrée des données dans le tableau
 					}
 					  
 //					  valtest=10;
@@ -79,8 +79,8 @@ public class AgentMeteo extends jade.core.Agent{
 				try {
 		        	 FileWriter fw = new FileWriter (fichier);
 		        	 String save ="";
-						for (int i = 0; i < tab.length; i++) {
-							save = save+tab[i].toString()+";";
+						for (int i = 0; i < tabMeteo.length; i++) {
+							save = save+tabMeteo[i].toString()+";";
 							}
 					fw.write (save);
 					fw.close();
@@ -103,13 +103,13 @@ public class AgentMeteo extends jade.core.Agent{
 						int temperature;
 						
 										// entrée dans le tableau
-						for (int i = 0; i < tab.length; i++) {
+						for (int i = 0; i < tabMeteo.length; i++) {
 							JSONObject temp1 = listejour.getJSONObject(i);
 							temperature = temp1.getJSONObject("temp").getInt("day");
 							date=temp1.getLong("dt");
 							meteo = temp1.getJSONArray("weather").getJSONObject(0).getString("description");
 
-							tab[i] = new Meteo(date,temperature,meteo);			// entrée des données dans le tableau		
+							tabMeteo[i] = new Meteo(date,temperature,meteo);			// entrée des données dans le tableau		
 						}
 						  
 
@@ -121,8 +121,8 @@ public class AgentMeteo extends jade.core.Agent{
 					try {
 			        	 FileWriter fw = new FileWriter(fichier);
 			        	 String save ="";
-							for (int i = 0; i < tab.length; i++) {
-								save = save+tab[i].toString()+";";
+							for (int i = 0; i < tabMeteo.length; i++) {
+								save = save+tabMeteo[i].toString()+";";
 								}
 						fw.write (save);
 						fw.close();
@@ -137,7 +137,7 @@ public class AgentMeteo extends jade.core.Agent{
 				{
 				ACLMessage msg = receive();
 				if(msg!= null)  {														// lorsqu'un message est traité avec du contenu
-					envoiobjet(msg.getSender().getLocalName(),tab);
+					envoiobjet(msg.getSender().getLocalName(),tabMeteo);
 					}
 				else{
 					block();

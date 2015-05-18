@@ -67,7 +67,7 @@ public class AgentOccupant extends jade.core.Agent{
 	String server="192.168.1.42";
 	
 	private static File save = new File("savec3po.txt");
-	private Meteo[] tab= new Meteo[7];
+	private Meteo[] tabMeteo= new Meteo[7];
     
 	protected void setup(){
 
@@ -149,15 +149,15 @@ public class AgentOccupant extends jade.core.Agent{
 			        case "senor_meteo":  // envoyer la météo sur l'application
 						
 			        	try {
-							tab=(Meteo[])msg.getContentObject();
+							tabMeteo=(Meteo[])msg.getContentObject();
 							
 						} catch (UnreadableException e) {
 							e.printStackTrace();
 						}
 			        	
 			        	String envoi ="";
-						for (int i = 0; i < tab.length; i++) {
-							envoi = envoi+tab[i].toString()+";";
+						for (int i = 0; i < tabMeteo.length; i++) {
+							envoi = envoi+tabMeteo[i].toString()+";";
 							}
 			       	try {
 							
