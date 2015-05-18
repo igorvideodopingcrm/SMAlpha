@@ -125,6 +125,20 @@ public class AgentOccupant  extends jade.core.Agent{
 			        			// envoi des préférences utilisateurs
 			        			envoimessage("glados","prefs utilisateur");
 			        		}
+			        		else if (msg.getContent().toString().equals("equipements"))
+			        		{
+			        			try {
+									
+									
+									JSONObject json = postserver("equipements","");
+									JSONArray equipements = json.getJSONArray();//surement erreur
+									envoimessage("glados",equipements);//fonction non existante
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+			        			envoimessage("glados","confirmation planning");
+			        		}
 			        		else
 			        		{
 			        			
