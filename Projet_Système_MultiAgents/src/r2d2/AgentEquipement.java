@@ -16,8 +16,8 @@ import jade.wrapper.ContainerController;
 import jade.wrapper.StaleProxyException;
 
 public class AgentEquipement extends jade.core.Agent{
-	File fichier = new File("sauvr2d2.txt");
-	File equips = new File("equipement.txt");
+	private static File saveFile = new File("saver2d2.txt");
+	private static File equips = new File("equipement.txt");
 	
 	protected void setup(){
 		
@@ -33,19 +33,19 @@ public class AgentEquipement extends jade.core.Agent{
 					System.out.println(getLocalName()+" lancé");
 					
 					
-					if (! fichier.exists()) // si le fichier n'existe pas, le créer
+					if (!AgentEquipement.saveFile.exists()) // si le fichier n'existe pas, le créer
 					
 					{
 						try {
-							fichier.createNewFile();
+							AgentEquipement.saveFile.createNewFile();
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 						}
 					}
 					
 			         try {
-			        	 FileWriter fw = new FileWriter (fichier);
-			        	 FileReader fr = new FileReader (fichier);
+			        	 FileWriter fw = new FileWriter (AgentEquipement.saveFile);
+			        	 FileReader fr = new FileReader (AgentEquipement.saveFile);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 					}

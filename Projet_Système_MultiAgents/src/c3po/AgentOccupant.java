@@ -62,12 +62,12 @@ import jade.wrapper.ContainerController;
 import jade.wrapper.StaleProxyException;
 
 
-public class AgentOccupant  extends jade.core.Agent{
+public class AgentOccupant extends jade.core.Agent{
 	
 	String server="192.168.1.42";
 	
-	File fichier = new File("sauvc3po.txt");
-	Meteo[] tab= new Meteo[7];
+	private static File save = new File("savec3po.txt");
+	private Meteo[] tab= new Meteo[7];
     
 	protected void setup(){
 
@@ -80,10 +80,10 @@ public class AgentOccupant  extends jade.core.Agent{
 					System.out.println(getLocalName()+" lancé");
 					
 					
-					if (! fichier.exists()) // si le fichier n'existe pas, le créer
+					if (! AgentOccupant.save.exists()) // si le fichier n'existe pas, le créer
 					{
 						try {
-							fichier.createNewFile();
+							AgentOccupant.save.createNewFile();
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 						}

@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 
 public class AgentEnergie extends jade.core.Agent{
-	File fichier = new File("sauvglados.txt");
+	private static File save = new File("saveglados.txt");
 	private static int alpha=1;
 	private static int beta1=1;
 	private static int beta2=1;
@@ -36,11 +36,11 @@ public class AgentEnergie extends jade.core.Agent{
 			public void action(){
 				System.out.println(getLocalName()+" lance");
 				
-				if (! fichier.exists()) // si le fichier n'existe pas, le creer
+				if (! AgentEnergie.save.exists()) // si le fichier n'existe pas, le creer
 				
 				{
 					try {
-						fichier.createNewFile();
+						AgentEnergie.save.createNewFile();
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 					}
@@ -100,10 +100,10 @@ public class AgentEnergie extends jade.core.Agent{
 				placerEquipement(eCourrant,consoT);}
 	//	}
 		try {
-			FileWriter fw = new FileWriter("sauvglados.txt");
-			FileReader fr = new FileReader("sauvglados.txt");
+			FileWriter fw = new FileWriter("saveglados.txt");
+			FileReader fr = new FileReader("saveglados.txt");
 			BufferedReader br = new BufferedReader (fr);
-			fw.write("planning sauv glados");
+			fw.write("planning save glados");
 			fw.close();
 			String line = br.readLine();
 			 

@@ -24,9 +24,9 @@ import jade.wrapper.StaleProxyException;
 
 public class AgentMeteo extends jade.core.Agent{
 
-	Meteo[] tab= new Meteo[7];
-	String nomprecedent = "";
-	File fichier = new File("sauvsenor_meteo.txt");
+	private Meteo[] tab= new Meteo[7];
+	// String nomprecedent = "";
+	private static File save = new File("savesenor_meteo.txt");
 	
 	protected void setup(){
 		
@@ -39,12 +39,12 @@ public class AgentMeteo extends jade.core.Agent{
 			
 			public void action(){
 				System.out.println(getLocalName()+" lancé");
-				File fichier = new File("sauvsenor_meteo.txt");
-				if (! fichier.exists()) // si le fichier n'existe pas, le créer
+				// File save = new File("savesenor_meteo.txt");
+				if (! AgentMeteo.save.exists()) // si le fichier n'existe pas, le créer
 				
 				{
 					try {
-						fichier.createNewFile();
+						AgentMeteo.save.createNewFile();
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 					}
@@ -64,15 +64,11 @@ public class AgentMeteo extends jade.core.Agent{
 					for (int i = 0; i < tab.length; i++) {
 						temp1 = listejour.getJSONObject(i);
 						temperature = temp1.getJSONObject("temp").getInt("day");
-						valdat=temp1.getLong("dt");
+						date=temp1.getLong("dt");
 						meteo = temp1.getJSONArray("weather").getJSONObject(0).getString("description");
 
-						tab[i] = new Meteo();			// entrée des données dans le tableau
-						tab[i].setDate(valdat);
-						tab[i].setTemperature(temperature);
-						tab[i].setMeteo(meteo);
-						 
-						}
+						tab[i] = new Meteo(date,temperature,meteo);			// entrée des données dans le tableau
+					}
 					  
 //					  valtest=10;
 				} catch (IOException | JSONException e) {
@@ -110,15 +106,11 @@ public class AgentMeteo extends jade.core.Agent{
 						for (int i = 0; i < tab.length; i++) {
 							JSONObject temp1 = listejour.getJSONObject(i);
 							temperature = temp1.getJSONObject("temp").getInt("day");
-							valdat=temp1.getLong("dt");
+							date=temp1.getLong("dt");
 							meteo = temp1.getJSONArray("weather").getJSONObject(0).getString("description");
 
-							tab[i] = new Meteo();			// entrée des données dans le tableau
-							tab[i].setDate(valdat);
-							tab[i].setTemperature(temperature);
-							tab[i].setMeteo(meteo);
-		
-							}
+							tab[i] = new Meteo(date,temperature,meteo);			// entrée des données dans le tableau		
+						}
 						  
 
 					} catch (IOException | JSONException e) {
