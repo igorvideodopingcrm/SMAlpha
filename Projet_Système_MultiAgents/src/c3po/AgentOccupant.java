@@ -6,7 +6,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import senor_meteo.JsonReader;
 import senor_meteo.Meteo;
+
+
 
 import java.util.ArrayList;
 
@@ -22,7 +25,7 @@ import java.nio.charset.Charset;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
+import outils.Outils;
 
 //import src.BasicNameValuePair;
 //import src.ClientProtocolException;
@@ -47,6 +50,7 @@ import java.io.ObjectOutputStream;
 
 
 
+
 //import src.UrlEncodedFormEntity;
 import jade.core.AID;
 import jade.core.Agent;
@@ -64,7 +68,7 @@ import jade.wrapper.StaleProxyException;
 
 public class AgentOccupant  extends jade.core.Agent{
 	
-	String server="192.168.1.42";
+	static String server="192.168.1.42";
 	
 	File fichier = new File("sauvc3po.txt");
 	Meteo[] tab= new Meteo[7];
@@ -120,14 +124,13 @@ public class AgentOccupant  extends jade.core.Agent{
 			        case "glados": // envoyer les prefs utilisateurs à glados
 			        	
 			        		
-			        		if (msg.getContent().toString().equals("prefs")){
-			        			
-			        			// envoi des préférences utilisateurs
-			        			envoimessage("glados","prefs utilisateur");
+			        		if (msg.getContent().contains("prefs")){
+			        			System.out.println("c3po:pref envoyées");
+			        			Outils.envoimessage("glados","prefs utilisateur",this.myAgent);
 			        		}
 			        		else
-			        		{
-			        			
+			        		{	
+			        			System.out.println("c3po:planning reçu");
 			        			envoimessage("glados","confirmation planning");
 			        		}
 			                 break;
@@ -146,7 +149,6 @@ public class AgentOccupant  extends jade.core.Agent{
 							envoi = envoi+tab[i].toString()+";";
 							}
 			       	try {
-							
 							postserver("meteo",envoi);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
@@ -178,26 +180,25 @@ public class AgentOccupant  extends jade.core.Agent{
 	}
 	
 	
-	public void envoimessage(String destinataire,String contenu){
-		ACLMessage message = new ACLMessage(ACLMessage.INFORM);
-		message.setContent(contenu);
-		message.addReceiver(new AID(destinataire, AID.ISLOCALNAME));
-		send(message);
-	}
+
 	
 	public static JSONObject postserver(String title,String message) throws IOException {
-			
-			String tempText = "http://"+server+"/SMAlpha_html/c3po.php"?"+title+"="+message;
-			
+			String tempText = "http://"+server+"/SMAlpha_html/c3po.php?"+title+"="+message;
+			tempText=tempText.replace(" ", "_");
 		    InputStream is = new URL(tempText).openStream();
 		    try {
 		      BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-		      String jsonText = readAll(rd);
+		      String jsonText = JsonReader.readAll(rd);
+		      System.out.println(jsonText);
 		      JSONObject json = new JSONObject(jsonText);
 		      return json;
-		    } finally {
+		    } catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
 		      is.close();
 		    }
+			return null;
 	  	}
 	
 	
@@ -248,4 +249,10 @@ public class AgentOccupant  extends jade.core.Agent{
 		
 	}
 	
+	public void envoimessage(String destinataire,String contenu){
+		ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+		message.setContent(contenu);
+		message.addReceiver(new AID(destinataire, AID.ISLOCALNAME));
+		send(message);
+	}
 }

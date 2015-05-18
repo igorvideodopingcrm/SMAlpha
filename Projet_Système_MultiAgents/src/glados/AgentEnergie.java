@@ -5,6 +5,7 @@ import jade.core.behaviours.OneShotBehaviour;
 import jade.core.behaviours.ParallelBehaviour;
 import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.UnreadableException;
 import jade.wrapper.AgentController;
 import jade.wrapper.ContainerController;
 import jade.wrapper.StaleProxyException;
@@ -17,11 +18,16 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
+
+import senor_meteo.Meteo;
 
 
 public class AgentEnergie extends jade.core.Agent{
 	File fichier = new File("sauvglados.txt");
+	Meteo[] tab= new Meteo[7];
+	
 	protected void setup(){
 		
 		ParallelBehaviour energieparallele = new ParallelBehaviour(ParallelBehaviour.WHEN_ALL);
@@ -66,8 +72,11 @@ public class AgentEnergie extends jade.core.Agent{
 		ArrayList <Equipement> planning = new ArrayList <Equipement>();
 				
 		envoimessage("senor_meteo","meteo demande");
-		String meteo = receptionmessage("senor_meteo","meteo demande");
-		System.out.println(meteo);
+		tab = (Meteo[]) receptionobjet("senor_meteo","meteo demande");
+		//		for (int i = 0; i < tab.length; i++) {
+		//		System.out.println(tab[i].toString());
+		//		}
+		
 		envoimessage("c3po","prefs");
 		String prefs = receptionmessage("c3po","prefs");
 		System.out.println(prefs);
@@ -103,10 +112,10 @@ public class AgentEnergie extends jade.core.Agent{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		envoimessage("c3po","planning");
-		String S =receptionmessage("c3po","planning");
-		envoimessage("r2d2","planning");
-		String J = receptionmessage("r2d2","planning");
+		envoiobjet("c3po",planning);
+		String S =receptionmessage("c3po",planning);
+		envoiobjet("r2d2",planning);
+		String J = receptionmessage("r2d2",planning);
 	}
 
 	
@@ -126,7 +135,19 @@ public class AgentEnergie extends jade.core.Agent{
 					}
 				}
 	
-	public void envoimessage(String destinataire,String contenu){
+	public void  envoiobjet(String destinataire,java.io.Serializable contenu){
+		ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+		try {
+			message.setContentObject(contenu);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		message.addReceiver(new AID(destinataire, AID.ISLOCALNAME));
+		send(message);
+	}
+	
+	public void envoimessage (String destinataire,String contenu){
 		ACLMessage message = new ACLMessage(ACLMessage.INFORM);
 		message.setContent(contenu);
 		message.addReceiver(new AID(destinataire, AID.ISLOCALNAME));
@@ -139,12 +160,49 @@ public class AgentEnergie extends jade.core.Agent{
 		if (msg.getSender().getLocalName().contains("ams"))
 		{
 			defibrillateur(agentcontacte);
-			envoimessage(agentcontacte,messageoriginal);
+			 envoiobjet(agentcontacte,messageoriginal);
 			contenu =receptionmessage(agentcontacte,messageoriginal);
 		}
 		else{
 			contenu = msg.getContent();
 		}
+		return contenu;
+	}
+	
+	public String receptionmessage(String agentcontacte, java.io.Serializable messageoriginal){
+		ACLMessage msg = blockingReceive();
+		String contenu ;
+		if (msg.getSender().getLocalName().contains("ams"))
+		{
+			defibrillateur(agentcontacte);
+			 envoiobjet(agentcontacte,messageoriginal);
+			contenu =receptionmessage(agentcontacte,messageoriginal);
+		}
+		else{
+			contenu = msg.getContent();
+		}
+		return contenu;
+	}
+	
+	public Serializable receptionobjet(String agentcontacte, java.io.Serializable messageoriginal){
+		ACLMessage msg = blockingReceive();
+		Serializable contenu;
+		if (msg.getSender().getLocalName().contains("ams"))
+		{
+			defibrillateur(agentcontacte);
+			 envoiobjet(agentcontacte,messageoriginal);
+			contenu=receptionobjet(agentcontacte,messageoriginal);
+		}
+		else
+		{
+			try {
+				contenu=msg.getContentObject();
+			} catch (UnreadableException e) {
+				// TODO Auto-generated catch block
+				return null;
+			}
+		}
+		
 		return contenu;
 	}
 	
