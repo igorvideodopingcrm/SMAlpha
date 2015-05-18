@@ -72,15 +72,20 @@ public class AgentEnergie extends jade.core.Agent{
 		ArrayList <Equipement> init = new ArrayList <Equipement>();
 		ArrayList <Equipement> planning = new ArrayList <Equipement>();
 				
-		Outils.envoimessage("senor_meteo","meteo demande",a);
-		tab =(Meteo[])Outils.receptionobjet("senor_meteo","meteo demande",a);
-				for (int i = 0; i < tab.length; i++) {
-					System.out.println(tab[i].toString());
-				}
+
+		Outils.envoimessage("c3po","","demandeprefs",a);
 		
-		Outils.envoimessage("c3po","prefs",a);
-		String prefs = Outils.receptionmessage("c3po","prefs",a);
+		System.out.println("attentes prefs");
+		Serializable prefs = Outils.receptionobjet("c3po","prefsutilisateur","demandeprefs","prefs",a);
 		System.out.println(prefs);
+		
+		Outils.envoimessage("senor_meteo","","demandemeteo",a);
+		tab =(Meteo[])Outils.receptionobjet("senor_meteo","meteo demande","demandemeteo","meteo",a);
+		
+		for (int i = 0; i < tab.length; i++) {
+			System.out.println(tab[i].toString());
+		}
+
 		
 	//	recup conso max // récupère la consommation max que peut s'autoriser glados à l'instant T
 		int consoT[]= new int[24]; 
@@ -113,10 +118,10 @@ public class AgentEnergie extends jade.core.Agent{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Outils.envoimessage("c3po",planning,a);
-		String S = Outils.receptionmessage("c3po",planning,a);
-		Outils.envoimessage("r2d2",planning, a);
-		String J = Outils.receptionmessage("r2d2",planning,a);
+		Outils.envoimessage("c3po",planning,"planning",a);
+		String S = (String) Outils.receptionobjet("c3po",planning,"planning","confplanning",a);
+		Outils.envoimessage("r2d2",planning,"planning",a);
+		String J = (String) Outils.receptionobjet("r2d2",planning,"planning","confplanning", a);
 	}
 
 	

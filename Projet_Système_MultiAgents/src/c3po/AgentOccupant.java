@@ -93,10 +93,8 @@ public class AgentOccupant  extends jade.core.Agent{
 						}
 					}
 					
-					ACLMessage message = new ACLMessage(ACLMessage.INFORM);
-					message.addReceiver(new AID("senor_meteo", AID.ISLOCALNAME));
-					message.setContent("météo!");
-					send(message);
+					Outils.envoimessage("senor_meteo","demandemeteo","demandemeteo", this.myAgent);
+					Outils.receptionobjet("senor_meteo", "meteo","demandemeteo","meteo",this.myAgent);
 			  }
 				
 		  });
@@ -118,21 +116,22 @@ public class AgentOccupant  extends jade.core.Agent{
 				{
 				ACLMessage msg = receive();
 				if(msg!= null)  {
-					String expe=msg.getSender().getLocalName();
-					switch (expe) {
+					String expediteur=msg.getSender().getLocalName();
+					switch (expediteur) {
 					
-			        case "glados": // envoyer les prefs utilisateurs à glados
+			        case "glados":
 			        	
-			        		
-			        		if (msg.getContent().contains("prefs")){
-			        			System.out.println("c3po:pref envoyées");
-			        			Outils.envoimessage("glados","prefs utilisateur",this.myAgent);
+			        	switch (msg.getLanguage())
+			        		{case "demandeprefs": // glados demande les prefs
+			        			System.out.println("prefs envoyées");
+			        			Outils.envoimessage("glados","prefs","prefs",this.myAgent);
+			        			break;
+			        			
+			        		case "planning": // le planning vient d'être reçu
+			        			Outils.envoimessage("glados","confirmation planning","confplanning",this.myAgent);
+			        			break;
 			        		}
-			        		else
-			        		{	
-			        			System.out.println("c3po:planning reçu");
-			        			Outils.envoimessage("glados","confirmation planning",this.myAgent);
-			        		}
+			        	
 			                 break;
 			                 
 			        case "senor_meteo":  // envoyer la météo sur l'application
@@ -154,27 +153,28 @@ public class AgentOccupant  extends jade.core.Agent{
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-
-
 			        		break; 
 			        	
 			        case "ams":
 			        	
 			        	String contenu = msg.getContent();
-			        	String[] part1 = contenu.split(":");
-			        	String separation1 = part1[6];
-			        	String[] part2 = separation1.split(" ");
-			        	String agentareboot = part2[1]; 
+			        	String[] separmessage = contenu.split(":");
+			        	String contientnom = separmessage[6];
+			        	String[] nomagent = contientnom.split(" ");
+			        	String agentareboot = nomagent[1]; 
 			        	Outils.defibrillateur(agentareboot,this.myAgent);
-			        	
 			        	break;
 			        	
+			        	
 			        default: System.out.println("je suis C3PO et j'ai reçu " + msg.getContent()); ;
-			                 break;}
-					
+			                 break;}	
 
+						}
+				else
+				{
+					block();
 				}
-				}
+					}
 				});
 			addBehaviour(occuparallele);
 	}
@@ -202,51 +202,5 @@ public class AgentOccupant  extends jade.core.Agent{
 	  	}
 	
 	
-	/*public void defibrillateur(String agentmort){
-		if (agentmort.contains("@"))
-		{
-			String[] part2 = agentmort.split("@");
-        	agentmort = part2[0]; 
-		}
-		ContainerController cc = getContainerController();
-		
-		switch (agentmort) {
-		
-        case "senor_meteo":
-        	
-        	try {
-			AgentController ac = cc.createNewAgent("senor_meteo","senor_meteo.AgentMeteo", null);
-			ac.start();} 
-        	catch (StaleProxyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-        	};
-                 break;
-                 
-        case "r2d2":
-        	
-        	try {
-			AgentController ac = cc.createNewAgent("r2d2","r2d2.AgentEquipement", null);
-			ac.start();}
-        	catch (StaleProxyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-        	};
-                 break;
-                 
-        case "glados": 
-        	try {
-			AgentController ac = cc.createNewAgent("senor_meteo","senor_meteo.AgentMeteo", null);
-			ac.start();} 
-        	catch (StaleProxyException e) {
-			// TODO Auto-generated catch block
-        		e.printStackTrace();
-        	};
-        		break; 
-        		
-        default: System.out.println("Erreur dans le reboot d'un agent par defibrillateur.") ;
-                 break;}
-		
-	}*/
 
 }

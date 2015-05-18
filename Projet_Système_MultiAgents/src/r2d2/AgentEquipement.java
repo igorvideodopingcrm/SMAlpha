@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import outils.Outils;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.OneShotBehaviour;
@@ -11,6 +12,7 @@ import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.ParallelBehaviour;
 import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.UnreadableException;
 import jade.wrapper.AgentController;
 import jade.wrapper.ContainerController;
 import jade.wrapper.StaleProxyException;
@@ -62,30 +64,27 @@ public class AgentEquipement extends jade.core.Agent{
 					
 			        case "glados": // envoyer les prefs utilisateurs à glados
 			        	
-			        		if (msg.getContent()=="planning"){
-			        			
-			        			envoimessage("glados","confirmation planning");
-			        		}
-			        		
+						if (msg.getLanguage().equals("planning")){
+							Outils.envoimessage("glados","confirmation","confplanning",this.myAgent);
+						}
 			                 break;
 			                 
 			        	
 			        case "ams":
 			        	
 			        	String contenu = msg.getContent();
-			        	String[] part1 = contenu.split(":");
-			        	String separation1 = part1[6];
-			        	String[] part2 = separation1.split(" ");
-			        	String agentareboot = part2[1]; 
-			        	defibrillateur(agentareboot);
+			        	String[] separmessage = contenu.split(":");
+			        	String contientnom = separmessage[6];
+			        	String[] nomagent = contientnom.split(" ");
+			        	String agentareboot = nomagent[1]; 
+			        	Outils.defibrillateur(agentareboot,this.myAgent);
 			        	break;
 			        
 			        case "dummy":
-			        	String htxt = msg.getContent();
-			        	String[] h = htxt.split("h");
+			        	String heuretext = msg.getContent();
+			        	String[] h = heuretext.split("h");
 			        	int heure =  Integer.parseInt(h[0]);
 			        	int min = Integer.parseInt(h[1]);
-			        	//regarde l'heure
 						//regarde le planning
 						//annonce l'état de chaque équipement.
 			        	
@@ -105,57 +104,6 @@ public class AgentEquipement extends jade.core.Agent{
 		// ajout du comportement décrit au dessus.
 	}
 
-	public void envoimessage(String destinataire,String contenu){
-		ACLMessage message = new ACLMessage(ACLMessage.INFORM);
-		message.setContent(contenu);
-		message.addReceiver(new AID(destinataire, AID.ISLOCALNAME));
-		send(message);
-	}
-	
-	public void defibrillateur(String agentmort){
-		if (agentmort.contains("@"))
-		{
-			String[] part2 = agentmort.split("@");
-        	agentmort = part2[0]; 
-		}
-		ContainerController cc = getContainerController();
-		
-		switch (agentmort) {
-		
-        case "senor_meteo":
-        	
-        	try {
-			AgentController ac = cc.createNewAgent("senor_meteo","senor_meteo.AgentMeteo", null);
-			ac.start();} 
-        	catch (StaleProxyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-        	};
-                 break;
-        case "c3po":  
-        	
-        	try {
-			AgentController ac = cc.createNewAgent("c3po","c3po.AgentOccupant", null);
-			ac.start();} 
-        	catch (StaleProxyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-        	};
-                 break;
-                 
-        case "glados": 
-        	try {
-			AgentController ac = cc.createNewAgent("senor_meteo","senor_meteo.AgentMeteo", null);
-			ac.start();} 
-        	catch (StaleProxyException e) {
-			// TODO Auto-generated catch block
-        		e.printStackTrace();
-        	};
-        		break; 
-        		
-        default: System.out.println("Erreur dans le reboot d'un agent par defibrillateur.") ;
-                 break;}
-		
-	}
+
 	
 }

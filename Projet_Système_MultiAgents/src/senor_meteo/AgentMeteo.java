@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import outils.Outils;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
@@ -143,8 +144,8 @@ public class AgentMeteo extends jade.core.Agent{
 				public void action()
 				{
 				ACLMessage msg = receive();
-				if(msg!= null)  {														// lorsqu'un message est traité avec du contenu
-					envoiobjet(msg.getSender().getLocalName(),tab);
+				if(msg!= null)  {	// lorsqu'un message est traité avec du contenu
+					Outils.envoimessage(msg.getSender().getLocalName(),tab,"meteo",this.myAgent);
 					}
 				else{
 					block();
@@ -154,75 +155,6 @@ public class AgentMeteo extends jade.core.Agent{
 			
 			addBehaviour(meteoparallele);
 			// ajout du comportement décrit au dessus.
-	}
-	
-	
-	
-	public void envoimessage (String destinataire,String contenu){
-		ACLMessage message = new ACLMessage(ACLMessage.INFORM);
-		message.setContent(contenu);
-		message.addReceiver(new AID(destinataire, AID.ISLOCALNAME));
-		send(message);
-	}
-	
-	public void envoiobjet (String destinataire,java.io.Serializable contenu){
-		ACLMessage message = new ACLMessage(ACLMessage.INFORM);
-		try {
-			message.setContentObject(contenu);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		message.addReceiver(new AID(destinataire, AID.ISLOCALNAME));
-		send(message);
-	}
-	
-	
-	public void defibrillateur(String agentmort){
-		if (agentmort.contains("@"))
-		{
-			String[] part2 = agentmort.split("@");
-        	agentmort = part2[0]; 
-		}
-		ContainerController cc = getContainerController();
-		
-		switch (agentmort) {
-		
-        case "r2d2":
-        	
-        	try {
-			AgentController ac = cc.createNewAgent("r2d2","r2d2.AgentEquipement", null);
-			ac.start();}
-        	catch (StaleProxyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-        	};
-                 break;
-                 
-        case "c3po":  
-        	
-        	try {
-			AgentController ac = cc.createNewAgent("c3po","c3po.AgentOccupant", null);
-			ac.start();} 
-        	catch (StaleProxyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-        	};
-                 break;
-                 
-        case "glados": 
-        	try {
-			AgentController ac = cc.createNewAgent("senor_meteo","senor_meteo.AgentMeteo", null);
-			ac.start();} 
-        	catch (StaleProxyException e) {
-			// TODO Auto-generated catch block
-        		e.printStackTrace();
-        	};
-        		break; 
-        		
-        default: System.out.println("Erreur dans le reboot d'un agent par defibrillateur.") ;
-                 break;}
-		
 	}
 	
 }
