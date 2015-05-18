@@ -24,7 +24,7 @@ import jade.wrapper.StaleProxyException;
 
 public class AgentMeteo extends jade.core.Agent{
 
-	Tabmeteo[] tab= new Tabmeteo[7];
+	Meteo[] tab= new Meteo[7];
 	String nomprecedent = "";
 	File fichier = new File("sauvsenor_meteo.txt");
 	
@@ -66,7 +66,7 @@ public class AgentMeteo extends jade.core.Agent{
 						valdat=temp1.getLong("dt");
 						meteo = temp1.getJSONArray("weather").getJSONObject(0).getString("description");
 
-						tab[i] = new Tabmeteo();			// entrée des données dans le tableau
+						tab[i] = new Meteo();			// entrée des données dans le tableau
 						tab[i].setDate(valdat);
 						tab[i].setTemperature(temperature);
 						tab[i].setMeteo(meteo);
@@ -112,7 +112,7 @@ public class AgentMeteo extends jade.core.Agent{
 							valdat=temp1.getLong("dt");
 							meteo = temp1.getJSONArray("weather").getJSONObject(0).getString("description");
 
-							tab[i] = new Tabmeteo();			// entrée des données dans le tableau
+							tab[i] = new Meteo();			// entrée des données dans le tableau
 							tab[i].setDate(valdat);
 							tab[i].setTemperature(temperature);
 							tab[i].setMeteo(meteo);
@@ -144,14 +144,7 @@ public class AgentMeteo extends jade.core.Agent{
 				{
 				ACLMessage msg = receive();
 				if(msg!= null)  {														// lorsqu'un message est traité avec du contenu
-					
-					String nom = msg.getSender().getLocalName();
-					String reponse ="";
-					for (int i = 0; i < tab.length; i++) {
-						reponse = reponse+tab[i].toString()+";";
-						}
-					envoimessage(nom,reponse);
-					nomprecedent=nom;
+					envoiobjet(msg.getSender().getLocalName(),tab);
 					}
 				else{
 					block();
@@ -171,6 +164,19 @@ public class AgentMeteo extends jade.core.Agent{
 		message.addReceiver(new AID(destinataire, AID.ISLOCALNAME));
 		send(message);
 	}
+	
+	public void envoiobjet (String destinataire,java.io.Serializable contenu){
+		ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+		try {
+			message.setContentObject(contenu);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		message.addReceiver(new AID(destinataire, AID.ISLOCALNAME));
+		send(message);
+	}
+	
 	
 	public void defibrillateur(String agentmort){
 		if (agentmort.contains("@"))

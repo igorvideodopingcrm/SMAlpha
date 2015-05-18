@@ -6,7 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import senor_meteo.Tabmeteo;
+import senor_meteo.Meteo;
 
 import java.util.ArrayList;
 
@@ -18,6 +18,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
+
+
 
 
 //import src.BasicNameValuePair;
@@ -32,10 +34,14 @@ import org.apache.*;
 
 import java.lang.Exception;
 import java.lang.String;
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 
 
+// serialization d'objet.
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 
 
@@ -48,6 +54,7 @@ import jade.core.behaviours.OneShotBehaviour;
 import jade.core.behaviours.ParallelBehaviour;
 import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.UnreadableException;
 import jade.wrapper.AgentController;
 import jade.wrapper.ContainerController;
 import jade.wrapper.StaleProxyException;
@@ -58,16 +65,12 @@ public class AgentOccupant  extends jade.core.Agent{
 	String server="127.0.0.0";
 
 	File fichier = new File("sauvc3po.txt");
-	Tabmeteo[] tab= new Tabmeteo[7];//TODO enlever ce tableau test une fois les tests terminé
+	Meteo[] tab= new Meteo[7];
+    
 	protected void setup(){
 
-			addBehaviour(new GUIBehaviour());
-			// ajout du comportement décrit au dessous.
-			
-			
+
 			ParallelBehaviour occuparallele = new ParallelBehaviour(ParallelBehaviour.WHEN_ALL);
-			
-			
 			
 			occuparallele.addSubBehaviour(new OneShotBehaviour(this){
 				
@@ -92,7 +95,7 @@ public class AgentOccupant  extends jade.core.Agent{
 				
 		  });
 			
-			occuparallele.addSubBehaviour(new TickerBehaviour(this,20000){// 43200000 = 12 heures en milisecondes | à modifier selon le rafraichissement voulu
+			occuparallele.addSubBehaviour(new TickerBehaviour(this,5000){// 43200000 = 12 heures en milisecondes | à modifier selon le rafraichissement voulu
 				protected void onTick() {									// timer d'obtention de la météo par l'agentoccupant auprès de l'agent météo
 					
 					ACLMessage message = new ACLMessage(ACLMessage.INFORM);
@@ -128,8 +131,21 @@ public class AgentOccupant  extends jade.core.Agent{
 			                 break;
 			                 
 			        case "senor_meteo":  // envoyer la météo sur l'application
-						try {
-							postserver("meteo",msg.getContent().toString());
+						
+			        	try {
+							tab=(Meteo[])msg.getContentObject();
+							
+						} catch (UnreadableException e) {
+							e.printStackTrace();
+						}
+			        	
+			        	String envoi ="";
+						for (int i = 0; i < tab.length; i++) {
+							envoi = envoi+tab[i].toString()+";";
+							}
+			       	try {
+							
+							postserver("meteo",envoi);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -159,26 +175,6 @@ public class AgentOccupant  extends jade.core.Agent{
 			addBehaviour(occuparallele);
 	}
 	
-	/**
-	 * 	Inner class GUIBehaviour
-	 */
-	private class GUIBehaviour extends Behaviour 
-	{
-
-
-		public void action() {
-			// TODO Contenu du Behaviour de La GUI, en charge de son comportement
-			
-		}
-
-
-		public boolean done() {
-			// TODO Methode à appeler à la fin de la GUI, mettre TRUE pour fermer le Behaviour, False Pour qu'il se rouvre de manière cyclique
-			// CF voir les Behaviour One shot et les behaviours cycliques
-			return false;
-		}
-		
-	}
 	
 	public void envoimessage(String destinataire,String contenu){
 		ACLMessage message = new ACLMessage(ACLMessage.INFORM);

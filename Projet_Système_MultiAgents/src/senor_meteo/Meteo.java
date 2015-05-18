@@ -1,6 +1,8 @@
 package senor_meteo;
 
-public class Tabmeteo {
+import java.io.Serializable;
+
+public class Meteo implements  Serializable{
 
 String date="";
 int temperature=42;

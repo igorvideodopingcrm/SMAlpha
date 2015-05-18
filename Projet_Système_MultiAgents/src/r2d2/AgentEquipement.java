@@ -18,6 +18,7 @@ import jade.wrapper.StaleProxyException;
 public class AgentEquipement extends jade.core.Agent{
 	File fichier = new File("sauvr2d2.txt");
 	File equips = new File("equipement.txt");
+	
 	protected void setup(){
 		
 		ParallelBehaviour equiparallele = new ParallelBehaviour(ParallelBehaviour.WHEN_ALL);
@@ -68,40 +69,6 @@ public class AgentEquipement extends jade.core.Agent{
 			        		
 			                 break;
 			                 
-			        case "senor_meteo":  // envoyer la météo sur l'application
-			        			
-						//		HttpClient httpclient = new DefaultHttpClient();
-						//        HttpPost httppost = new HttpPost((String) params[0]);//rajouter de quoi joindre le serveur
-						        
-						//        ArrayList<NameValuePair> queryParams = new ArrayList<NameValuePair>();
-						//        queryParams.add(new BasicNameValuePair("contenu", contenu));
-						        
-						        // create and launch the POST request
-					//	        try {
-					//				httppost.setEntity(new UrlEncodedFormEntity(queryParams));
-					//		        HttpResponse httpResponse;
-					//				httpResponse = httpclient.execute(httppost);
-					//				response = EntityUtils.toString(httpResponse.getEntity());
-									/*JSONObject jsonResponse = new JSONObject(jsonString);
-									response = jsonResponse.get("message").toString();*/
-					//			} catch (UnsupportedEncodingException e) {
-									//Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
-					//			}  catch (ClientProtocolException e) {
-									//Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
-					//			} catch (IOException e) {
-									//Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
-					//			}  catch (ParseException e) {
-									
-									//Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
-								 //catch (JSONException e) {
-									//Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
-								//}
-								
-						//	else{
-					//			block();
-						//		};
-						//		}
-			        		break; 
 			        	
 			        case "ams":
 			        	
@@ -111,10 +78,19 @@ public class AgentEquipement extends jade.core.Agent{
 			        	String[] part2 = separation1.split(" ");
 			        	String agentareboot = part2[1]; 
 			        	defibrillateur(agentareboot);
-			        	
 			        	break;
+			        
+			        case "dummy":
+			        	String htxt = msg.getContent();
+			        	String[] h = htxt.split("h");
+			        	int heure =  Integer.parseInt(h[0]);
+			        	int min = Integer.parseInt(h[1]);
+			        	//regarde l'heure
+						//regarde le planning
+						//annonce l'état de chaque équipement.
 			        	
-			        default: System.out.println("je suis C3PO et j'ai reçu " + msg.getContent()); ;
+			        	
+			        default: System.out.println("r2d2: reçu " + msg.getContent()); ;
 			                 break;}
 					
 
@@ -125,14 +101,6 @@ public class AgentEquipement extends jade.core.Agent{
 				}
 			});
 		
-		equiparallele.addSubBehaviour(new CyclicBehaviour(this) {
-			public void action() {
-				//regarde l'heure
-				//regarde le planning
-				//annonce l'état de chaque équipement.
-					
-			}
-		});
 		addBehaviour(equiparallele);
 		// ajout du comportement décrit au dessus.
 	}
