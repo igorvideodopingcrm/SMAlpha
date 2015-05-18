@@ -55,7 +55,7 @@ import jade.wrapper.StaleProxyException;
 
 public class AgentOccupant  extends jade.core.Agent{
 	
-	String server="127.0.0.0";
+	String server="192.168.1.42";
 	
 	File fichier = new File("sauvc3po.txt");
 	Tabmeteo[] tab= new Tabmeteo[7];//TODO enlever ce tableau test une fois les tests terminé
@@ -183,7 +183,7 @@ public class AgentOccupant  extends jade.core.Agent{
 	
 	public static void postserver(String title,String message) throws IOException {
 			
-			String tempText = "http://"+server+"?"+title+"="+message;
+			String tempText = "http://"+server+"/SMAlpha_html/c3po.php"?"+title+"="+message;
 			
 		    InputStream is = new URL(tempText).openStream();
 		    try {
