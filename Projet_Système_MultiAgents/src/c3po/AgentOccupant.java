@@ -19,6 +19,8 @@ import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 
@@ -62,8 +64,8 @@ import jade.wrapper.StaleProxyException;
 
 public class AgentOccupant  extends jade.core.Agent{
 	
-	String server="127.0.0.0";
-
+	String server="192.168.1.42";
+	
 	File fichier = new File("sauvc3po.txt");
 	Meteo[] tab= new Meteo[7];
     
@@ -121,7 +123,7 @@ public class AgentOccupant  extends jade.core.Agent{
 			        		if (msg.getContent().toString().equals("prefs")){
 			        			
 			        			// envoi des préférences utilisateurs
-			        			envoimessage("glados","c3po:prefs utilisateur");
+			        			envoimessage("glados","prefs utilisateur");
 			        		}
 			        		else
 			        		{
@@ -183,19 +185,22 @@ public class AgentOccupant  extends jade.core.Agent{
 		send(message);
 	}
 	
-	
-public void postserver(String title,String message) throws IOException {
+	public static JSONObject postserver(String title,String message) throws IOException {
 			
-			String tempText = "http://" + server + "?" +title+"="+message;
+			String tempText = "http://"+server+"/SMAlpha_html/c3po.php"?"+title+"="+message;
 			
 		    InputStream is = new URL(tempText).openStream();
 		    try {
 		      BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+		      String jsonText = readAll(rd);
+		      JSONObject json = new JSONObject(jsonText);
+		      return json;
 		    } finally {
 		      is.close();
 		    }
 	  	}
-		
+	
+	
 	public void defibrillateur(String agentmort){
 		if (agentmort.contains("@"))
 		{
