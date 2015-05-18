@@ -22,6 +22,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import senor_meteo.Meteo;
+import outils.Outils;
 
 
 public class AgentEnergie extends jade.core.Agent{
@@ -49,14 +50,14 @@ public class AgentEnergie extends jade.core.Agent{
 				}
 				
 		         
-				faireplanning();
+				faireplanning(this.myAgent);
 		  }
 			
 	  });
 		energieparallele.addSubBehaviour(new TickerBehaviour(this,86400000){ // une fois par jour
 			protected void onTick() {
 
-				faireplanning();
+				faireplanning(this.myAgent);
 			}
 			});
 		
@@ -65,20 +66,20 @@ public class AgentEnergie extends jade.core.Agent{
 	}
 	
 	
-	public void faireplanning(){
+	public void faireplanning(Agent a){
 		//recup équipement -> ajout dans init
 		
 		ArrayList <Equipement> init = new ArrayList <Equipement>();
 		ArrayList <Equipement> planning = new ArrayList <Equipement>();
 				
-		envoimessage("senor_meteo","meteo demande");
-		tab = (Meteo[]) receptionobjet("senor_meteo","meteo demande");
-		//		for (int i = 0; i < tab.length; i++) {
-		//		System.out.println(tab[i].toString());
-		//		}
+		Outils.envoimessage("senor_meteo","meteo demande",a);
+		tab =(Meteo[])Outils.receptionobjet("senor_meteo","meteo demande",a);
+				for (int i = 0; i < tab.length; i++) {
+					System.out.println(tab[i].toString());
+				}
 		
-		envoimessage("c3po","prefs");
-		String prefs = receptionmessage("c3po","prefs");
+		Outils.envoimessage("c3po","prefs",a);
+		String prefs = Outils.receptionmessage("c3po","prefs",a);
 		System.out.println(prefs);
 		
 	//	recup conso max // récupère la consommation max que peut s'autoriser glados à l'instant T
@@ -112,10 +113,10 @@ public class AgentEnergie extends jade.core.Agent{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		envoiobjet("c3po",planning);
-		String S =receptionmessage("c3po",planning);
-		envoiobjet("r2d2",planning);
-		String J = receptionmessage("r2d2",planning);
+		Outils.envoimessage("c3po",planning,a);
+		String S = Outils.receptionmessage("c3po",planning,a);
+		Outils.envoimessage("r2d2",planning, a);
+		String J = Outils.receptionmessage("r2d2",planning,a);
 	}
 
 	
@@ -135,124 +136,6 @@ public class AgentEnergie extends jade.core.Agent{
 					}
 				}
 	
-	public void  envoiobjet(String destinataire,java.io.Serializable contenu){
-		ACLMessage message = new ACLMessage(ACLMessage.INFORM);
-		try {
-			message.setContentObject(contenu);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		message.addReceiver(new AID(destinataire, AID.ISLOCALNAME));
-		send(message);
-	}
-	
-	public void envoimessage (String destinataire,String contenu){
-		ACLMessage message = new ACLMessage(ACLMessage.INFORM);
-		message.setContent(contenu);
-		message.addReceiver(new AID(destinataire, AID.ISLOCALNAME));
-		send(message);
-	}
-	
-	public String receptionmessage(String agentcontacte, String messageoriginal){
-		ACLMessage msg = blockingReceive();
-		String contenu ;
-		if (msg.getSender().getLocalName().contains("ams"))
-		{
-			defibrillateur(agentcontacte);
-			 envoiobjet(agentcontacte,messageoriginal);
-			contenu =receptionmessage(agentcontacte,messageoriginal);
-		}
-		else{
-			contenu = msg.getContent();
-		}
-		return contenu;
-	}
-	
-	public String receptionmessage(String agentcontacte, java.io.Serializable messageoriginal){
-		ACLMessage msg = blockingReceive();
-		String contenu ;
-		if (msg.getSender().getLocalName().contains("ams"))
-		{
-			defibrillateur(agentcontacte);
-			 envoiobjet(agentcontacte,messageoriginal);
-			contenu =receptionmessage(agentcontacte,messageoriginal);
-		}
-		else{
-			contenu = msg.getContent();
-		}
-		return contenu;
-	}
-	
-	public Serializable receptionobjet(String agentcontacte, java.io.Serializable messageoriginal){
-		ACLMessage msg = blockingReceive();
-		Serializable contenu;
-		if (msg.getSender().getLocalName().contains("ams"))
-		{
-			defibrillateur(agentcontacte);
-			 envoiobjet(agentcontacte,messageoriginal);
-			contenu=receptionobjet(agentcontacte,messageoriginal);
-		}
-		else
-		{
-			try {
-				contenu=msg.getContentObject();
-			} catch (UnreadableException e) {
-				// TODO Auto-generated catch block
-				return null;
-			}
-		}
-		
-		return contenu;
-	}
-	
-	public void defibrillateur(String agentmort){
-		if (agentmort.contains("@"))
-		{
-			String[] part2 = agentmort.split("@");
-        	agentmort = part2[0]; 
-		}
-		ContainerController cc = getContainerController();
-		
-		switch (agentmort) {
-		
-        case "senor_meteo":
-        	
-        	try {
-			AgentController ac = cc.createNewAgent("senor_meteo","senor_meteo.AgentMeteo", null);
-			ac.start();} 
-        	catch (StaleProxyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-        	};
-                 break;
-                 
-        case "r2d2":
-        	
-        	try {
-			AgentController ac = cc.createNewAgent("r2d2","r2d2.AgentEquipement", null);
-			ac.start();}
-        	catch (StaleProxyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-        	};
-                 break;
-                 
-        case "c3po":  
-        	
-        	try {
-			AgentController ac = cc.createNewAgent("c3po","c3po.AgentOccupant", null);
-			ac.start();} 
-        	catch (StaleProxyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-        	};
-                 break;
-        		
-        default: System.out.println("Erreur dans le reboot d'un agent par defibrillateur.") ;
-                 break;}
-		
-	}
 	
 	public static int penalite (Equipement e,int h, int[] consoT){
 		int pTot=0;
@@ -271,6 +154,3 @@ public class AgentEnergie extends jade.core.Agent{
 	}
 	}
 	
-
-
-

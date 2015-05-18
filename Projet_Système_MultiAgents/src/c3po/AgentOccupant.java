@@ -131,7 +131,7 @@ public class AgentOccupant  extends jade.core.Agent{
 			        		else
 			        		{	
 			        			System.out.println("c3po:planning reçu");
-			        			envoimessage("glados","confirmation planning");
+			        			Outils.envoimessage("glados","confirmation planning",this.myAgent);
 			        		}
 			                 break;
 			                 
@@ -165,7 +165,7 @@ public class AgentOccupant  extends jade.core.Agent{
 			        	String separation1 = part1[6];
 			        	String[] part2 = separation1.split(" ");
 			        	String agentareboot = part2[1]; 
-			        	defibrillateur(agentareboot);
+			        	Outils.defibrillateur(agentareboot,this.myAgent);
 			        	
 			        	break;
 			        	
@@ -202,7 +202,7 @@ public class AgentOccupant  extends jade.core.Agent{
 	  	}
 	
 	
-	public void defibrillateur(String agentmort){
+	/*public void defibrillateur(String agentmort){
 		if (agentmort.contains("@"))
 		{
 			String[] part2 = agentmort.split("@");
@@ -247,12 +247,6 @@ public class AgentOccupant  extends jade.core.Agent{
         default: System.out.println("Erreur dans le reboot d'un agent par defibrillateur.") ;
                  break;}
 		
-	}
-	
-	public void envoimessage(String destinataire,String contenu){
-		ACLMessage message = new ACLMessage(ACLMessage.INFORM);
-		message.setContent(contenu);
-		message.addReceiver(new AID(destinataire, AID.ISLOCALNAME));
-		send(message);
-	}
+	}*/
+
 }
