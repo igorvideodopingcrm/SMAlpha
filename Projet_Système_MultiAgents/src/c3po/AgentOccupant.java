@@ -11,7 +11,13 @@ import senor_meteo.Tabmeteo;
 import java.util.ArrayList;
 
 
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URL;
+import java.nio.charset.Charset;
 
 
 //import src.BasicNameValuePair;
@@ -49,6 +55,8 @@ import jade.wrapper.StaleProxyException;
 
 public class AgentOccupant  extends jade.core.Agent{
 	
+	String server="127.0.0.0";
+
 	File fichier = new File("sauvc3po.txt");
 	Tabmeteo[] tab= new Tabmeteo[7];//TODO enlever ce tableau test une fois les tests terminé
 	protected void setup(){
@@ -110,7 +118,7 @@ public class AgentOccupant  extends jade.core.Agent{
 			        		if (msg.getContent().toString().equals("prefs")){
 			        			
 			        			// envoi des préférences utilisateurs
-			        			envoimessage("glados","prefs utilisateur");
+			        			envoimessage("glados","c3po:prefs utilisateur");
 			        		}
 			        		else
 			        		{
@@ -120,38 +128,14 @@ public class AgentOccupant  extends jade.core.Agent{
 			                 break;
 			                 
 			        case "senor_meteo":  // envoyer la météo sur l'application
-			        			
-						//		HttpClient httpclient = new DefaultHttpClient();
-						//        HttpPost httppost = new HttpPost((String) params[0]);//rajouter de quoi joindre le serveur
-						        
-						//        ArrayList<NameValuePair> queryParams = new ArrayList<NameValuePair>();
-						//        queryParams.add(new BasicNameValuePair("contenu", contenu));
-						        
-						        // create and launch the POST request
-					//	        try {
-					//				httppost.setEntity(new UrlEncodedFormEntity(queryParams));
-					//		        HttpResponse httpResponse;
-					//				httpResponse = httpclient.execute(httppost);
-					//				response = EntityUtils.toString(httpResponse.getEntity());
-									/*JSONObject jsonResponse = new JSONObject(jsonString);
-									response = jsonResponse.get("message").toString();*/
-					//			} catch (UnsupportedEncodingException e) {
-									//Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
-					//			}  catch (ClientProtocolException e) {
-									//Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
-					//			} catch (IOException e) {
-									//Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
-					//			}  catch (ParseException e) {
-									
-									//Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
-								 //catch (JSONException e) {
-									//Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
-								//}
-								
-						//	else{
-					//			block();
-						//		};
-						//		}
+						try {
+							postserver("meteo",msg.getContent().toString());
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+
 			        		break; 
 			        	
 			        case "ams":
@@ -203,6 +187,19 @@ public class AgentOccupant  extends jade.core.Agent{
 		send(message);
 	}
 	
+	
+public void postserver(String title,String message) throws IOException {
+			
+			String tempText = "http://" + server + "?" +title+"="+message;
+			
+		    InputStream is = new URL(tempText).openStream();
+		    try {
+		      BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+		    } finally {
+		      is.close();
+		    }
+	  	}
+		
 	public void defibrillateur(String agentmort){
 		if (agentmort.contains("@"))
 		{

@@ -87,7 +87,7 @@ public class AgentEnergie extends jade.core.Agent{
 			FileWriter fw = new FileWriter("sauvglados.txt");
 			FileReader fr = new FileReader("sauvglados.txt");
 			BufferedReader br = new BufferedReader (fr);
-			fw.write("planning");
+			fw.write("planning sauv glados");
 			fw.close();
 			String line = br.readLine();
 			 
