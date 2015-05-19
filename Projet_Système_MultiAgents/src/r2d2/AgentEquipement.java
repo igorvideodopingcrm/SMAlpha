@@ -1,31 +1,36 @@
 package r2d2;
+import glados.Equipement;
+
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
-import jade.core.AID;
-import jade.core.Agent;
+import outils.Outils;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.ParallelBehaviour;
-import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
-import jade.wrapper.AgentController;
-import jade.wrapper.ContainerController;
-import jade.wrapper.StaleProxyException;
+import jade.lang.acl.UnreadableException;
 
 public class AgentEquipement extends jade.core.Agent{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static File saveFile = new File("saver2d2.txt");
-	private static File equips = new File("equipement.txt");
-	
 	protected void setup(){
 		
 		ParallelBehaviour equiparallele = new ParallelBehaviour(ParallelBehaviour.WHEN_ALL);
 		
 		equiparallele.addSubBehaviour(new OneShotBehaviour(this) 
 			{
-
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
 
 				@Override
 				public void action() {
@@ -43,16 +48,16 @@ public class AgentEquipement extends jade.core.Agent{
 						}
 					}
 					
-			         try {
-			        	 FileWriter fw = new FileWriter (AgentEquipement.saveFile);
-			        	 FileReader fr = new FileReader (AgentEquipement.saveFile);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-					}
+			        
 				}
 			});
 		
 		equiparallele.addSubBehaviour(new CyclicBehaviour(this) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			public void action()
 			{
 				ACLMessage msg = receive();
@@ -60,38 +65,68 @@ public class AgentEquipement extends jade.core.Agent{
 					String expe=msg.getSender().getLocalName();
 					switch (expe) {
 					
-			        case "glados": // envoyer les prefs utilisateurs à glados
+			        case "glados": 
 			        	
-			        		if (msg.getContent()=="planning"){
-			        			
-			        			envoimessage("glados","confirmation planning");
-			        		}
-			        		
+						if (msg.getLanguage().equals("planning")){
+							ArrayList <Equipement> planning = new ArrayList <Equipement>();
+							try {
+								planning = (ArrayList<Equipement>) msg.getContentObject();
+							} catch (UnreadableException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							
+		        			try {
+		        				FileWriter fw = new FileWriter(saveFile);
+		        				FileReader fr = new FileReader(saveFile);
+		        				BufferedReader br = new BufferedReader(fr);
+		        				for (int j=0;j<planning.size();j++)
+		        				{
+		        					fw.write(planning.get(j).toString());
+		        					fw.write("\n");
+		        				}
+		        				fw.close();
+		        				String line = br.readLine();
+		        				
+		        				System.out.println ("je suis r2d2 et ceci est le planning");
+		        			        while (line != null)
+		        			        {
+		        			            System.out.println (line);
+		        			            line = br.readLine();
+		        			        }
+		        			 
+		        			    br.close();
+		        			    fr.close();
+		        			 
+		        			} catch (IOException e) {
+		        				// TODO Auto-generated catch block
+		        				e.printStackTrace();
+		        			}
+							
+						}
 			                 break;
-			                 
-			        	
+
 			        case "ams":
 			        	
 			        	String contenu = msg.getContent();
-			        	String[] part1 = contenu.split(":");
-			        	String separation1 = part1[6];
-			        	String[] part2 = separation1.split(" ");
-			        	String agentareboot = part2[1]; 
-			        	defibrillateur(agentareboot);
+			        	String[] separmessage = contenu.split(":");
+			        	String contientnom = separmessage[6];
+			        	String[] nomagent = contientnom.split(" ");
+			        	String agentareboot = nomagent[1]; 
+			        	Outils.defibrillateur(agentareboot,this.myAgent);
 			        	break;
 			        
 			        case "dummy":
-			        	String htxt = msg.getContent();
-			        	String[] h = htxt.split("h");
+			        	String heuretext = msg.getContent();
+			        	String[] h = heuretext.split("h");
 			        	int heure =  Integer.parseInt(h[0]);
-			        	int min = Integer.parseInt(h[1]);
-			        	//regarde l'heure
-						//regarde le planning
-						//annonce l'état de chaque équipement.
-			        	
+			        	Equipallume(heure);
+
+			        	break;
 			        	
 			        default: System.out.println("r2d2: reçu " + msg.getContent()); ;
-			                 break;}
+			            break;
+			            }
 					
 
 				}
@@ -105,57 +140,46 @@ public class AgentEquipement extends jade.core.Agent{
 		// ajout du comportement décrit au dessus.
 	}
 
-	public void envoimessage(String destinataire,String contenu){
-		ACLMessage message = new ACLMessage(ACLMessage.INFORM);
-		message.setContent(contenu);
-		message.addReceiver(new AID(destinataire, AID.ISLOCALNAME));
-		send(message);
-	}
-	
-	public void defibrillateur(String agentmort){
-		if (agentmort.contains("@"))
-		{
-			String[] part2 = agentmort.split("@");
-        	agentmort = part2[0]; 
+
+	public ArrayList <Equipement> Equipallume(int heure) {
+		ArrayList <Equipement> equipAllume = new ArrayList <Equipement>();
+		ArrayList <Equipement> planning = new ArrayList <Equipement>();
+    	
+    	try {
+			FileReader fr = new FileReader(saveFile);
+			BufferedReader br = new BufferedReader(fr);
+			String line = br.readLine();
+		        while (line != null)
+		        	
+		        {	 System.out.println (line);
+		        	planning.add(new Equipement(line));
+		            line = br.readLine();
+		            
+		        }
+		 
+		    br.close();
+		    fr.close();
+		 
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		ContainerController cc = getContainerController();
+    	
+    	for (int j=0;j<planning.size();j++)
+		{	
+			if(planning.get(j).getIndice()<heure && ((planning.get(j).getIndice()+planning.get(j).getDuree())>heure))
+			{
+				equipAllume.add(planning.get(j));
+			};
+		}
+    	System.out.println("Equipements allumés: " + equipAllume.size());
+    	for (int j=0;j< equipAllume.size();j++)
+		{
+    		System.out.println(equipAllume.get(j).toString());
+		}
+    	System.out.println("\n");
+		//annonce l'état de chaque équipement.*/
 		
-		switch (agentmort) {
-		
-        case "senor_meteo":
-        	
-        	try {
-			AgentController ac = cc.createNewAgent("senor_meteo","senor_meteo.AgentMeteo", null);
-			ac.start();} 
-        	catch (StaleProxyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-        	};
-                 break;
-        case "c3po":  
-        	
-        	try {
-			AgentController ac = cc.createNewAgent("c3po","c3po.AgentOccupant", null);
-			ac.start();} 
-        	catch (StaleProxyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-        	};
-                 break;
-                 
-        case "glados": 
-        	try {
-			AgentController ac = cc.createNewAgent("senor_meteo","senor_meteo.AgentMeteo", null);
-			ac.start();} 
-        	catch (StaleProxyException e) {
-			// TODO Auto-generated catch block
-        		e.printStackTrace();
-        	};
-        		break; 
-        		
-        default: System.out.println("Erreur dans le reboot d'un agent par defibrillateur.") ;
-                 break;}
-		
+		return equipAllume;
 	}
-	
 }

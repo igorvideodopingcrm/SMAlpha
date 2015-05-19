@@ -1,6 +1,12 @@
 package glados;
 
-public class Equipement implements Comparable{
+import java.io.Serializable;
+
+public class Equipement implements Comparable<Equipement>,Serializable{
+		/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 		private String nom;
 		private	int duree;
 		private	int conso;
@@ -27,8 +33,34 @@ public class Equipement implements Comparable{
 		 * @return the nom
 		 */
 		
+		public Equipement(String save) {
+		String[] arguments = save.split(",");
+		String[] valeurs = new String[6];
+		for (int h=0;h< arguments.length;h++)
+			{
+				valeurs[h]=arguments[h].split("=")[1];
+			}
+		
+		this.nom = valeurs[0];
+		this.duree = Integer.parseInt(valeurs[1]);
+		this.conso = Integer.parseInt(valeurs[2]);
+		this.debutmin = Integer.parseInt(valeurs[3]);
+		this.finmax = Integer.parseInt(valeurs[4]);
+		this.indice = Integer.parseInt(valeurs[5].replace(";",""));
+		}
+		
 		public String getNom() {
 			return nom;
+		}
+
+		/* (non-Javadoc)
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			return "nom=" + nom + ",duree=" + duree + ",conso="
+					+ conso + ",debutmin=" + debutmin + ",finmax=" + finmax
+					+ ",indice=" + indice +";";
 		}
 		/**
 		 * @param nom the nom to set
@@ -101,4 +133,6 @@ public class Equipement implements Comparable{
 			else if (((this.getFinmax()-this.getDebutmin())-2*this.getDuree())-this.getConso() > ((e.getFinmax()-e.getDebutmin())-2*e.getDuree())-e.getConso()) return -1;
 			else return 0;
 		}
+
+		
 }

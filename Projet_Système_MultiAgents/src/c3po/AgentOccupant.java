@@ -1,73 +1,48 @@
 package c3po;
+import glados.Equipement;
+
 import java.io.IOException;
 
-import org.apache.http.ParseException;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-
+import senor_meteo.JsonReader;
 import senor_meteo.Meteo;
 
 import java.util.ArrayList;
-
-
 import java.io.BufferedReader;
-import java.io.IOException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import outils.Outils;
 
-
-
-//import src.BasicNameValuePair;
-//import src.ClientProtocolException;
-//import src.DefaultHttpClient;
-//import src.EditText;
-//import src.HttpClient;
-//import src.HttpPost;
-//import src.HttpResponse;
-//import src.NameValuePair;
-import org.apache.*;
-
-import java.lang.Exception;
 import java.lang.String;
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.UnsupportedEncodingException;
 
 
-// serialization d'objet.
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
-
-
-//import src.UrlEncodedFormEntity;
 import jade.core.AID;
-import jade.core.Agent;
-import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.core.behaviours.ParallelBehaviour;
 import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
-import jade.wrapper.AgentController;
-import jade.wrapper.ContainerController;
-import jade.wrapper.StaleProxyException;
 
 
 public class AgentOccupant extends jade.core.Agent{
 	
-	String server="192.168.1.42";
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	static String server="192.168.1.42";
 	
 	private static File save = new File("savec3po.txt");
-	private Meteo[] tabMeteo= new Meteo[7];
+	private Meteo[]tabMeteo= new Meteo[7];
     
 	protected void setup(){
 
@@ -76,6 +51,11 @@ public class AgentOccupant extends jade.core.Agent{
 			
 			occuparallele.addSubBehaviour(new OneShotBehaviour(this){
 				
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
 				public void action(){
 					System.out.println(getLocalName()+" lancé");
 					
@@ -89,15 +69,18 @@ public class AgentOccupant extends jade.core.Agent{
 						}
 					}
 					
-					ACLMessage message = new ACLMessage(ACLMessage.INFORM);
-					message.addReceiver(new AID("senor_meteo", AID.ISLOCALNAME));
-					message.setContent("météo!");
-					send(message);
+				//	Outils.envoimessage("senor_meteo","demandemeteo","demandemeteo", this.myAgent);
+				//	Outils.receptionobjet("senor_meteo", "meteo","demandemeteo","meteo",this.myAgent);
 			  }
 				
 		  });
 			
 			occuparallele.addSubBehaviour(new TickerBehaviour(this,5000){// 43200000 = 12 heures en milisecondes | à modifier selon le rafraichissement voulu
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
 				protected void onTick() {									// timer d'obtention de la météo par l'agentoccupant auprès de l'agent météo
 					
 					ACLMessage message = new ACLMessage(ACLMessage.INFORM);
@@ -110,156 +93,140 @@ public class AgentOccupant extends jade.core.Agent{
 			
 			occuparallele.addSubBehaviour(new CyclicBehaviour(this) { // behaviour de réception de message
 				
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
 				public void action()
 				{
 				ACLMessage msg = receive();
 				if(msg!= null)  {
-					String expe=msg.getSender().getLocalName();
-					switch (expe) {
 					
-			        case "glados": // envoyer les prefs utilisateurs à glados
-			        	
-			        		
-			        		if (msg.getContent().toString().equals("prefs")){
-			        			
-			        			// envoi des préférences utilisateurs
-			        			envoimessage("glados","prefs utilisateur");
-			        		}
-			        		else if (msg.getContent().toString().equals("equipements"))
-			        		{
-			        			try {
-									
-									
-									JSONObject json = postserver("equipements","");
-									JSONArray equipements = json.getJSONArray();//surement erreur
-									envoimessage("glados",equipements);//fonction non existante
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-			        			envoimessage("glados","confirmation planning");
-			        		}
-			        		else
-			        		{
-			        			
-			        			envoimessage("glados","confirmation planning");
-			        		}
-			                 break;
-			                 
-			        case "senor_meteo":  // envoyer la météo sur l'application
-						
-			        	try {
-							tabMeteo=(Meteo[])msg.getContentObject();
+				if (msg.getSender().getLocalName().equals("ams")){
+
+		        	String contenu = msg.getContent();
+		        	String[] separmessage = contenu.split(":");
+		        	String contientnom = separmessage[6];
+		        	String[] nomagent = contientnom.split(" ");
+		        	String agentareboot = nomagent[1]; 
+		        	Outils.defibrillateur(agentareboot,this.myAgent);
+				}else{
+					switch (msg.getLanguage())
+					{
+					case "prefs": // glados demande les prefs
+	        			System.out.println("prefs envoyées");
+	        			Outils.envoimessage("glados","prefs","prefs",this.myAgent);
+	        			break;
+	        			
+	        		case "planning": // le planning vient d'être reçu
+	        			System.out.println("envoi planning web");
+	        			Outils.envoimessage("glados","confirmation planning","planning",this.myAgent);
+	        			ArrayList <Equipement> planning = new ArrayList <Equipement>();
+					try {
+						planning = (ArrayList<Equipement>) msg.getContentObject();
+					} catch (UnreadableException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+	        			try {
+	        				String envoi1 = "";
+	        				FileWriter fw = new FileWriter("savec3po.txt");
+	        				FileReader fr = new FileReader("savec3po.txt");
+	        				BufferedReader br = new BufferedReader(fr);
+	        				for (int j=0;j<planning.size();j++)
+	        				{
+	        					envoi1 = envoi1+planning.get(j).toString();
+	        				fw.write(planning.get(j).toString());
+	        				}
+	        				fw.close();
+	        				String line = br.readLine();
+	        				
+	        				System.out.println ("je suis c3po et ceci est le planning");
+	        			        while (line != null)
+	        			        {
+	        			            System.out.println (line);
+	        			            line = br.readLine();
+	        			        }
+	        			 
+	        			    br.close();
+	        			    fr.close();
+	        			    postserver("planning",envoi1);
+	        			} catch (IOException e) {
+	        				// TODO Auto-generated catch block
+	        				e.printStackTrace();
+	        			}
+	        			break;
+
+	        		case "equipements":// glados demande les equipements
+	        			
+	        			try {
+							JSONArray jsonEquip =postserver("equipements","");
+							jsonEquip = postserver("equipements","");
 							
-						} catch (UnreadableException e) {
+							String listequip = jsonEquip.toString();
+							
+							Outils.envoimessage("glados",listequip,"equipements",this.myAgent);
+						
+	        			} catch (IOException e) {
+							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-			        	
+	        			
+	        		break;
+	        		
+	        		case "meteo":  // envoyer la météo sur l'application
+			        	try {
+							tabMeteo=(Meteo[])msg.getContentObject();
+						} catch (UnreadableException e) {
+
+							System.out.println ("trycatchmeteo");
+							e.printStackTrace();
+						}
 			        	String envoi ="";
 						for (int i = 0; i < tabMeteo.length; i++) {
 							envoi = envoi+tabMeteo[i].toString()+";";
 							}
-			       	try {
-							
+						try {
 							postserver("meteo",envoi);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-
-
-			        		break; 
-			        	
-			        case "ams":
-			        	
-			        	String contenu = msg.getContent();
-			        	String[] part1 = contenu.split(":");
-			        	String separation1 = part1[6];
-			        	String[] part2 = separation1.split(" ");
-			        	String agentareboot = part2[1]; 
-			        	defibrillateur(agentareboot);
-			        	
-			        	break;
-			        	
-			        default: System.out.println("je suis C3PO et j'ai reçu " + msg.getContent()); ;
-			                 break;}
-					
-
+			        		break;
+					}
 				}
+	
+						
 				}
+				else
+				{
+					block();
+				}
+					}
 				});
 			addBehaviour(occuparallele);
 	}
 	
 	
-	public void envoimessage(String destinataire,String contenu){
-		ACLMessage message = new ACLMessage(ACLMessage.INFORM);
-		message.setContent(contenu);
-		message.addReceiver(new AID(destinataire, AID.ISLOCALNAME));
-		send(message);
-	}
-	
-	public static JSONObject postserver(String title,String message) throws IOException {
-			
-			String tempText = "http://"+server+"/SMAlpha_html/c3po.php"?"+title+"="+message;
-			
+	public static JSONArray postserver(String title,String message) throws IOException {
+			String tempText = "http://"+server+"/SMAlpha_html/c3po.php?"+title+"="+message;
+			tempText=tempText.replace(" ","_");
 		    InputStream is = new URL(tempText).openStream();
 		    try {
 		      BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-		      String jsonText = readAll(rd);
-		      JSONObject json = new JSONObject(jsonText);
+		      String jsonText = JsonReader.readAll(rd);
+		      System.out.println(jsonText);
+		      JSONArray json = new JSONArray("["+jsonText+"]");
 		      return json;
-		    } finally {
+		    } catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
 		      is.close();
 		    }
+			return null;
 	  	}
 	
-	
-	public void defibrillateur(String agentmort){
-		if (agentmort.contains("@"))
-		{
-			String[] part2 = agentmort.split("@");
-        	agentmort = part2[0]; 
-		}
-		ContainerController cc = getContainerController();
-		
-		switch (agentmort) {
-		
-        case "senor_meteo":
-        	
-        	try {
-			AgentController ac = cc.createNewAgent("senor_meteo","senor_meteo.AgentMeteo", null);
-			ac.start();} 
-        	catch (StaleProxyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-        	};
-                 break;
-                 
-        case "r2d2":
-        	
-        	try {
-			AgentController ac = cc.createNewAgent("r2d2","r2d2.AgentEquipement", null);
-			ac.start();}
-        	catch (StaleProxyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-        	};
-                 break;
-                 
-        case "glados": 
-        	try {
-			AgentController ac = cc.createNewAgent("senor_meteo","senor_meteo.AgentMeteo", null);
-			ac.start();} 
-        	catch (StaleProxyException e) {
-			// TODO Auto-generated catch block
-        		e.printStackTrace();
-        	};
-        		break; 
-        		
-        default: System.out.println("Erreur dans le reboot d'un agent par defibrillateur.") ;
-                 break;}
-		
-	}
-	
+
 }

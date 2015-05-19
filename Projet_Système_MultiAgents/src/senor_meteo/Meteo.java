@@ -4,13 +4,17 @@ import java.io.Serializable;
 
 public class Meteo implements  Serializable{
 
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 private String date="";
 private int temperature=42;
 private String meteo="";
 
 public Meteo(){}
 
-public Meteo(String date, int temperature, String meteo){
+public Meteo(long date, int temperature, String meteo){
 	this.setDate(date);
 	this.setTemperature(temperature);
 	this.setMeteo(meteo);
