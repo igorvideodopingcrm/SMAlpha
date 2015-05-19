@@ -4,26 +4,37 @@ import java.io.Serializable;
 
 public class Meteo implements  Serializable{
 
-String date="";
-int temperature=42;
-String meteo="";
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+private String date="";
+private int temperature=42;
+private String meteo="";
 
+public Meteo(){}
+
+public Meteo(long date, int temperature, String meteo){
+	this.setDate(date);
+	this.setTemperature(temperature);
+	this.setMeteo(meteo);
+}
 
 public String getDate() {
-	return date;
+	return this.date;
 }
 public void setDate(long i) {
-	String dat = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new java.util.Date(i*1000)); // i ou i*1000 ?
-	this.date = dat;
+	String date = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new java.util.Date(i*1000)); // i ou i*1000 ?
+	this.date = date;
 }
 public int getTemperature() {
-	return temperature;
+	return this.temperature;
 }
 public void setTemperature(int temperature) {
 	this.temperature = temperature;
 }
 public String getMeteo() {
-	return meteo;
+	return this.meteo;
 }
 public void setMeteo(String meteo) {
 	this.meteo = meteo;
@@ -31,11 +42,8 @@ public void setMeteo(String meteo) {
 
 @Override
 public String toString() {
-	return  date + "," + temperature + "," + meteo;
+	return this.date + "," + this.temperature + "," + this.meteo;
 }
-
-
-
 
 }
 

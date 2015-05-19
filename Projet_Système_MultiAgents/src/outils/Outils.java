@@ -2,21 +2,25 @@ package outils;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.concurrent.Semaphore;
 
 import jade.core.AID;
 import jade.core.Agent;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-import jade.lang.acl.MessageTemplate.MatchExpression;
 import jade.lang.acl.UnreadableException;
 import jade.wrapper.AgentController;
 import jade.wrapper.ContainerController;
 import jade.wrapper.StaleProxyException;
-import jdk.nashorn.internal.ir.Block;
 
 
 public class Outils {
 
+
+	
+	static Semaphore boitemess = new Semaphore(1);
+
+	
 	public static void defibrillateur(String agentmort, Agent a){ // fonction de défibrillateur. cette fonction sert à reboot des Agents qui seraient tombé
 		if (agentmort.contains("@"))
 		{
@@ -75,6 +79,7 @@ public class Outils {
 		
 	}
 
+
 		
 	public static void envoimessage(String destinataire,java.io.Serializable contenu,String titre, Agent a){ // fonction d'envoi de message ACL contenant un objet 
 		ACLMessage message = new ACLMessage(ACLMessage.INFORM);
@@ -88,28 +93,22 @@ public class Outils {
 		message.addReceiver(new AID(destinataire, AID.ISLOCALNAME));
 		a.send(message);
 	}
+
 	
-	/*public static Serializable receptionobjet(String agentcontacte, Serializable messageoriginal,String titreorigin, String titreattendu, Agent a){
-		Serializable contenu;
-		
-		int nbmessageattente= a.getCurQueueSize();
-		if (nbmessageattente==0){
-			a.block();
-		}
-		
-		
-		contenu=reception(agentcontacte,messageoriginal,titreorigin,titreattendu,a);
-		return contenu;
-	}
 	
-	*/
+	
+	
+	
+	
+
 	
 	
 	public static Serializable receptionobjet(String agentcontacte, Serializable messageoriginal,String titreorigin, String titreattendu, Agent a){ // fonction de reception d'objet à l'envoi d'une string 
-				
+	
+		
 		Serializable contenu = null;
 		MessageTemplate IDams =MessageTemplate.MatchSender(new AID("ams", AID.ISLOCALNAME)); 
-		ACLMessage msgams = a.blockingReceive(IDams,1);
+		ACLMessage msgams = a.blockingReceive(IDams,500);
 		
 		if (msgams==null)
 			{
@@ -117,11 +116,11 @@ public class Outils {
 			MessageTemplate IDcontact =MessageTemplate.MatchSender(new AID(agentcontacte, AID.ISLOCALNAME)); 
 			MessageTemplate filtre = MessageTemplate.and(titre,IDcontact);
 			ACLMessage msgcontact = a.receive(filtre);
-			System.out.println("boucle "+agentcontacte);
 			if (msgcontact!=null ){
 				/*if ( msgcontact.getSender().getLocalName().equals(agentcontacte)){*/
 					try {
 						contenu=msgcontact.getContentObject();
+						boitemess.release();
 					} catch (UnreadableException e) {
 						// TODO Auto-generated catch block
 						a.putBack(msgcontact);
@@ -130,7 +129,7 @@ public class Outils {
 
 				}
 			else
-				{
+				{boitemess.release();
 				contenu=receptionobjet(agentcontacte,messageoriginal,titreorigin,titreattendu,a);
 				}
 			}
@@ -143,9 +142,15 @@ public class Outils {
         	String agentareboot = nomagent[1]; 
         	Outils.defibrillateur(agentareboot,a);
         	envoimessage(agentcontacte,messageoriginal,titreorigin,a);
+        	boitemess.release();
         	contenu=receptionobjet(agentcontacte,messageoriginal,titreorigin,titreattendu,a);
 		}
+		
+		
 		return contenu;	
 	}
+	
+	
+	
 	
 }
