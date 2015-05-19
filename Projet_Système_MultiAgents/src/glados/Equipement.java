@@ -1,26 +1,25 @@
 package glados;
 
-public class Equipement {
+public class Equipement implements Comparable{
 		private String nom;
-		private	int durée;
+		private	int duree;
 		private	int conso;
-		private	int débutmin;
+		private	int debutmin;
 		private	int finmax;
 		private	int indice;
 		/**
 		 * @param nom
-		 * @param durée
+		 * @param duree
 		 * @param conso
-		 * @param débutmin
+		 * @param debutmin
 		 * @param finmax
 		 * @param indice
 		 */
-		public Equipement(String nom, int durée, int conso, int débutmin,
-				int finmax) {
+		public Equipement(String nom, int duree, int conso, int debutmin, int finmax) {
 			this.nom = nom;
-			this.durée = durée;
+			this.duree = duree;
 			this.conso = conso;
-			this.débutmin = débutmin;
+			this.debutmin = debutmin;
 			this.finmax = finmax;
 			this.indice = 0;
 		}
@@ -38,16 +37,16 @@ public class Equipement {
 			this.nom = nom;
 		}
 		/**
-		 * @return the durée
+		 * @return the duree
 		 */
-		public int getDurée() {
-			return durée;
+		public int getDuree() {
+			return duree;
 		}
 		/**
-		 * @param durée the durée to set
+		 * @param duree the duree to set
 		 */
-		public void setDurée(int durée) {
-			this.durée = durée;
+		public void setDuree(int duree) {
+			this.duree = duree;
 		}
 		/**
 		 * @return the conso
@@ -62,16 +61,16 @@ public class Equipement {
 			this.conso = conso;
 		}
 		/**
-		 * @return the débutmin
+		 * @return the debutmin
 		 */
-		public int getDébutmin() {
-			return débutmin;
+		public int getDebutmin() {
+			return debutmin;
 		}
 		/**
-		 * @param débutmin the débutmin to set
+		 * @param debutmin the debutmin to set
 		 */
-		public void setDébutmin(int débutmin) {
-			this.débutmin = débutmin;
+		public void setDebutmin(int debutmin) {
+			this.debutmin = debutmin;
 		}
 		/**
 		 * @return the finmax
@@ -96,5 +95,10 @@ public class Equipement {
 		 */
 		public void setIndice(int indice) {
 			this.indice = indice;
+		}
+		public int compareTo(Equipement e){
+			if (((this.getFinmax()-this.getDebutmin())-2*this.getDuree())-this.getConso() < ((e.getFinmax()-e.getDebutmin())-2*e.getDuree())-e.getConso()) return 1;//il faudrait trouver quelque chose de mieux
+			else if (((this.getFinmax()-this.getDebutmin())-2*this.getDuree())-this.getConso() > ((e.getFinmax()-e.getDebutmin())-2*e.getDuree())-e.getConso()) return -1;
+			else return 0;
 		}
 }

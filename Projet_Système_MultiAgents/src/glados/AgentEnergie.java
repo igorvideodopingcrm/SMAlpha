@@ -37,9 +37,9 @@ public class AgentEnergie extends jade.core.Agent{
 
 
 			public void action(){
-				System.out.println(getLocalName()+" lancé");
+				System.out.println(getLocalName()+" lance");
 				
-				if (! fichier.exists()) // si le fichier n'existe pas, le créer
+				if (! fichier.exists()) // si le fichier n'existe pas, le creer
 				
 				{
 					try {
@@ -62,21 +62,29 @@ public class AgentEnergie extends jade.core.Agent{
 			});
 		
 		addBehaviour(energieparallele);
-		// ajout du comportement décrit au dessus.
+		// ajout du comportement decrit au dessus.
 	}
 	
 	
 	public void faireplanning(Agent a){
-		//recup équipement -> ajout dans init
+		//recup equipement -> ajout dans init
 		
 		ArrayList <Equipement> init = new ArrayList <Equipement>();
 		ArrayList <Equipement> planning = new ArrayList <Equipement>();
 				
-
+		envoimessage("senor_meteo","meteo demande");
+		String meteo = receptionmessage("senor_meteo","meteo demande");
+		System.out.println(meteo);
+		envoimessage("c3po","prefs");
+		envoimessage("c3po","equipements");
+		
+		String prefs = receptionmessage("c3po","prefs");
+ // CORRIGER ICI !!!!
 		Outils.envoimessage("c3po","","demandeprefs",a);
 		
 		System.out.println("attentes prefs");
 		Serializable prefs = Outils.receptionobjet("c3po","prefsutilisateur","demandeprefs","prefs",a);
+		JSONArray equipements = receptionmessage("c3po","equipements");
 		System.out.println(prefs);
 		
 		Outils.envoimessage("senor_meteo","","demandemeteo",a);
@@ -89,14 +97,11 @@ public class AgentEnergie extends jade.core.Agent{
 		
 	//	recup conso max // récupère la consommation max que peut s'autoriser glados à l'instant T
 		int consoT[]= new int[24]; 
-		Equipement eCourrant;
-	//	while(!init.isEmpty()) {
-	//			déterminer le plus compliqué 
-	//			+grosse conso
-	//			++dif entre durée et taille plage faible.
-	//	planning.add(eCourrant);
-	//	init.remove(eCourrant);
-	//	placerEquipement(eCourrant,consoT);}
+		Equipement eCourant;
+		while(!init.isEmpty()) {
+				eCourant=pop(init); 
+				planning.add(eCourrant);
+				placerEquipement(eCourrant,consoT);}
 	//	}
 		try {
 			FileWriter fw = new FileWriter("sauvglados.txt");
@@ -126,36 +131,69 @@ public class AgentEnergie extends jade.core.Agent{
 
 	
 	public static void placerEquipement(Equipement e, int [] consoT){	
-				int min[]= new int[2]; // 0=p 1=i | créa tableau 2 dimension min
+				int min[]= new int[2]; // 0=p 1=i | crea tableau 2 dimension min
 				min[0]= Integer.MAX_VALUE;// infini
-				for (int i =e.getDébutmin(); i< e.getFinmax()-e.getDurée() ; i++ ){ 		
-					if (penalite(e,i,consoT) < min[0]) {			// p = fonction pénalité
+				for (int i =e.getDebutmin(); i< e.getFinmax()-e.getDuree() ; i++ ){ 		
+					if (penalite(e,i,consoT) < min[0]) {			// p = fonction penalite
 					min[0] = penalite(e,i,consoT);
 					min[1]=i;
 					}
 				}
 				e.setIndice( min[1]);
 				//placer dans le planning // planning [24] ou on add les conso de chaque h
-				for (int i=e.getIndice(); i<e.getIndice()+e.getDurée(); i++) {
+				for (int i=e.getIndice(); i<e.getIndice()+e.getDuree(); i++) {
 					consoT[i]+= e.getConso();
 					}
 				}
 	
+	public static Equipement pop(ArrayList liste){
+		Equipement e=liste.get(0);
+		liste.remove(0);
+		return e;
+	}
 	
 	public static int penalite (Equipement e,int h, int[] consoT){
 		int pTot=0;
-		for(int i=h; i<h + e.getDurée();i++){
-	//		if(alpha >0)
-	//			pTot+= consoT[i] + e.conso;
-	//		if(beta1 >0)
-	//			ptot += P1
-	//		if(beta2 >0)
-	//			ptot += P1
-	//		if(beta3>0)
-	//			ptot += P1
+		int[] tempT=Array.copyOf(consoT,consoT.length);
+		for(int i=h; i<h + e.getDuree();i++){
+			tempT[i]+=e.getConso();
+			if(AgentEnergie.alpha >0)
+				pTot+= AgentEnergie.alpha*(tempT[i]);
 		}
+		if(AgentEnergie.beta1 >0)
+			pTot += AgentEnergie.beta1*p1(e,tempT);
+		if(AgentEnergie.beta2 >0)
+			pTot += AgentEnergie.beta2*p2(e,tempT);
+		if(AgentEnergie.beta3>0)
+			pTot += AgentEnergie.beta3*p3(e,tempT);
+		
 		return pTot;	
 		
 	}
+	public static int p1(Equipement e,int[] tempT){
+		int somme=0;
+		for (int i=0;i<24-1;i++){
+			somme+=Math.abs(tempT[i+1]-tempT[i]);
+		}
+		return somme;
+	}
+	public static int p2(Equipement e,int[] tempT){
+		int somme=0;
+		for (int i=0;i<24-1;i++){
+			somme+=(tempT[i+1]-tempT[i])^2;
+		}
+		return somme;
+	}
+	public static int p3(Equipement e,int[] tempT){
+		int somme=0;
+		for (int i=0;i<24-1;i++){
+			if(tempT[i+1]>tempT[i]) somme+=(tempT[i+1]-tempT[i])^2;
+		}
+		return somme;
 	}
 	
+}
+	
+
+
+

@@ -61,8 +61,9 @@ public class AgentMeteo extends jade.core.Agent{
 					int temperature;
 					
 									// entrée dans le tableau
+					JSONObject temp1;
 					for (int i = 0; i < tab.length; i++) {
-						JSONObject temp1 = listejour.getJSONObject(i);
+						temp1 = listejour.getJSONObject(i);
 						temperature = temp1.getJSONObject("temp").getInt("day");
 						valdat=temp1.getLong("dt");
 						meteo = temp1.getJSONArray("weather").getJSONObject(0).getString("description");
