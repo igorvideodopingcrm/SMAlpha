@@ -9,10 +9,10 @@ function create_equipement($nom,$conso,$debut,$fin,$duree){
 	if($debut<0)
 		$debut=0;
 	if($fin<$debut+$duree){
-		if($debut+$duree>24)
+		if($debut+$duree>24){
 			$fin=24;
 			$debut=$fin-$duree;
-		else
+		}else
 			$fin=$debut+$duree;
 	}
 	$query="INSERT INTO `equipement`(`nom`, `conso`, `debut_min`, `fin_max`, `duree`) VALUES ('".$nom."','".$conso."','".$debut."','".$fin."','".$duree."')";
