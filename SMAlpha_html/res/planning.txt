@@ -1,0 +1,1 @@
+nom=urtu,duree=2,conso=12,debutmin=12,finmax=14,indice=12;nom=test,duree=5,conso=24,debutmin=19,finmax=24,indice=19;nom=sys_chauffage,duree=24,conso=12,debutmin=0,finmax=24,indice=0;nom=squalala2leretour,duree=5,conso=75,debutmin=5,finmax=15,indice=7;

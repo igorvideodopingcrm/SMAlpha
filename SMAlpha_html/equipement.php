@@ -1,9 +1,9 @@
 <?php
 include_once "./init.php";
 if(isset($_POST["create"])){
-	create_equipement($_POST["nom"],$_POST["conso"],$_POST["conso"],$_POST["fin"],$_POST["duree"]);
+	create_equipement($_POST["nom"],$_POST["conso"],$_POST["debut"],$_POST["fin"],$_POST["duree"]);
 }else if(isset($_POST["update"])){
-	update_equipement($_POST["id"],$_POST["nom"],$_POST["conso"],$_POST["conso"],$_POST["fin"],$_POST["duree"]);
+	update_equipement($_POST["id"],$_POST["nom"],$_POST["conso"],$_POST["debut"],$_POST["fin"],$_POST["duree"]);
 }else if(isset($_POST["delete"])){
 	delete_equipement($_POST["id"]);
 }
