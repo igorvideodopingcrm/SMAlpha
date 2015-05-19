@@ -117,6 +117,18 @@ public class AgentOccupant extends jade.core.Agent{
 					case "prefs": // glados demande les prefs
 	        			System.out.println("prefs envoyées");
 	        			Outils.envoimessage("glados","prefs","prefs",this.myAgent);
+	        			
+	        			/*try {
+							JSONArray jsonEquip =postserver("prefs","");
+							
+							String listequip = jsonEquip.toString();
+							
+							Outils.envoimessage("glados",listequip,"prefs",this.myAgent);
+						
+	        			} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}*/
 	        			break;
 	        			
 	        		case "planning": // le planning vient d'être reçu
@@ -162,7 +174,6 @@ public class AgentOccupant extends jade.core.Agent{
 	        			
 	        			try {
 							JSONArray jsonEquip =postserver("equipements","");
-							jsonEquip = postserver("equipements","");
 							
 							String listequip = jsonEquip.toString();
 							
@@ -217,7 +228,7 @@ public class AgentOccupant extends jade.core.Agent{
 		      BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
 		      String jsonText = JsonReader.readAll(rd);
 		      System.out.println(jsonText);
-		      JSONArray json = new JSONArray("["+jsonText+"]");
+		      JSONArray json = new JSONArray(jsonText);
 		      return json;
 		    } catch (JSONException e) {
 				// TODO Auto-generated catch block

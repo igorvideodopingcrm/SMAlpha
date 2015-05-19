@@ -1,0 +1,10 @@
+<div id="graph">
+  100<br /> <br /> <br /> 75 <br /> <br /> <br /> 50 <br /> <br /> <br /> 25 <br /> <br /> <br /> 0
+<ul>
+{for $i=0 to 23}
+  <li>{$conso[$i]}:{if $i< 10}0{/if}{$i}h00:{if $conso[$i] eq $max and $max neq $moy}red{elseif $conso[$i] gt $moy}orange{else}lightgreen{/if}</li>
+{/for} 
+</ul>
+</div>
+<div id="labels">Heures</div>
+<script src="./js/planning.js"></script>
