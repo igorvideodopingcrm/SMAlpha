@@ -148,15 +148,15 @@ public class AgentEnergie extends jade.core.Agent{
 		
 		System.out.println(prefs);
 		
-		/* for(Equipement e : init){
+		 for(Equipement e : init){
 		   System.out.println("avant: "+ e.getNom());
-		  }*/
+		  }
 		 
 		  Collections.sort(init);
-		  /*  System.out.println("sort");
+		  System.out.println("sort");
 		  for(Equipement e : init){
 		   System.out.println("après: "+e.getNom());
-		  }*/
+		  }
 
 		
 	//	recup conso max // récupère la consommation max que peut s'autoriser glados à l'instant T

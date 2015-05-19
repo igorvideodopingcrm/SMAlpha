@@ -129,8 +129,8 @@ public class Equipement implements Comparable<Equipement>,Serializable{
 			this.indice = indice;
 		}
 		public int compareTo(Equipement e){
-			if (((this.getFinmax()-this.getDebutmin())-2*this.getDuree())-this.getConso() < ((e.getFinmax()-e.getDebutmin())-2*e.getDuree())-e.getConso()) return 1;//il faudrait trouver quelque chose de mieux
-			else if (((this.getFinmax()-this.getDebutmin())-2*this.getDuree())-this.getConso() > ((e.getFinmax()-e.getDebutmin())-2*e.getDuree())-e.getConso()) return -1;
+			if (((this.getFinmax()-this.getDebutmin())-2*this.getDuree())-this.getConso() > ((e.getFinmax()-e.getDebutmin())-2*e.getDuree())-e.getConso()) return 1;//il faudrait trouver quelque chose de mieux
+			else if (((this.getFinmax()-this.getDebutmin())-2*this.getDuree())-this.getConso() < ((e.getFinmax()-e.getDebutmin())-2*e.getDuree())-e.getConso()) return -1;
 			else return 0;
 		}
 

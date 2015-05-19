@@ -167,7 +167,7 @@ public class AgentEquipement extends jade.core.Agent{
     	
     	for (int j=0;j<planning.size();j++)
 		{	
-			if(planning.get(j).getIndice()<heure && ((planning.get(j).getIndice()+planning.get(j).getDuree())>heure))
+			if(planning.get(j).getIndice()<=heure && ((planning.get(j).getIndice()+planning.get(j).getDuree())>heure))
 			{
 				equipAllume.add(planning.get(j));
 			};
