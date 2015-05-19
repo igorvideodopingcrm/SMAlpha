@@ -3,7 +3,7 @@ include_once "./init.php";
 if(isset($_GET["meteo"])){
 	$regex="/^(([0-9]{2}\/){2}([0-9]){4}_(([0-9]){2}(:)?){3},(-)?([0-9]){0,2},([a-z](_)?)+;){1,7}$/";
 	if(!preg_match($regex,$_GET["meteo"])){
-		echo json_encode(array("meteo"=> "bad format"));
+		echo json_encode(array(array("meteo"=> "bad format")));
 		exit();
 	}
 	$id=0;
@@ -34,7 +34,7 @@ if(isset($_GET["meteo"])){
 	$f=fopen("./res/meteo.txt","w");
 	fwrite($f,str_replace("_"," ",$_GET["meteo"]));
 	fclose($f);
-	echo json_encode(array("meteo"=> "ok"));
+	echo json_encode(array(array("meteo"=> "ok")));
 	exit();
 }else if(isset($_GET["equipements"])){
 	echo json_encode(get_equipements());
@@ -43,6 +43,6 @@ if(isset($_GET["meteo"])){
 	$f=fopen("./res/planning.txt","w");
 	fwrite($f,$_GET["planning"]);
 	fclose($f);
-	echo json_encode(array("planning"=> "recu"));
+	echo json_encode(array(array("planning"=> "recu")));
 }
 ?>
