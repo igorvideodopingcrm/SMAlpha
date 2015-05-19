@@ -78,6 +78,20 @@ public class AgentMeteo extends jade.core.Agent{
 					// TODO Auto-generated catch block
 					System.out.println("erreur: Senor meteo n'a pas reçu de donnée du web.");
 					e.printStackTrace();
+					
+					String format = "MM/dd/yyyy";
+
+					java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat( format );
+					java.util.Date date = new java.util.Date();
+
+					
+					
+					
+					if (tabMeteo[0].getDate().split(" ")[0].equals(formater.format( date ))){
+						for(int i=1;i < tabMeteo.length; i++){
+							tabMeteo[i-1]=tabMeteo[i];
+						}
+					}
 				}
 				try {
 		        	 FileWriter fw = new FileWriter (save);
