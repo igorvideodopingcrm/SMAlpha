@@ -1,0 +1,2 @@
+température=20
+surface=42

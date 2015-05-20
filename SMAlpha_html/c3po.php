@@ -3,7 +3,7 @@ include_once "./init.php";
 if(isset($_GET["meteo"])){
 	$regex="/^(([0-9]{2}\/){2}([0-9]){4}_(([0-9]){2}(:)?){3},(-)?([0-9]){0,2},([a-z](_)?)+;){1,7}$/";
 	if(!preg_match($regex,$_GET["meteo"])){
-		echo json_encode(array(array("meteo"=> "bad format")));
+		echo json_encode(array(array("meteo"=> "bad format")));//afin que tous les messages envoyés à l'agent aient le même format
 		exit();
 	}
 	$id=0;
@@ -21,15 +21,23 @@ if(isset($_GET["meteo"])){
 	while($days = fgets($meteo_file)){
 		$meteo=explode(";",$days,-1);
 	}
+	fclose($meteo_file);
 	for($i=0;$i<count($meteo);$i++){
 		$meteo[$i]=explode(",",$meteo[$i]);
 		$meteo[$i][0]=strstr($meteo[$i][0]," ",true);
 	}
 	$temperature=$meteo[0][1];
+	$prefs=get_pref();
+	$conso=0;
+	if(isset($prefs["température"])){
+		$conso=$prefs["température"]-$temperature;
+		if($conso<0)
+			$conso=0;
+	}
 	if($exist){
-		update_equipement($id,"sys_chauffage",$temperature,0,24,24);
+		update_equipement($id,"sys_chauffage",$conso,0,24,24);
 	}else{
-		create_equipement("sys_chauffage",$temperature,0,24,24);
+		create_equipement("sys_chauffage",$conso,0,24,24);
 	}
 	$f=fopen("./res/meteo.txt","w");
 	fwrite($f,str_replace("_"," ",$_GET["meteo"]));

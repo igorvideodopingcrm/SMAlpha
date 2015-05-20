@@ -8,6 +8,7 @@ $meteo = array();
 while($days = fgets($meteo_file)){
 	$meteo=explode(";",$days,-1);
 }
+fclose($meteo_file);
 for($i=0;$i<count($meteo);$i++){
 	$meteo[$i]=explode(",",$meteo[$i]);
 	$meteo[$i][0]=strstr($meteo[$i][0]," ",true);
