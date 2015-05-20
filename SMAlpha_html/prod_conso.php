@@ -7,6 +7,7 @@ $planning_file=fopen("./res/planning.txt","r");
 while($days = fgets($planning_file)){
 	$equipements_string=explode(";",$days,-1);
 }
+fclose($planning_file);
 for($i=0;$i<count($equipements_string);$i++){
 	$equipements_string[$i]=explode(",",$equipements_string[$i]);
 	$equipements_string[$i][0]=strstr($equipements_string[$i][0]," ",true);

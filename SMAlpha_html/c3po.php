@@ -21,6 +21,7 @@ if(isset($_GET["meteo"])){
 	while($days = fgets($meteo_file)){
 		$meteo=explode(";",$days,-1);
 	}
+	fclose($meteo_file);
 	for($i=0;$i<count($meteo);$i++){
 		$meteo[$i]=explode(",",$meteo[$i]);
 		$meteo[$i][0]=strstr($meteo[$i][0]," ",true);
@@ -32,7 +33,7 @@ if(isset($_GET["meteo"])){
 		$conso=$prefs["température"]-$temperature;
 		if($conso<0)
 			$conso=0;
-		}
+	}
 	if($exist){
 		update_equipement($id,"sys_chauffage",$conso,0,24,24);
 	}else{

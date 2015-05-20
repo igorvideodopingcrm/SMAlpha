@@ -1,2 +1,2 @@
-température=50
+température=20
 surface=42
