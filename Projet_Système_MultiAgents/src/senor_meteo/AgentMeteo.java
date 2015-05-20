@@ -1,7 +1,9 @@
 package senor_meteo;
 
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -45,13 +47,31 @@ public class AgentMeteo extends jade.core.Agent{
 				System.out.println(getLocalName()+" lancé");
 				// File save = new File("savesenor_meteo.txt");
 				if (! AgentMeteo.save.exists()) // si le fichier n'existe pas, le créer
-				
 				{
 					try {
 						AgentMeteo.save.createNewFile();
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 					}
+				}
+				else 
+				{
+    				FileReader fr;
+					try { // tente de charger la météo du fichier texte
+						fr = new FileReader(save);
+						BufferedReader br = new BufferedReader(fr);
+	    				String linesave = br.readLine();
+	    			    String[] tabsemaine = linesave.split(";");
+	    			    for (int m = 0; m < tabsemaine.length; m++) {	    			    
+	    			    	String[] tabjour = tabsemaine[m].split(",");
+	    			    	tabMeteo[m] = new Meteo(tabjour[0],Integer.parseInt(tabjour[1]),tabjour[2]);			    	
+	    			    }
+	    			    br.close();
+	    			    fr.close();
+					} catch (IOException e) {
+						
+					}
+    				
 				}
 				
 		         
@@ -76,8 +96,7 @@ public class AgentMeteo extends jade.core.Agent{
 //					  valtest=10;
 				} catch (IOException | JSONException e) {
 					// TODO Auto-generated catch block
-					System.out.println("erreur: Senor meteo n'a pas reçu de donnée du web.");
-					e.printStackTrace();
+					//e.printStackTrace();
 					
 					String format = "MM/dd/yyyy";
 
@@ -87,7 +106,7 @@ public class AgentMeteo extends jade.core.Agent{
 					
 					
 					
-					if (tabMeteo[0].getDate().split(" ")[0].equals(formater.format( date ))){
+					if (!tabMeteo[0].getDate().split(" ")[0].equals(formater.format( date ))){
 						for(int i=1;i < tabMeteo.length; i++){
 							tabMeteo[i-1]=tabMeteo[i];
 						}
@@ -138,6 +157,19 @@ public class AgentMeteo extends jade.core.Agent{
 						// TODO Auto-generated catch block
 						System.out.println("erreur: Senor meteo n'a pas reçu de donnée du web.");
 						e.printStackTrace();
+						String format = "MM/dd/yyyy";
+
+						java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat( format );
+						java.util.Date date = new java.util.Date();
+
+						
+						
+						
+						if (!tabMeteo[0].getDate().split(" ")[0].equals(formater.format( date ))){
+							for(int i=1;i < tabMeteo.length; i++){
+								tabMeteo[i-1]=tabMeteo[i];
+							}
+						}
 					}
 					try {
 			        	 FileWriter fw = new FileWriter(save);
@@ -163,7 +195,12 @@ public class AgentMeteo extends jade.core.Agent{
 				{
 				ACLMessage msg = receive();
 				if(msg!= null)  {	// lorsqu'un message est traité avec du contenu
+					if (msg.getSender().getLocalName().equals("ams")){	// ams envoi un message si l'agent qu'on a cherché à contacté n'est pas actif
+						String agentreboot = Outils.defibrillateur( msg.getContent(),this.myAgent);
+					}
+					else{
 					Outils.envoimessage(msg.getSender().getLocalName(),tabMeteo,"meteo",this.myAgent);
+					}
 					}
 				else{
 					block();

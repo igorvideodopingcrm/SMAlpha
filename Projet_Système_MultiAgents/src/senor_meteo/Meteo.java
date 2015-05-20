@@ -15,15 +15,26 @@ private String meteo="";
 public Meteo(){}
 
 public Meteo(long date, int temperature, String meteo){
+	this.setDatefromlong(date);
+	this.setTemperature(temperature);
+	this.setMeteo(meteo);
+}
+
+public Meteo(String date, int temperature, String meteo){
 	this.setDate(date);
 	this.setTemperature(temperature);
 	this.setMeteo(meteo);
 }
 
+
+private void setDate(String date) {
+	this.date=date;
+}
+
 public String getDate() {
 	return this.date;
 }
-public void setDate(long i) {
+public void setDatefromlong(long i) {
 	String date = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new java.util.Date(i*1000)); // i ou i*1000 ?
 	this.date = date;
 }

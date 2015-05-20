@@ -26,7 +26,7 @@ public class JsonReader {
 		
 	  	String lat="45.57";
 		String longit="5.93";
-		String tempText = "http://api.openweathermap.org/data/2.5/forecast/daily?lat="+lat+ "&lon="+longit+"&cnt=7&mode=json&units=metric";
+		String tempText ="http://api.openweathermap.org/data/2.5/forecast/daily?lat="+lat+ "&lon="+longit+"&cnt=7&mode=json&units=metric";
 		
 	    InputStream is = new URL(tempText).openStream();
 	    try {

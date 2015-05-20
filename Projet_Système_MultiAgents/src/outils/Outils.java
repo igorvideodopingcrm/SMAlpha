@@ -21,7 +21,13 @@ public class Outils {
 	static Semaphore boitemess = new Semaphore(1);
 
 	
-	public static void defibrillateur(String agentmort, Agent a){ // fonction de défibrillateur. cette fonction sert à reboot des Agents qui seraient tombé
+	public static String defibrillateur(String messageagentmort, Agent a){ // fonction de défibrillateur. cette fonction sert à reboot des Agents qui seraient tombé
+		
+		String[] separmessage = messageagentmort.split(":");
+		String contientnom = separmessage[6];
+		String[] nomagent = contientnom.split(" ");
+		String agentmort = nomagent[1]; 
+		
 		if (agentmort.contains("@"))
 		{
 			String[] part2 = agentmort.split("@");
@@ -55,7 +61,7 @@ public class Outils {
                  
         case "glados": 
         	try {
-			AgentController ac = cc.createNewAgent("senor_meteo","senor_meteo.AgentMeteo", null);
+			AgentController ac = cc.createNewAgent("glados","glados.AgentEnergie", null);
 			ac.start();} 
         	catch (StaleProxyException e) {
 			// TODO Auto-generated catch block
@@ -76,7 +82,7 @@ public class Outils {
         		
         default: System.out.println("Erreur dans le reboot d'un agent par defibrillateur.") ;
                  break;}
-		
+		return agentmort;
 	}
 
 
@@ -94,21 +100,13 @@ public class Outils {
 		a.send(message);
 	}
 
-	
-	
-	
-	
-	
-	
-
-	
-	
+		
 	public static Serializable receptionobjet(String agentcontacte, Serializable messageoriginal,String titreorigin, String titreattendu, Agent a){ // fonction de reception d'objet à l'envoi d'une string 
 	
 		
 		Serializable contenu = null;
 		MessageTemplate IDams =MessageTemplate.MatchSender(new AID("ams", AID.ISLOCALNAME)); 
-		ACLMessage msgams = a.blockingReceive(IDams,500);
+		ACLMessage msgams = a.blockingReceive(IDams,1);
 		
 		if (msgams==null)
 			{
@@ -120,7 +118,6 @@ public class Outils {
 				/*if ( msgcontact.getSender().getLocalName().equals(agentcontacte)){*/
 					try {
 						contenu=msgcontact.getContentObject();
-						boitemess.release();
 					} catch (UnreadableException e) {
 						// TODO Auto-generated catch block
 						a.putBack(msgcontact);
@@ -135,14 +132,8 @@ public class Outils {
 			}
 		else
 		{
-			String messageams = msgams.getContent();
-        	String[] separmessage = messageams.split(":");
-        	String contientnom = separmessage[6];
-        	String[] nomagent = contientnom.split(" ");
-        	String agentareboot = nomagent[1]; 
-        	Outils.defibrillateur(agentareboot,a);
+        	Outils.defibrillateur(msgams.getContent(),a);
         	envoimessage(agentcontacte,messageoriginal,titreorigin,a);
-        	boitemess.release();
         	contenu=receptionobjet(agentcontacte,messageoriginal,titreorigin,titreattendu,a);
 		}
 		

@@ -58,6 +58,7 @@ public class AgentEquipement extends jade.core.Agent{
 			 */
 			private static final long serialVersionUID = 1L;
 
+			
 			public void action()
 			{
 				ACLMessage msg = receive();
@@ -102,18 +103,12 @@ public class AgentEquipement extends jade.core.Agent{
 		        				// TODO Auto-generated catch block
 		        				e.printStackTrace();
 		        			}
-							
+		        			Outils.envoimessage("glados","planning reçu","planning",this.myAgent);
 						}
 			                 break;
 
-			        case "ams":
-			        	
-			        	String contenu = msg.getContent();
-			        	String[] separmessage = contenu.split(":");
-			        	String contientnom = separmessage[6];
-			        	String[] nomagent = contientnom.split(" ");
-			        	String agentareboot = nomagent[1]; 
-			        	Outils.defibrillateur(agentareboot,this.myAgent);
+			        case "ams": 
+			        	Outils.defibrillateur(msg.getContent(),this.myAgent);
 			        	break;
 			        
 			        case "dummy":
