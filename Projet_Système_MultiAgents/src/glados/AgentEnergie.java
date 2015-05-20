@@ -7,7 +7,6 @@ import jade.lang.acl.UnreadableException;
 
 import java.io.File;		
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -43,10 +42,9 @@ public class AgentEnergie extends jade.core.Agent{
 			private static final long serialVersionUID = 1L;
 
 			public void action(){
-				System.out.println(getLocalName()+" lance");
+				System.out.println(getLocalName()+" lancé");
 				
 				if (! AgentEnergie.log.exists()) // si le fichier n'existe pas, le creer
-				
 				{
 					try {
 						AgentEnergie.log.createNewFile();
@@ -178,7 +176,6 @@ public class AgentEnergie extends jade.core.Agent{
 				for (int i=e.getIndice(); i<e.getIndice()+e.getDuree(); i++) {					//placement dans le planning
 					consoT[i]+= e.getConso();
 				}
-				System.out.println(e.toString());
 		}
 	
 	public static Equipement pop(ArrayList<Equipement> liste){

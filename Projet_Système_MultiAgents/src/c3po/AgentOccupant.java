@@ -84,7 +84,6 @@ public class AgentOccupant extends jade.core.Agent{
 								break;*/ 
 						
 							case "planning": // le planning vient d'être reçu de l'agentEnergie
-								System.out.println("planning reçu");
 								Outils.envoimessage("glados","confirmation planning","planning",this.myAgent);
 								ArrayList <Equipement> planning = new ArrayList <Equipement>();
 								try {
@@ -148,8 +147,7 @@ public class AgentOccupant extends jade.core.Agent{
 								}
 								break;
 								
-							default:
-									
+							default:			
 							PrintStream printlog;
 							try {
 								printlog = new PrintStream(log);
@@ -167,6 +165,14 @@ public class AgentOccupant extends jade.core.Agent{
 				}
 				}
 			});
+			
+			if (! AgentOccupant.log.exists()) // si le fichier n'existe pas, le creer
+			{
+				try {
+					AgentOccupant.log.createNewFile();
+				} catch (IOException e) {
+				}
+			}
 			
 			// envoi de message à senor meteo pour obtenir la météo et la traiter avant toute chose.
 			Outils.envoimessage("senor_meteo","meteo demande","meteo demande", this);
