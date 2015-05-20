@@ -25,10 +25,10 @@ public class AgentEnergie extends jade.core.Agent{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private static int alpha=1;								//coefficient de pénalité de
-	private static int beta1=1;								//coefficient de pénalité de
-	private static int beta2=1;								//coefficient de pénalité de
-	private static int beta3=1;								//coefficient de pénalité de
+	private static int alpha=1;								//coefficient de pénalité du total trop haut
+	private static int beta1=1;								//coefficient de pénalité montée/descente
+	private static int beta2=1;								//coefficient de pénalité montée/descente brusque
+	private static int beta3=1;								//coefficient de pénalité montée brusque(sans les descentes)
 	private static File log = new File("log.txt");			//Fichier de log d'erreur
 		
 	protected void setup(){
@@ -188,8 +188,10 @@ public class AgentEnergie extends jade.core.Agent{
 		int pTot=0;
 		int[] tempT= new int[consoT.length];
 				System.arraycopy(consoT, 0, tempT, 0, consoT.length);
+		
 		for(int i=h; i<h + e.getDuree();i++){
 			tempT[i]+=e.getConso();
+			//penalité total trop haut
 			if(AgentEnergie.alpha >0)
 				pTot+= AgentEnergie.alpha*(tempT[i]);
 		}
@@ -203,6 +205,8 @@ public class AgentEnergie extends jade.core.Agent{
 		return pTot;	
 		
 	}
+	
+	//pénalité montée/descente
 	public static int p1(Equipement e,int[] tempT){
 		int somme=0;
 		for (int i=0;i<24-2;i++){
@@ -210,6 +214,7 @@ public class AgentEnergie extends jade.core.Agent{
 		}
 		return somme;
 	}
+	//pénalité montée/descente brusque
 	public static int p2(Equipement e,int[] tempT){
 		int somme=0;
 		for (int i=0;i<24-2;i++){
@@ -217,6 +222,7 @@ public class AgentEnergie extends jade.core.Agent{
 		}
 		return somme;
 	}
+	//pénalité montée brusque(sans les descentes)
 	public static int p3(Equipement e,int[] tempT){
 		int somme=0;
 		for (int i=0;i<24-2;i++){
