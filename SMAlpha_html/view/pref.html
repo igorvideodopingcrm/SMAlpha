@@ -1,0 +1,17 @@
+<table style="margin-top:10px;" class="table">
+	<tr>
+		<th>Paramètre</th>
+		<th>valeure</th>
+		<th></th>
+	</tr>
+	<form action="./pref.php" method="post">
+{foreach from=$prefs key=lbl item=pref}
+	<tr>
+		
+		<td><label for="{$lbl}">{$lbl}{if $lbl=="température"} (°C){elseif $lbl=="surface"} (m²){/if}</label></td>
+		<td><input name="{$lbl}" type="text" class="form-control" value="{$pref}"></td>
+	</tr>
+{/foreach}
+	<td colspan="2"><button name="update" type="submit" class="btn btn-primary">Mettre à jour les préférences</button></td>
+	</form>
+</table>

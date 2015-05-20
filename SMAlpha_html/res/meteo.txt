@@ -1,1 +1,1 @@
-05/19/2015 13:00:00,12,light rain;05/20/2015 13:00:00,7,moderate rain;05/21/2015 13:00:00,9,broken clouds;05/22/2015 13:00:00,13,few clouds;05/23/2015 13:00:00,13,light rain;05/24/2015 13:00:00,13,moderate rain;05/25/2015 13:00:00,15,moderate rain;
+05/20/2015 13:00:00,7,moderate rain;05/21/2015 13:00:00,9,broken clouds;05/22/2015 13:00:00,13,few clouds;05/23/2015 13:00:00,13,light rain;05/24/2015 13:00:00,13,moderate rain;05/25/2015 13:00:00,15,moderate rain;05/26/2015 13:00:00,14,light rain;

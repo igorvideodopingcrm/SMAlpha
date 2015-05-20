@@ -1,0 +1,2 @@
+température=50
+surface=42
