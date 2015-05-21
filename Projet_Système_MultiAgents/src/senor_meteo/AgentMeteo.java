@@ -66,34 +66,6 @@ public class AgentMeteo extends jade.core.Agent{
 						}
 					}
 				}
-				else 
-				{
-    				FileReader fr;
-					try { 							// tente de charger la météo du fichier texte par rapport au jour actuel
-						fr = new FileReader(save);
-						BufferedReader br = new BufferedReader(fr);
-	    				String linesave = br.readLine();
-	    			    String[] tabsemaine = linesave.split(";");
-	    			    for (int m = 0; m < tabsemaine.length; m++) {	    			    
-	    			    	String[] tabjour = tabsemaine[m].split(",");
-	    			    	tabMeteo[m] = new Meteo(tabjour[0],Integer.parseInt(tabjour[1]),tabjour[2]);			    	
-	    			    }
-	    			    br.close();
-	    			    fr.close();
-					} catch (IOException e) {
-						try {
-							PrintStream printlog = new PrintStream(log);
-							printlog.print(this.myAgent.getLocalName());
-							e.printStackTrace(printlog);
-							printlog.close();
-						}
-						catch (FileNotFoundException e1) {
-						}
-					}
-    				
-				}
-				
-		         
 				try {
 				
 					JSONObject json = senor_meteo.JsonReader.meteoFromUrl();	// importation de la météo depuis la fonction du package
