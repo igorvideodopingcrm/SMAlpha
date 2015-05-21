@@ -5,6 +5,7 @@ import senor_meteo.Meteo;
 import outils.Outils;
 
 import java.io.FileNotFoundException; // libraire java
+import java.io.FileReader;
 import java.io.IOException;		
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -29,23 +30,12 @@ public class AgentOccupant extends jade.core.Agent{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static String server="192.168.1.42"; 			//adresse du serveur pour l'envoi des données|interface utilisateur
+	private static File serveur=new File("serveur.txt"); //adresse du serveur dans le fichier serveur.txt pour l'envoi des données|interface utilisateur
 	private static File log = new File("log.txt");			//Fichier de log d'erreur 
 	
 	protected void setup(){	
 
 			ParallelBehaviour occuparallele = new ParallelBehaviour(ParallelBehaviour.WHEN_ALL);//comportement composé des sous-comportement de l'agentOccupant
-			occuparallele.addSubBehaviour(new OneShotBehaviour(this){								//sous-Comportement au lancement
-				/**
-				 * 
-				 */
-				private static final long serialVersionUID = 1L;
-
-				public void action(){
-					
-					System.out.println(this.myAgent.getLocalName()+" lancé");
-			  }	
-		  });
 			occuparallele.addSubBehaviour(new TickerBehaviour(this,30000){ // comportement de demande cyclique de la météo
 				/**
 				 * 
@@ -174,6 +164,7 @@ public class AgentOccupant extends jade.core.Agent{
 				}
 			}
 			
+			System.out.println(this.getLocalName()+" lancé");  // ensemble de tache au lancement
 			// envoi de message à senor meteo pour obtenir la météo et la traiter avant toute chose.
 			Outils.envoimessage("senor_meteo","meteo demande","meteo demande", this);
 			Meteo[]tabMeteo= new Meteo[7];
@@ -200,29 +191,47 @@ public class AgentOccupant extends jade.core.Agent{
 	
 	
 	public static JSONArray postserver(String title,String message,Agent a) throws IOException {	//fonction d'envoi de donnée au serveur web. retourne un JSONArray des données|de confirmation
-			String tempText = "http://"+AgentOccupant.server+"/SMAlpha_html/c3po.php?"+title+"="+message;
-			tempText=tempText.replace(" ","_");
-		    InputStream is = new URL(tempText).openStream();
-		    try {
-		      BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-		      String jsonText = JsonReader.readAll(rd);
-		      JSONArray json = new JSONArray(jsonText);
-		      return json;
-		    }
-		    catch (JSONException e) {
-		    	try {
-		    		PrintStream printlog = new PrintStream(log);
-					printlog.print(a.getLocalName());
-					e.printStackTrace(printlog);
-					printlog.close();
-				}
-				catch (FileNotFoundException e1) {
-				}
+		String tempText ="";
+		try {
+			FileReader fr = new FileReader(AgentOccupant.serveur);
+			BufferedReader br = new BufferedReader(fr);
+			String line = br.readLine();
+		    tempText = "http://"+line+"/c3po.php?"+title+"="+message;
+		    br.close();
+		    fr.close();
+		}
+		catch (IOException e){
+			try {
+	    		PrintStream printlog = new PrintStream(log);
+				printlog.print(a.getLocalName());
+				e.printStackTrace(printlog);
+				printlog.close();
 			}
-		    finally{
-		      is.close();
-		    }
-			return null;
+			catch (FileNotFoundException e1) {
+			}
+		}	
+		tempText=tempText.replace(" ","_");
+		InputStream is = new URL(tempText).openStream();  
+		try {
+			BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+			String jsonText = JsonReader.readAll(rd);
+			JSONArray json = new JSONArray(jsonText);
+			return json;	    
+		}	
+		catch (JSONException e) {
+			try {	
+				PrintStream printlog = new PrintStream(log);	
+				printlog.print(a.getLocalName());	
+				e.printStackTrace(printlog);	
+				printlog.close();	
+			}
+			catch (FileNotFoundException e1) {			
+			}
+		}
+		finally{
+			is.close();  
+		}
+		return null;
 	}
 	
 
