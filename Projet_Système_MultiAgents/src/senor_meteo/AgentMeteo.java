@@ -30,7 +30,6 @@ public class AgentMeteo extends jade.core.Agent{
 	private Meteo[] tabMeteo= new Meteo[7];
 	private static File save = new File("savesenor_meteo.txt");
 	private static File log = new File("log.txt");			//Fichier de log d'erreur
-	private static final int REFRESH_TIME = 3600;	//temps entre deux interrogations au service web, en seconde
 	protected void setup(){
 		
 		ParallelBehaviour meteoparallele = new ParallelBehaviour(ParallelBehaviour.WHEN_ALL);
@@ -67,9 +66,6 @@ public class AgentMeteo extends jade.core.Agent{
 						}
 					}
 				}
-			
-				
-		         
 				try {
 				
 					JSONObject json = senor_meteo.JsonReader.meteoFromUrl();	// importation de la météo depuis la fonction du package
@@ -128,7 +124,7 @@ public class AgentMeteo extends jade.core.Agent{
 			
 	  });
 			
-		meteoparallele.addSubBehaviour(new TickerBehaviour(this,AgentMeteo.REFRESH_TIME*1000){// behaviour chargé de rafraichier la météo. durée en miliseconde à changer selon la durée ce que l'on souhaite.
+		meteoparallele.addSubBehaviour(new TickerBehaviour(this,30000){// behaviour chargé de rafraichier la météo. durée en miliseconde à changer selon la durée ce que l'on souhaite.
 			/**
 			 * 
 			 */
