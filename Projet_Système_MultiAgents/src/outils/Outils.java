@@ -1,6 +1,8 @@
 package outils;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.Serializable;
 import java.util.concurrent.Semaphore;
 
@@ -101,54 +103,46 @@ public class Outils {
 	}
 
 		
-	public static Serializable receptionobjet(String agentcontacte, Serializable messageoriginal,String titreorigin, String titreattendu, Agent a){ // fonction de reception d'objet à l'envoi d'une string 
-	
-		
-		
-		
-		
-		
-		
-		
-		
-		
+	public static Serializable receptionobjet(String agentcontacte, Serializable messageoriginal,String titreorigin, String titreattendu, Agent receveur){ // fonction de reception d'objet à l'envoi d'une string 
 		
 		Serializable contenu = null;
+		boolean msgrecu =false;
 		MessageTemplate IDams =MessageTemplate.MatchSender(new AID("ams", AID.ISLOCALNAME)); 
-		ACLMessage msgams = a.blockingReceive(IDams,1);
 		
-		if (msgams==null)
-			{
-			MessageTemplate titre =MessageTemplate.MatchLanguage(titreattendu);
-			MessageTemplate IDcontact =MessageTemplate.MatchSender(new AID(agentcontacte, AID.ISLOCALNAME)); 
-			MessageTemplate filtre = MessageTemplate.and(titre,IDcontact);
-			ACLMessage msgcontact = a.receive(filtre);
-			if (msgcontact!=null ){
-				/*if ( msgcontact.getSender().getLocalName().equals(agentcontacte)){*/
+		MessageTemplate titre =MessageTemplate.MatchLanguage(titreattendu);
+		MessageTemplate IDcontact =MessageTemplate.MatchSender(new AID(agentcontacte, AID.ISLOCALNAME)); 
+		MessageTemplate filtreAttendu = MessageTemplate.and(titre,IDcontact);
+		
+		MessageTemplate msgAccepte = MessageTemplate.or(IDams,filtreAttendu);
+		ACLMessage msg = receveur.blockingReceive(msgAccepte);
+		
+		while (!msgrecu){
+			if (!msg.getSender().getLocalName().contains(agentcontacte))
+			{	Outils.defibrillateur(msg.getContent(),receveur);
+				envoimessage(agentcontacte,messageoriginal,titreorigin,receveur);
+				msg = receveur.blockingReceive(msgAccepte);
+			}
+			else{
+				try {
+					contenu=msg.getContentObject();
+					msgrecu = true;
+				} catch (UnreadableException e) {
+					receveur.putBack(msg);
 					try {
-						contenu=msgcontact.getContentObject();
-					} catch (UnreadableException e) {
-						// TODO Auto-generated catch block
-						a.putBack(msgcontact);
-						e.printStackTrace();
+			    		PrintStream printlog = new PrintStream("log.txt");
+						printlog.print(receveur.getLocalName());
+						e.printStackTrace(printlog);
+						printlog.close();
 					}
-
-				}
-			else
-				{
-				contenu=receptionobjet(agentcontacte,messageoriginal,titreorigin,titreattendu,a);
+					catch (FileNotFoundException e1){
+					}
+					msgrecu = true;
 				}
 			}
-		else
-		{
-        	Outils.defibrillateur(msgams.getContent(),a);
-        	envoimessage(agentcontacte,messageoriginal,titreorigin,a);
-        	contenu=receptionobjet(agentcontacte,messageoriginal,titreorigin,titreattendu,a);
 		}
-		
-		
-		return contenu;	
-	}
+		return contenu;
+
+	} 
 	
 	
 	
