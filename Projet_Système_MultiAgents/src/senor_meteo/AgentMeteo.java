@@ -30,6 +30,7 @@ public class AgentMeteo extends jade.core.Agent{
 	private Meteo[] tabMeteo= new Meteo[7];
 	private static File save = new File("savesenor_meteo.txt");
 	private static File log = new File("log.txt");			//Fichier de log d'erreur
+	private static final int REFRESH_TIME = 3600;	//temps entre deux interrogations au service web, en seconde
 	protected void setup(){
 		
 		ParallelBehaviour meteoparallele = new ParallelBehaviour(ParallelBehaviour.WHEN_ALL);
@@ -66,32 +67,7 @@ public class AgentMeteo extends jade.core.Agent{
 						}
 					}
 				}
-				else 
-				{
-    				FileReader fr;
-					try { 							// tente de charger la météo du fichier texte par rapport au jour actuel
-						fr = new FileReader(save);
-						BufferedReader br = new BufferedReader(fr);
-	    				String linesave = br.readLine();
-	    			    String[] tabsemaine = linesave.split(";");
-	    			    for (int m = 0; m < tabsemaine.length; m++) {	    			    
-	    			    	String[] tabjour = tabsemaine[m].split(",");
-	    			    	tabMeteo[m] = new Meteo(tabjour[0],Integer.parseInt(tabjour[1]),tabjour[2]);			    	
-	    			    }
-	    			    br.close();
-	    			    fr.close();
-					} catch (IOException e) {
-						try {
-							PrintStream printlog = new PrintStream(log);
-							printlog.print(this.myAgent.getLocalName());
-							e.printStackTrace(printlog);
-							printlog.close();
-						}
-						catch (FileNotFoundException e1) {
-						}
-					}
-    				
-				}
+			
 				
 		         
 				try {
@@ -152,7 +128,7 @@ public class AgentMeteo extends jade.core.Agent{
 			
 	  });
 			
-		meteoparallele.addSubBehaviour(new TickerBehaviour(this,30000){// behaviour chargé de rafraichier la météo. durée en miliseconde à changer selon la durée ce que l'on souhaite.
+		meteoparallele.addSubBehaviour(new TickerBehaviour(this,AgentMeteo.REFRESH_TIME*1000){// behaviour chargé de rafraichier la météo. durée en miliseconde à changer selon la durée ce que l'on souhaite.
 			/**
 			 * 
 			 */
