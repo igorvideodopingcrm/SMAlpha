@@ -7,7 +7,7 @@
 			</li>
 			<li>
 				<img src="./res/
-				{if $day[2]=="clear sky"}clear sky
+				{if $day[2]=="clear sky" or $day[2]=="sky is clear"}clear sky
 				{elseif strpos($day[2],"snow")!= false or strpos($day[2],"sleet")!= false}snow
 				{elseif $day[2]=="broken clouds"}broken clouds
 				{elseif strpos($day[2],"drizzle")!= false}drizzle
