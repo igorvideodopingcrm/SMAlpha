@@ -104,6 +104,15 @@ public class Outils {
 	public static Serializable receptionobjet(String agentcontacte, Serializable messageoriginal,String titreorigin, String titreattendu, Agent a){ // fonction de reception d'objet à l'envoi d'une string 
 	
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		Serializable contenu = null;
 		MessageTemplate IDams =MessageTemplate.MatchSender(new AID("ams", AID.ISLOCALNAME)); 
 		ACLMessage msgams = a.blockingReceive(IDams,1);
@@ -126,7 +135,7 @@ public class Outils {
 
 				}
 			else
-				{boitemess.release();
+				{
 				contenu=receptionobjet(agentcontacte,messageoriginal,titreorigin,titreattendu,a);
 				}
 			}
