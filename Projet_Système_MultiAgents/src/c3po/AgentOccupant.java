@@ -2,7 +2,7 @@ package c3po;
 import glados.Equipement; 		// importation des packages du systeme multi agent
 import senor_meteo.JsonReader;	
 import senor_meteo.Meteo;
-import outils.Outils;
+import outils.Smalpha;
 
 import java.io.FileNotFoundException; // libraire java
 import java.io.FileReader;
@@ -25,7 +25,7 @@ import jade.core.behaviours.*;
 import jade.lang.acl.*;
 
 
-public class AgentOccupant extends jade.core.Agent{
+public class AgentOccupant extends Smalpha{
 	/**
 	 * 
 	 */
@@ -44,7 +44,7 @@ public class AgentOccupant extends jade.core.Agent{
 				
 				protected void onTick(){
 					
-					Outils.envoimessage("senor_meteo","demandemeteo","demandemeteo", this.myAgent);
+					((Smalpha) this.myAgent).envoimessage("senor_meteo","demandemeteo","demandemeteo");
 				}
 			});
 			
@@ -60,9 +60,9 @@ public class AgentOccupant extends jade.core.Agent{
 				ACLMessage msg = receive();								//on cherche à obtenir un message de la boite de reception
 				if(msg!= null)  {										//si on n'a pas de message: msg == null;
 					if (msg.getSender().getLocalName().equals("ams")){			// ams envoi un message si l'agent qu'on a cherché à contacté n'est pas actif|est mort
-						String agentreboot = Outils.defibrillateur( msg.getContent(),this.myAgent);// on réanime l'agent qui est mort|absent
+						String agentreboot = ((Smalpha) this.myAgent).defibrillateur( msg.getContent());// on réanime l'agent qui est mort|absent
 						if (agentreboot.contains("senor_meteo")){		//selon l'agent reboot, on lui renvoie le message
-							Outils.envoimessage("senor_meteo","demandemeteo","demandemeteo", this.myAgent);
+							((Smalpha) this.myAgent).envoimessage("senor_meteo","demandemeteo","demandemeteo");
 						}
 					}
 					else{
@@ -70,11 +70,11 @@ public class AgentOccupant extends jade.core.Agent{
 						
 						/*case "prefs":  // cas d'envoi des préférence utilisateur à faire gérer par l'agentEnergie ( actuellement géré coté serveur web)			
 								System.out.println("prefs envoyées");
-								Outils.envoimessage("glados","prefs","prefs",this.myAgent);
+								this.envoimessage("glados","prefs","prefs",this.myAgent);
 								break;*/ 
 						
 							case "planning": // le planning vient d'être reçu de l'agentEnergie
-								Outils.envoimessage("glados","confirmation planning","planning",this.myAgent);
+								((Smalpha) this.myAgent).envoimessage("glados","confirmation planning","planning");
 								ArrayList <Equipement> planning = new ArrayList <Equipement>();
 								try {
 									planning = (ArrayList<Equipement>) msg.getContentObject();
@@ -101,7 +101,7 @@ public class AgentOccupant extends jade.core.Agent{
 								try {
 									JSONArray jsonEquip=postserver("equipements","",this.myAgent);	
 									String listequip = jsonEquip.toString();
-									Outils.envoimessage("glados",listequip,"equipements",this.myAgent);
+									((Smalpha) this.myAgent).envoimessage("glados",listequip,"equipements");
 								}
 								catch (IOException e) {
 									try {
@@ -166,9 +166,9 @@ public class AgentOccupant extends jade.core.Agent{
 			
 			System.out.println(this.getLocalName()+" lancé");  // ensemble de tache au lancement
 			// envoi de message à senor meteo pour obtenir la météo et la traiter avant toute chose.
-			Outils.envoimessage("senor_meteo","meteo demande","meteo demande", this);
+			this.envoimessage("senor_meteo","meteo demande","meteo demande");
 			Meteo[]tabMeteo= new Meteo[7];
-			tabMeteo=(Meteo[])Outils.receptionobjet("senor_meteo","meteo","meteo","meteo", this);
+			tabMeteo=(Meteo[]) super.receptionobjet("senor_meteo","meteo","meteo","meteo");
 			String envoi ="";
 			for (int i = 0; i < tabMeteo.length; i++) {
 				envoi = envoi+tabMeteo[i].toString()+";";

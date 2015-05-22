@@ -1,5 +1,4 @@
 package glados;
-import jade.core.Agent;		//package jade
 import jade.core.behaviours.OneShotBehaviour;
 import jade.core.behaviours.ParallelBehaviour;
 import jade.core.behaviours.TickerBehaviour;
@@ -16,10 +15,10 @@ import org.json.JSONArray;	//package org.json
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import outils.Outils;
+import outils.Smalpha;
 
 
-public class AgentEnergie extends jade.core.Agent{
+public class AgentEnergie extends Smalpha{
 	/**
 	 * 
 	 */
@@ -54,7 +53,7 @@ public class AgentEnergie extends jade.core.Agent{
 				
 		         
 				try {
-					faireplanning(this.myAgent);
+					faireplanning((Smalpha) this.myAgent);
 				} catch (UnreadableException e) {
 					try {
 			    		PrintStream printlog = new PrintStream(log);
@@ -77,7 +76,7 @@ public class AgentEnergie extends jade.core.Agent{
 			protected void onTick() {
 
 				try {
-					faireplanning(this.myAgent);
+					faireplanning((Smalpha) this.myAgent);
 				} catch (UnreadableException e) {
 					try {
 			    		PrintStream printlog = new PrintStream(log);
@@ -96,18 +95,18 @@ public class AgentEnergie extends jade.core.Agent{
 	}
 	
 	
-	public void faireplanning(Agent a) throws UnreadableException{	//fonction de réalisation du planning
+	public void faireplanning(Smalpha a) throws UnreadableException{	//fonction de réalisation du planning
 		//recup equipement -> ajout dans init
 		
 		ArrayList <Equipement> init = new ArrayList <Equipement>();
 		ArrayList <Equipement> planning = new ArrayList <Equipement>();
 				
 		
-		/*Outils.envoimessage("c3po","prefs","prefs", a);	
-		Serializable prefs = Outils.receptionobjet("c3po","prefs","prefs","prefs",a);*/	
+		/*a.envoimessage("c3po","prefs","prefs", a);	
+		Serializable prefs = a.receptionobjet("c3po","prefs","prefs","prefs",a);*/	
 		
-		Outils.envoimessage("c3po","equipements","equipements", a); //demande des equipement à c3po
-		String equipstring =(String)Outils.receptionobjet("c3po","equipements","equipements","equipements", a);
+		a.envoimessage("c3po","equipements","equipements"); //demande des equipement à c3po
+		String equipstring =(String)a.receptionobjet("c3po","equipements","equipements","equipements");
 		
 		equipstring.replace("]","");
 		String[] tabequipJson= equipstring.split("\\{");
@@ -155,10 +154,10 @@ public class AgentEnergie extends jade.core.Agent{
 				planning.add(eCourant);		//placement des équipement dans le planning
 				placerEquipement(eCourant,consoT);
 		}
-		Outils.envoimessage("c3po",planning,"planning",a);		//envoi du planning à qui de droit
-		Outils.receptionobjet("c3po",planning,"planning","planning",a);
-		Outils.envoimessage("r2d2",planning,"planning",a);
-		Outils.receptionobjet("r2d2",planning,"planning","planning", a);
+		a.envoimessage("c3po",planning,"planning");		//envoi du planning à qui de droit
+		a.receptionobjet("c3po",planning,"planning","planning");
+		a.envoimessage("r2d2",planning,"planning");
+		a.receptionobjet("r2d2",planning,"planning","planning");
 		}
 
 	

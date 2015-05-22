@@ -1,6 +1,6 @@
 package senor_meteo;
 
-import outils.Outils; // importation des packages du systeme multi agent
+import outils.Smalpha;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,14 +14,14 @@ import org.json.JSONArray;		//import de org.json
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import jade.core.behaviours.CyclicBehaviour;	//import de ojade
+import jade.core.behaviours.CyclicBehaviour;	//import de jade
 import jade.core.behaviours.OneShotBehaviour;
 import jade.core.behaviours.ParallelBehaviour;
 import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
 
 
-public class AgentMeteo extends jade.core.Agent{
+public class AgentMeteo extends Smalpha{
 
 	/**
 	 * 
@@ -39,7 +39,6 @@ public class AgentMeteo extends jade.core.Agent{
 			/**
 			 * 
 			 */
-			private static final long serialVersionUID = 1L;
 
 			public void action(){
 				System.out.println(getLocalName()+" lancé"); 
@@ -206,10 +205,10 @@ public class AgentMeteo extends jade.core.Agent{
 					ACLMessage msg = receive();
 					if(msg!= null)  {										// lorsqu'un message est traité avec du contenu
 						if (msg.getSender().getLocalName().equals("ams")){	// ams envoi un message si l'agent qu'on a cherché à contacté n'est pas actif
-							Outils.defibrillateur( msg.getContent(),this.myAgent);
+							((Smalpha) this.myAgent).defibrillateur( msg.getContent());
 						}
 						else{  // l'agent est actif et demande la météo
-						Outils.envoimessage(msg.getSender().getLocalName(),tabMeteo,"meteo",this.myAgent);
+						((Smalpha) this.myAgent).envoimessage(msg.getSender().getLocalName(),tabMeteo,"meteo");
 						}
 					}
 					else{

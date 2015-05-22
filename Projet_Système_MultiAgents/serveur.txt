@@ -1,1 +1,1 @@
-192.168.1.42/SMAlpha_html
+localhost/SMAlpha_html

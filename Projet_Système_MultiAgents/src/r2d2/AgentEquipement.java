@@ -1,7 +1,7 @@
 package r2d2;
 
 import glados.Equipement;	//import des packages du système multi agent
-import outils.Outils;
+import outils.Smalpha;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,7 +19,7 @@ import jade.core.behaviours.ParallelBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 
-public class AgentEquipement extends jade.core.Agent{
+public class AgentEquipement extends Smalpha{
 	/**
 	 * 
 	 */
@@ -115,13 +115,13 @@ public class AgentEquipement extends jade.core.Agent{
 		    					catch (FileNotFoundException e1) {
 		    					}
 		        			}
-		        			Outils.envoimessage("glados","planning reçu","planning",this.myAgent);
+		        			((Smalpha) this.myAgent).envoimessage("glados","planning reçu","planning");
 			                 break;
 
 			       
 						case "ams":	// un agent mort a tenté de contacter l'agent Equipement. l'agent le réanime
 							
-							Outils.defibrillateur(msg.getContent(),this.myAgent);
+							((Smalpha) this.myAgent).defibrillateur(msg.getContent());
 							break;
 			        
 
