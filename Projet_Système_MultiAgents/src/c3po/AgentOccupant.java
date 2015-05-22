@@ -168,7 +168,7 @@ public class AgentOccupant extends Smalpha{
 			// envoi de message à senor meteo pour obtenir la météo et la traiter avant toute chose.
 			this.envoimessage("senor_meteo","meteo demande","meteo demande");
 			Meteo[]tabMeteo= new Meteo[7];
-			tabMeteo=(Meteo[]) super.receptionobjet("senor_meteo","meteo","meteo","meteo");
+			tabMeteo=(Meteo[]) this.receptionobjet("senor_meteo","meteo","meteo","meteo");
 			String envoi ="";
 			for (int i = 0; i < tabMeteo.length; i++) {
 				envoi = envoi+tabMeteo[i].toString()+";";
