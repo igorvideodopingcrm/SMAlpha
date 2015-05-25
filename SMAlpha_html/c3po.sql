@@ -19,7 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `c3po`
 --
-
+CREATE DATABASE c3po CHARACTER SET 'utf8';
+USE c3po;
 -- --------------------------------------------------------
 
 --
