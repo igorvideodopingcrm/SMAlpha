@@ -16,6 +16,7 @@ import java.io.Serializable;
 public class Smalpha extends jade.core.Agent{
 
 	private static final long serialVersionUID = 1L;
+	
 	public String defibrillateur(String messageagentmort){ // fonction de défibrillateur. cette fonction sert à reboot des Agents qui seraient tombé
 		
 		String[] separmessage = messageagentmort.split(":");
