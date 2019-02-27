@@ -1,6 +1,6 @@
 -- phpMyAdmin SQL Dump
 -- version 4.2.11
--- http://www.phpmyadmin.net
+-- http://www.phpmyadmin.net  2
 --
 -- Client :  127.0.0.1
 -- Généré le :  Ven 22 Mai 2015 à 10:15
